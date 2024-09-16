@@ -1,0 +1,36 @@
+{
+  "kind": "singleType",
+  "collectionName": "about_sections",
+  "info": {
+    "singularName": "about-section",
+    "pluralName": "about-sections",
+    "displayName": "About Section",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "heading": {
+      "type": "text"
+    },
+    "sub_heading": {
+      "type": "text"
+    },
+    "paragraph": {
+      "type": "text"
+    },
+    "button_title": {
+      "type": "string"
+    },
+    "baground_image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}

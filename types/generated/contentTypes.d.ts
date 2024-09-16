@@ -788,6 +788,41 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiAboutSectionAboutSection extends Schema.SingleType {
+  collectionName: 'about_sections';
+  info: {
+    singularName: 'about-section';
+    pluralName: 'about-sections';
+    displayName: 'About Section';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    heading: Attribute.Text;
+    sub_heading: Attribute.Text;
+    paragraph: Attribute.Text;
+    button_title: Attribute.String;
+    baground_image: Attribute.Media<'images'> & Attribute.Required;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::about-section.about-section',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::about-section.about-section',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiBannerImageBannerImage extends Schema.CollectionType {
   collectionName: 'banner_images';
   info: {
@@ -821,29 +856,34 @@ export interface ApiBannerImageBannerImage extends Schema.CollectionType {
   };
 }
 
-export interface ApiTestingTesting extends Schema.SingleType {
-  collectionName: 'testings';
+export interface ApiContactusSectionContactusSection extends Schema.SingleType {
+  collectionName: 'contactus_sections';
   info: {
-    singularName: 'testing';
-    pluralName: 'testings';
-    displayName: 'testing';
+    singularName: 'contactus-section';
+    pluralName: 'contactus-sections';
+    displayName: 'Contactus Section';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    assdasd: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    heading: Attribute.String;
+    paragraph: Attribute.Text;
+    button_title: Attribute.String;
+    image: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    image_top_pos: Attribute.Float;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::testing.testing',
+      'api::contactus-section.contactus-section',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::testing.testing',
+      'api::contactus-section.contactus-section',
       'oneToOne',
       'admin::user'
     > &
@@ -869,8 +909,9 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::about-section.about-section': ApiAboutSectionAboutSection;
       'api::banner-image.banner-image': ApiBannerImageBannerImage;
-      'api::testing.testing': ApiTestingTesting;
+      'api::contactus-section.contactus-section': ApiContactusSectionContactusSection;
     }
   }
 }
