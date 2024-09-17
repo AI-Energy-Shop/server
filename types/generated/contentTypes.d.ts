@@ -804,7 +804,7 @@ export interface ApiAboutSectionAboutSection extends Schema.SingleType {
     sub_heading: Attribute.Text;
     paragraph: Attribute.Text;
     button_title: Attribute.String;
-    baground_image: Attribute.Media<'images'> & Attribute.Required;
+    baground_image: Attribute.Media<'images'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -836,7 +836,7 @@ export interface ApiBannerImageBannerImage extends Schema.CollectionType {
   };
   attributes: {
     title: Attribute.String;
-    image: Attribute.Media<'images'> & Attribute.Required;
+    image: Attribute.Media<'images'>;
     url: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
