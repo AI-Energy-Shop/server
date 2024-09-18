@@ -9,7 +9,11 @@ import i18N from "@strapi/plugin-i18n/strapi-admin";
 import usersPermissions from "@strapi/plugin-users-permissions/strapi-admin";
 import { renderAdmin } from "@strapi/strapi/admin";
 
+import customisations from "../../src/admin/app.js";
+
 renderAdmin(document.getElementById("strapi"), {
+  customisations,
+
   plugins: {
     "apollo-sandbox": apolloSandbox,
     "strapi-cloud": strapiCloud,

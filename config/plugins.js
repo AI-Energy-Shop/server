@@ -1,13 +1,16 @@
 module.exports = () => ({
-  //   upload: {
-  //     config: {
-  //       providerOptions: {
-  //         localServer: {
-  //           maxage: 300000,
-  //         },
-  //       },
-  //     },
-  //   },
+  upload: {
+    config: {
+      provider: "strapi-provider-upload-do",
+      providerOptions: {
+        directory: "strapi-dev", // optional
+        key: process.env.DO_SPACE_ACCESS_KEY,
+        secret: process.env.DO_SPACE_SECRET_KEY,
+        endpoint: process.env.DO_SPACE_ENDPOINT,
+        space: process.env.DO_SPACE_BUCKET,
+      },
+    },
+  },
   graphql: {
     enabled: true,
     config: {
