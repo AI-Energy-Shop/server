@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_layout_newsletters",
+  "info": {
+    "displayName": "Newsletter",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "input": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.input"
+    }
+  }
+}

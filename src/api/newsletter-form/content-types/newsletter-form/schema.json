@@ -1,0 +1,45 @@
+{
+  "kind": "singleType",
+  "collectionName": "newsletter_forms",
+  "info": {
+    "singularName": "newsletter-form",
+    "pluralName": "newsletter-forms",
+    "displayName": "Newsletter Form",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "form_inputs": {
+      "type": "component",
+      "repeatable": false,
+      "component": "layout.newsletter"
+    },
+    "heading": {
+      "type": "string",
+      "default": "Heading"
+    },
+    "paragraph": {
+      "type": "text"
+    },
+    "sub_text": {
+      "type": "text"
+    },
+    "button_title": {
+      "type": "string"
+    },
+    "privacy_link": {
+      "type": "string"
+    },
+    "background_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
+    }
+  }
+}

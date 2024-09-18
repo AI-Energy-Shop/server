@@ -823,12 +823,12 @@ export interface ApiAboutSectionAboutSection extends Schema.SingleType {
   };
 }
 
-export interface ApiBannerImageBannerImage extends Schema.CollectionType {
+export interface ApiBannerImageBannerImage extends Schema.SingleType {
   collectionName: 'banner_images';
   info: {
     singularName: 'banner-image';
     pluralName: 'banner-images';
-    displayName: 'BannerImages';
+    displayName: 'Banner Images';
     description: '';
   };
   options: {
@@ -836,8 +836,7 @@ export interface ApiBannerImageBannerImage extends Schema.CollectionType {
   };
   attributes: {
     title: Attribute.String;
-    image: Attribute.Media<'images'>;
-    url: Attribute.Text;
+    images: Attribute.Component<'elements.image', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -861,7 +860,7 @@ export interface ApiContactusSectionContactusSection extends Schema.SingleType {
   info: {
     singularName: 'contactus-section';
     pluralName: 'contactus-sections';
-    displayName: 'Contactus Section';
+    displayName: 'Contact Section';
     description: '';
   };
   options: {
@@ -891,6 +890,76 @@ export interface ApiContactusSectionContactusSection extends Schema.SingleType {
   };
 }
 
+export interface ApiGlobalGlobal extends Schema.SingleType {
+  collectionName: 'globals';
+  info: {
+    singularName: 'global';
+    pluralName: 'globals';
+    displayName: 'Global';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.Text;
+    topnav: Attribute.Component<'layout.top-nav'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::global.global',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::global.global',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiNewsletterFormNewsletterForm extends Schema.SingleType {
+  collectionName: 'newsletter_forms';
+  info: {
+    singularName: 'newsletter-form';
+    pluralName: 'newsletter-forms';
+    displayName: 'Newsletter Form';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    form_inputs: Attribute.Component<'layout.newsletter'>;
+    heading: Attribute.String & Attribute.DefaultTo<'Heading'>;
+    paragraph: Attribute.Text;
+    sub_text: Attribute.Text;
+    button_title: Attribute.String;
+    privacy_link: Attribute.String;
+    background_image: Attribute.Media<'images'>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::newsletter-form.newsletter-form',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::newsletter-form.newsletter-form',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -912,6 +981,8 @@ declare module '@strapi/types' {
       'api::about-section.about-section': ApiAboutSectionAboutSection;
       'api::banner-image.banner-image': ApiBannerImageBannerImage;
       'api::contactus-section.contactus-section': ApiContactusSectionContactusSection;
+      'api::global.global': ApiGlobalGlobal;
+      'api::newsletter-form.newsletter-form': ApiNewsletterFormNewsletterForm;
     }
   }
 }

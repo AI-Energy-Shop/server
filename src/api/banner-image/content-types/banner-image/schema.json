@@ -1,10 +1,10 @@
 {
-  "kind": "collectionType",
+  "kind": "singleType",
   "collectionName": "banner_images",
   "info": {
     "singularName": "banner-image",
     "pluralName": "banner-images",
-    "displayName": "BannerImages",
+    "displayName": "Banner Images",
     "description": ""
   },
   "options": {
@@ -15,16 +15,10 @@
     "title": {
       "type": "string"
     },
-    "image": {
-      "type": "media",
-      "multiple": false,
-      "required": false,
-      "allowedTypes": [
-        "images"
-      ]
-    },
-    "url": {
-      "type": "text"
+    "images": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.image"
     }
   }
 }
