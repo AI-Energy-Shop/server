@@ -800,10 +800,10 @@ export interface ApiAboutSectionAboutSection extends Schema.SingleType {
     draftAndPublish: true;
   };
   attributes: {
-    heading: Attribute.Text;
-    sub_heading: Attribute.Text;
-    paragraph: Attribute.Text;
-    button_title: Attribute.String;
+    heading: Attribute.Text & Attribute.DefaultTo<'Heading'>;
+    sub_heading: Attribute.Text & Attribute.DefaultTo<'Sub heading'>;
+    paragraph: Attribute.Text & Attribute.DefaultTo<'paragraph'>;
+    button_title: Attribute.String & Attribute.DefaultTo<'Button Title'>;
     baground_image: Attribute.Media<'images'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -937,7 +937,8 @@ export interface ApiNewsletterFormNewsletterForm extends Schema.SingleType {
   attributes: {
     form_inputs: Attribute.Component<'layout.newsletter'>;
     heading: Attribute.String & Attribute.DefaultTo<'Heading'>;
-    paragraph: Attribute.Text;
+    paragraph: Attribute.Text &
+      Attribute.DefaultTo<'Lorem ipsum dolor sit amet consectetur, adipisicing elit.'>;
     sub_text: Attribute.Text;
     button_title: Attribute.String;
     privacy_link: Attribute.String;

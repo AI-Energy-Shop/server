@@ -13,16 +13,20 @@
   "pluginOptions": {},
   "attributes": {
     "heading": {
-      "type": "text"
+      "type": "text",
+      "default": "Heading"
     },
     "sub_heading": {
-      "type": "text"
+      "type": "text",
+      "default": "Sub heading"
     },
     "paragraph": {
-      "type": "text"
+      "type": "text",
+      "default": "paragraph"
     },
     "button_title": {
-      "type": "string"
+      "type": "string",
+      "default": "Button Title"
     },
     "baground_image": {
       "type": "media",

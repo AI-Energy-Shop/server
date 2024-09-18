@@ -22,7 +22,8 @@
       "default": "Heading"
     },
     "paragraph": {
-      "type": "text"
+      "type": "text",
+      "default": "Lorem ipsum dolor sit amet consectetur, adipisicing elit."
     },
     "sub_text": {
       "type": "text"
