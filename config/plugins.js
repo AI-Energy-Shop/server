@@ -1,13 +1,28 @@
 module.exports = () => ({
   upload: {
     config: {
-      provider: "strapi-provider-upload-do",
+      provider: "aws-s3",
       providerOptions: {
-        directory: "strapi-dev", // optional
-        key: process.env.DO_SPACE_ACCESS_KEY,
-        secret: process.env.DO_SPACE_SECRET_KEY,
-        endpoint: process.env.DO_SPACE_ENDPOINT,
-        space: process.env.DO_SPACE_BUCKET,
+        s3Options: {
+          credentials: {
+            accessKeyId: process.env.DO_SPACE_ACCESS_KEY,
+            secretAccessKey: process.env.DO_SPACE_SECRET_KEY,
+          },
+          endpoint: process.env.DO_SPACE_ENDPOINT, // aws-s3 v3 needs a prefixed https:// endpoint
+          region: process.env.DO_SPACE_REGION,
+          params: {
+            Bucket: process.env.DO_SPACE_BUCKET,
+          },
+        },
+      },
+      actionOptions: {
+        upload: {
+          ACL: null,
+        },
+        uploadStream: {
+          ACL: null,
+        },
+        delete: {},
       },
     },
   },
