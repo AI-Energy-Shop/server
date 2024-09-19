@@ -4,7 +4,17 @@ module.exports = [
   "strapi::cors",
   "strapi::poweredBy",
   "strapi::query",
-  "strapi::body",
+  {
+    name: "strapi::body",
+    config: {
+      formLimit: "256mb", // modify form body
+      jsonLimit: "256mb", // modify JSON body
+      textLimit: "256mb", // modify text body
+      formidable: {
+        maxFileSize: 200 * 1024 * 1024, // multipart data, modify here limit of uploaded file size
+      },
+    },
+  },
   "strapi::session",
   "strapi::favicon",
   "strapi::public",
@@ -13,20 +23,34 @@ module.exports = [
     name: "strapi::security",
     config: {
       contentSecurityPolicy: {
+        useDefaults: true,
         directives: {
-          "frame-src": [
-            "http://localhost:*",
-            "self",
-            "sandbox.embed.apollographql.com",
+          "script-src": [
+            "'self'",
+            "'unsafe-inline'",
+            "cdn.jsdelivr.net",
+            "syd1.digitaloceanspaces.com",
           ],
-          "script-src": ["'self'", "'unsafe-inline'", "cdn.jsdelivr.net"],
+          // "connect-src": ["'self'", "https:"],
           "img-src": [
             "'self'",
             "data:",
-            "cdn.jsdelivr.net",
+            "blob:",
             "strapi.io",
-            `${process.env.DO_SPACE_BUCKET}.${process.env.DO_SPACE_REGION}.digitaloceanspaces.com`,
+            "market-assets.strapi.io",
+            "syd1.digitaloceanspaces.com",
+            // "https://aienergyshop-strapi-uploads.syd1.cdn.digitaloceanspaces.com",
           ],
+          "media-src": [
+            "'self'",
+            "data:",
+            "blob:",
+            "strapi.io",
+            "market-assets.strapi.io",
+            "syd1.digitaloceanspaces.com",
+            // "https://aienergyshop-strapi-uploads.syd1.cdn.digitaloceanspaces.com",
+          ],
+          upgradeInsecureRequests: null,
         },
       },
     },

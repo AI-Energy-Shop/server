@@ -17,6 +17,7 @@ module.exports = () => ({
       },
       actionOptions: {
         upload: {
+          folder: "strapi-dev",
           ACL: null,
         },
         uploadStream: {
