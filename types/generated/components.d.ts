@@ -67,6 +67,7 @@ export interface ElementsImage extends Schema.Component {
   };
   attributes: {
     image: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    link: Attribute.String;
   };
 }
 
