@@ -3,6 +3,8 @@ module.exports = () => ({
     config: {
       provider: "aws-s3",
       providerOptions: {
+        baseUrl: process.env.DO_CDN_URL,
+        rootPath: process.env.DO_ROOT_PATH,
         s3Options: {
           credentials: {
             accessKeyId: process.env.DO_SPACE_ACCESS_KEY,
@@ -16,13 +18,8 @@ module.exports = () => ({
         },
       },
       actionOptions: {
-        upload: {
-          folder: "strapi-dev",
-          ACL: null,
-        },
-        uploadStream: {
-          ACL: null,
-        },
+        upload: {},
+        uploadStream: {},
         delete: {},
       },
     },
