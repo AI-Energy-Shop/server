@@ -1,0 +1,18 @@
+{
+  "kind": "singleType",
+  "collectionName": "shift_trade_pages",
+  "info": {
+    "singularName": "shift-trade-page",
+    "pluralName": "shift-trade-pages",
+    "displayName": "Shift Trade Page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "page_title": {
+      "type": "string"
+    }
+  }
+}

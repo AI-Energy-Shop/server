@@ -1,0 +1,28 @@
+{
+  "kind": "singleType",
+  "collectionName": "contact_pages",
+  "info": {
+    "singularName": "contact-page",
+    "pluralName": "contact-pages",
+    "displayName": "Contact Page",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "contact_details_section": {
+      "type": "component",
+      "repeatable": false,
+      "component": "layout.contact-details",
+      "required": true
+    },
+    "warehouse_location": {
+      "type": "component",
+      "repeatable": false,
+      "component": "layout.warehouse-location-section",
+      "required": true
+    }
+  }
+}

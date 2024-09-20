@@ -1,0 +1,33 @@
+{
+  "kind": "singleType",
+  "collectionName": "home_pages",
+  "info": {
+    "singularName": "home-page",
+    "pluralName": "home-pages",
+    "displayName": "Home Page",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "banner_images": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.image"
+    },
+    "about_section": {
+      "displayName": "About Section",
+      "type": "component",
+      "repeatable": false,
+      "component": "layout.about-section"
+    },
+    "contactus_section": {
+      "displayName": "ContactUs Section",
+      "type": "component",
+      "repeatable": false,
+      "component": "layout.contact-us-section"
+    }
+  }
+}

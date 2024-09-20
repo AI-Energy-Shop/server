@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_elements_open_hours",
+  "info": {
+    "displayName": "Open Hours",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "warehouse_time": {
+      "type": "string"
+    },
+    "office_time": {
+      "type": "string"
+    }
+  }
+}

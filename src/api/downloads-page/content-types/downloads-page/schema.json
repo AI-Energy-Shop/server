@@ -1,0 +1,18 @@
+{
+  "kind": "singleType",
+  "collectionName": "downloads_pages",
+  "info": {
+    "singularName": "downloads-page",
+    "pluralName": "downloads-pages",
+    "displayName": "Downloads Page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "page_title": {
+      "type": "string"
+    }
+  }
+}

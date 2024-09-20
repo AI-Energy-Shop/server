@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_layout_contact_details",
+  "info": {
+    "displayName": "Contact Details Section",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "left_subheading": {
+      "type": "string",
+      "default": "Left heading",
+      "required": true
+    },
+    "left_description": {
+      "type": "string"
+    },
+    "right_subheading": {
+      "type": "string",
+      "default": "Right Heading",
+      "required": true
+    },
+    "right_description": {
+      "type": "string"
+    }
+  }
+}

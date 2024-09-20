@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_layout_contact_form_sections",
+  "info": {
+    "displayName": "Contact Form Section"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    }
+  }
+}

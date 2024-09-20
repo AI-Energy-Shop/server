@@ -788,34 +788,29 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface ApiAboutSectionAboutSection extends Schema.SingleType {
-  collectionName: 'about_sections';
+export interface ApiAboutPageAboutPage extends Schema.SingleType {
+  collectionName: 'about_pages';
   info: {
-    singularName: 'about-section';
-    pluralName: 'about-sections';
-    displayName: 'About Section';
-    description: '';
+    singularName: 'about-page';
+    pluralName: 'about-pages';
+    displayName: 'About Page';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    heading: Attribute.Text & Attribute.DefaultTo<'Heading'>;
-    sub_heading: Attribute.Text & Attribute.DefaultTo<'Sub heading'>;
-    paragraph: Attribute.Text & Attribute.DefaultTo<'paragraph'>;
-    button_title: Attribute.String & Attribute.DefaultTo<'Button Title'>;
-    baground_image: Attribute.Media<'images'>;
+    page_title: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::about-section.about-section',
+      'api::about-page.about-page',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::about-section.about-section',
+      'api::about-page.about-page',
       'oneToOne',
       'admin::user'
     > &
@@ -823,31 +818,33 @@ export interface ApiAboutSectionAboutSection extends Schema.SingleType {
   };
 }
 
-export interface ApiBannerImageBannerImage extends Schema.SingleType {
-  collectionName: 'banner_images';
+export interface ApiContactPageContactPage extends Schema.SingleType {
+  collectionName: 'contact_pages';
   info: {
-    singularName: 'banner-image';
-    pluralName: 'banner-images';
-    displayName: 'Banner Images';
+    singularName: 'contact-page';
+    pluralName: 'contact-pages';
+    displayName: 'Contact Page';
     description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    title: Attribute.String;
-    images: Attribute.Component<'elements.image', true>;
+    contact_details_section: Attribute.Component<'layout.contact-details'> &
+      Attribute.Required;
+    warehouse_location: Attribute.Component<'layout.warehouse-location-section'> &
+      Attribute.Required;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::banner-image.banner-image',
+      'api::contact-page.contact-page',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::banner-image.banner-image',
+      'api::contact-page.contact-page',
       'oneToOne',
       'admin::user'
     > &
@@ -855,34 +852,29 @@ export interface ApiBannerImageBannerImage extends Schema.SingleType {
   };
 }
 
-export interface ApiContactusSectionContactusSection extends Schema.SingleType {
-  collectionName: 'contactus_sections';
+export interface ApiDownloadsPageDownloadsPage extends Schema.SingleType {
+  collectionName: 'downloads_pages';
   info: {
-    singularName: 'contactus-section';
-    pluralName: 'contactus-sections';
-    displayName: 'Contact Section';
-    description: '';
+    singularName: 'downloads-page';
+    pluralName: 'downloads-pages';
+    displayName: 'Downloads Page';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    heading: Attribute.String;
-    paragraph: Attribute.Text;
-    button_title: Attribute.String;
-    image: Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    image_top_pos: Attribute.Float;
+    page_title: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::contactus-section.contactus-section',
+      'api::downloads-page.downloads-page',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::contactus-section.contactus-section',
+      'api::downloads-page.downloads-page',
       'oneToOne',
       'admin::user'
     > &
@@ -890,32 +882,32 @@ export interface ApiContactusSectionContactusSection extends Schema.SingleType {
   };
 }
 
-export interface ApiGlobalGlobal extends Schema.SingleType {
-  collectionName: 'globals';
+export interface ApiHomePageHomePage extends Schema.SingleType {
+  collectionName: 'home_pages';
   info: {
-    singularName: 'global';
-    pluralName: 'globals';
-    displayName: 'Global';
+    singularName: 'home-page';
+    pluralName: 'home-pages';
+    displayName: 'Home Page';
     description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
-    title: Attribute.String;
-    description: Attribute.Text;
-    topnav: Attribute.Component<'layout.top-nav'>;
+    banner_images: Attribute.Component<'elements.image', true>;
+    about_section: Attribute.Component<'layout.about-section'>;
+    contactus_section: Attribute.Component<'layout.contact-us-section'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
-      'api::global.global',
+      'api::home-page.home-page',
       'oneToOne',
       'admin::user'
     > &
       Attribute.Private;
     updatedBy: Attribute.Relation<
-      'api::global.global',
+      'api::home-page.home-page',
       'oneToOne',
       'admin::user'
     > &
@@ -961,6 +953,66 @@ export interface ApiNewsletterFormNewsletterForm extends Schema.SingleType {
   };
 }
 
+export interface ApiShiftTradePageShiftTradePage extends Schema.SingleType {
+  collectionName: 'shift_trade_pages';
+  info: {
+    singularName: 'shift-trade-page';
+    pluralName: 'shift-trade-pages';
+    displayName: 'Shift Trade Page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    page_title: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::shift-trade-page.shift-trade-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::shift-trade-page.shift-trade-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiStcTradingPageStcTradingPage extends Schema.SingleType {
+  collectionName: 'stc_trading_pages';
+  info: {
+    singularName: 'stc-trading-page';
+    pluralName: 'stc-trading-pages';
+    displayName: 'STC Trading Page';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    page_title: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::stc-trading-page.stc-trading-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::stc-trading-page.stc-trading-page',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -979,11 +1031,13 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'api::about-section.about-section': ApiAboutSectionAboutSection;
-      'api::banner-image.banner-image': ApiBannerImageBannerImage;
-      'api::contactus-section.contactus-section': ApiContactusSectionContactusSection;
-      'api::global.global': ApiGlobalGlobal;
+      'api::about-page.about-page': ApiAboutPageAboutPage;
+      'api::contact-page.contact-page': ApiContactPageContactPage;
+      'api::downloads-page.downloads-page': ApiDownloadsPageDownloadsPage;
+      'api::home-page.home-page': ApiHomePageHomePage;
       'api::newsletter-form.newsletter-form': ApiNewsletterFormNewsletterForm;
+      'api::shift-trade-page.shift-trade-page': ApiShiftTradePageShiftTradePage;
+      'api::stc-trading-page.stc-trading-page': ApiStcTradingPageStcTradingPage;
     }
   }
 }

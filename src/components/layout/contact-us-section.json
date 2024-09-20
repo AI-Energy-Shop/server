@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_layout_contact_us_sections",
+  "info": {
+    "displayName": "ContactUs Section"
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "image": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "button_title": {
+      "type": "string"
+    }
+  }
+}
