@@ -12,11 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "banner_images_desktop": {
-      "type": "component",
-      "repeatable": true,
-      "component": "elements.image"
-    },
     "about_section": {
       "displayName": "About Section",
       "type": "component",
@@ -29,12 +24,7 @@
       "repeatable": false,
       "component": "layout.contact-us-section"
     },
-    "banner_images_tablet": {
-      "type": "component",
-      "repeatable": true,
-      "component": "elements.image"
-    },
-    "banner_images_mobile": {
+    "banner_images": {
       "type": "component",
       "repeatable": true,
       "component": "elements.image"

@@ -19,6 +19,14 @@
     },
     "link": {
       "type": "string"
+    },
+    "image_type": {
+      "type": "enumeration",
+      "enum": [
+        "DESKTOP",
+        "TABLET",
+        "MOBILE"
+      ]
     }
   }
 }
