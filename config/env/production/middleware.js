@@ -24,11 +24,6 @@ module.exports = [
       contentSecurityPolicy: {
         useDefaults: true,
         directives: {
-          "frame-src": [
-            "self",
-            "http://localhost:*",
-            "sandbox.embed.apollographql.com",
-          ],
           "default-src": ["'self'", "*"], // Allows requests from all sources
           "script-src": ["'self'", "'unsafe-inline'", "*"],
           "connect-src": ["'self'", "http:", "https:", "*"], // Permit connections from any domain
