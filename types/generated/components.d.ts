@@ -158,7 +158,7 @@ export interface ElementsInput extends Schema.Component {
 export interface ElementsImage extends Schema.Component {
   collectionName: 'components_elements_images';
   info: {
-    displayName: 'Image';
+    displayName: 'Banner Image';
     description: '';
   };
   attributes: {

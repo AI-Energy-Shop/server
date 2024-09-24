@@ -894,9 +894,11 @@ export interface ApiHomePageHomePage extends Schema.SingleType {
     draftAndPublish: true;
   };
   attributes: {
-    banner_images: Attribute.Component<'elements.image', true>;
+    banner_images_desktop: Attribute.Component<'elements.image', true>;
     about_section: Attribute.Component<'layout.about-section'>;
     contactus_section: Attribute.Component<'layout.contact-us-section'>;
+    banner_images_tablet: Attribute.Component<'elements.image', true>;
+    banner_images_mobile: Attribute.Component<'elements.image', true>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
