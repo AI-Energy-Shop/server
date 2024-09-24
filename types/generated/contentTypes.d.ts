@@ -794,15 +794,15 @@ export interface ApiAboutPageAboutPage extends Schema.SingleType {
     singularName: 'about-page';
     pluralName: 'about-pages';
     displayName: 'About Page';
+    description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     page_title: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
       'api::about-page.about-page',
       'oneToOne',
@@ -953,6 +953,36 @@ export interface ApiNewsletterFormNewsletterForm extends Schema.SingleType {
   };
 }
 
+export interface ApiProductProduct extends Schema.CollectionType {
+  collectionName: 'products';
+  info: {
+    singularName: 'product';
+    pluralName: 'products';
+    displayName: 'Products';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiShiftTradePageShiftTradePage extends Schema.SingleType {
   collectionName: 'shift_trade_pages';
   info: {
@@ -1036,6 +1066,7 @@ declare module '@strapi/types' {
       'api::downloads-page.downloads-page': ApiDownloadsPageDownloadsPage;
       'api::home-page.home-page': ApiHomePageHomePage;
       'api::newsletter-form.newsletter-form': ApiNewsletterFormNewsletterForm;
+      'api::product.product': ApiProductProduct;
       'api::shift-trade-page.shift-trade-page': ApiShiftTradePageShiftTradePage;
       'api::stc-trading-page.stc-trading-page': ApiStcTradingPageStcTradingPage;
     }
