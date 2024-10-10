@@ -13,6 +13,18 @@ export interface LayoutWarehouseLocationSection extends Schema.Component {
   };
 }
 
+export interface LayoutVariant extends Schema.Component {
+  collectionName: 'components_layout_variants';
+  info: {
+    displayName: 'Variant';
+    icon: 'bulletList';
+  };
+  attributes: {
+    variant_title: Attribute.String;
+    variant_options: Attribute.Component<'elements.variant-option', true>;
+  };
+}
+
 export interface LayoutTopNav extends Schema.Component {
   collectionName: 'components_layout_top_navs';
   info: {
@@ -25,6 +37,48 @@ export interface LayoutTopNav extends Schema.Component {
   };
 }
 
+export interface LayoutStock extends Schema.Component {
+  collectionName: 'components_layout_stocks';
+  info: {
+    displayName: 'Stock';
+    description: '';
+  };
+  attributes: {
+    quantity: Attribute.String;
+    location_code: Attribute.Enumeration<
+      [
+        'SYD',
+        'MEL',
+        'BNE',
+        'PER',
+        'ADL',
+        'CBR',
+        'OOL',
+        'CNS',
+        'HBA',
+        'DRW',
+        'TSV',
+        'MCY',
+        'NTL',
+        'LST',
+        'AVV'
+      ]
+    >;
+  };
+}
+
+export interface LayoutPrice extends Schema.Component {
+  collectionName: 'components_layout_prices';
+  info: {
+    displayName: 'Price';
+    icon: 'priceTag';
+    description: '';
+  };
+  attributes: {
+    bulk_pricing: Attribute.Component<'layout.bulk-pricing', true>;
+  };
+}
+
 export interface LayoutNewsletter extends Schema.Component {
   collectionName: 'components_layout_newsletters';
   info: {
@@ -33,6 +87,18 @@ export interface LayoutNewsletter extends Schema.Component {
   };
   attributes: {
     input: Attribute.Component<'elements.input', true>;
+  };
+}
+
+export interface LayoutInventory extends Schema.Component {
+  collectionName: 'components_layout_inventories';
+  info: {
+    displayName: 'Inventory';
+    icon: 'cube';
+    description: '';
+  };
+  attributes: {
+    variant: Attribute.Component<'elements.variant-option', true>;
   };
 }
 
@@ -77,6 +143,20 @@ export interface LayoutContactDetails extends Schema.Component {
   };
 }
 
+export interface LayoutBulkPricing extends Schema.Component {
+  collectionName: 'components_layout_bulk_pricings';
+  info: {
+    displayName: 'Bulk Pricing';
+  };
+  attributes: {
+    product_id: Attribute.String;
+    user_level: Attribute.String;
+    min_quantity: Attribute.String;
+    max_quantity: Attribute.String;
+    price_per_unit: Attribute.String;
+  };
+}
+
 export interface LayoutAboutSection extends Schema.Component {
   collectionName: 'components_layout_about_sections';
   info: {
@@ -89,6 +169,17 @@ export interface LayoutAboutSection extends Schema.Component {
     description: Attribute.Text;
     background_image: Attribute.Media<'images' | 'videos'>;
     button_title: Attribute.String;
+  };
+}
+
+export interface ElementsVariantOption extends Schema.Component {
+  collectionName: 'components_elements_variant_options';
+  info: {
+    displayName: 'Variant Option';
+    description: '';
+  };
+  attributes: {
+    label: Attribute.String;
   };
 }
 
@@ -172,12 +263,18 @@ declare module '@strapi/types' {
   export module Shared {
     export interface Components {
       'layout.warehouse-location-section': LayoutWarehouseLocationSection;
+      'layout.variant': LayoutVariant;
       'layout.top-nav': LayoutTopNav;
+      'layout.stock': LayoutStock;
+      'layout.price': LayoutPrice;
       'layout.newsletter': LayoutNewsletter;
+      'layout.inventory': LayoutInventory;
       'layout.contact-us-section': LayoutContactUsSection;
       'layout.contact-form-section': LayoutContactFormSection;
       'layout.contact-details': LayoutContactDetails;
+      'layout.bulk-pricing': LayoutBulkPricing;
       'layout.about-section': LayoutAboutSection;
+      'elements.variant-option': ElementsVariantOption;
       'elements.open-hours': ElementsOpenHours;
       'elements.logo-link': ElementsLogoLink;
       'elements.location': ElementsLocation;

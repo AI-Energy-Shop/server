@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_layout_prices",
+  "info": {
+    "displayName": "Price",
+    "icon": "priceTag",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "bulk_pricing": {
+      "type": "component",
+      "repeatable": true,
+      "component": "layout.bulk-pricing"
+    }
+  }
+}

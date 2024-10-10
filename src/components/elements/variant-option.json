@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_elements_variant_options",
+  "info": {
+    "displayName": "Variant Option",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string"
+    }
+  }
+}

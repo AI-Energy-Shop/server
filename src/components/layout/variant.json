@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_layout_variants",
+  "info": {
+    "displayName": "Variant",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "variant_title": {
+      "type": "string"
+    },
+    "variant_options": {
+      "displayName": "Variant Option",
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.variant-option"
+    }
+  }
+}

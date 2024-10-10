@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_layout_inventories",
+  "info": {
+    "displayName": "Inventory",
+    "icon": "cube",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "variant": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.variant-option"
+    }
+  }
+}
