@@ -771,6 +771,8 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'plugin::users-permissions.role'
     >;
     level: Attribute.Enumeration<['SMALL', 'MID-SIZE', 'VIP']>;
+    user_type: Attribute.Enumeration<['INSTALLER', 'RETAILER']>;
+    approved: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

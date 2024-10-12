@@ -72,6 +72,16 @@
         "MID-SIZE",
         "VIP"
       ]
+    },
+    "user_type": {
+      "type": "enumeration",
+      "enum": [
+        "INSTALLER",
+        "RETAILER"
+      ]
+    },
+    "approved": {
+      "type": "boolean"
     }
   }
 }
