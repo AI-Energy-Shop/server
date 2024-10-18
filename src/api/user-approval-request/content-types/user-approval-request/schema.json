@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_approval_requests",
+  "info": {
+    "singularName": "user-approval-request",
+    "pluralName": "user-approval-requests",
+    "displayName": "User Approval Request",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "email": {
+      "type": "string"
+    },
+    "request_link": {
+      "type": "string"
+    },
+    "approved": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

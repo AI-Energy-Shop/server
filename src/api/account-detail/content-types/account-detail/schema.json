@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "account_details",
+  "info": {
+    "singularName": "account-detail",
+    "pluralName": "account-details",
+    "displayName": "Account Detail",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "level": {
+      "type": "enumeration",
+      "enum": [
+        "SMALL",
+        "MID-SIZED",
+        "VIP"
+      ]
+    },
+    "user_type": {
+      "type": "enumeration",
+      "enum": [
+        "INSTALLER",
+        "RETAILER"
+      ]
+    },
+    "odoo_id": {
+      "type": "string",
+      "unique": true
+    },
+    "first_name": {
+      "type": "string"
+    },
+    "middle_name": {
+      "type": "string"
+    },
+    "last_name": {
+      "type": "string"
+    },
+    "business_name": {
+      "type": "string"
+    },
+    "position": {
+      "type": "string"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "account_details"
+    }
+  }
+}
