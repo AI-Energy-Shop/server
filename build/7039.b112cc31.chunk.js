@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkbackend=self.webpackChunkbackend||[]).push([[7039],{17039:(n,a,e)=>{e.r(a),e.d(a,{default:()=>u});const u={"plugin.description.long":"Varsay\u0131lan API metodlar\u0131 ile bir GraphQL u\xE7 noktas\u0131 ekler.","plugin.description.short":"Varsay\u0131lan API metodlar\u0131 ile bir GraphQL u\xE7 noktas\u0131 ekler.","plugin.name":"GraphQL"}}}]);
