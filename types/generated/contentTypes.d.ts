@@ -1,140 +1,5 @@
 import type { Struct, Schema } from '@strapi/strapi';
 
-export interface ApiAccountDetailAccountDetail
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'account_details';
-  info: {
-    singularName: 'account-detail';
-    pluralName: 'account-details';
-    displayName: 'Account Detail';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    level: Schema.Attribute.Enumeration<['SMALL', 'MID-SIZED', 'VIP']>;
-    user_type: Schema.Attribute.Enumeration<['INSTALLER', 'RETAILER']>;
-    odoo_id: Schema.Attribute.String & Schema.Attribute.Unique;
-    first_name: Schema.Attribute.String;
-    middle_name: Schema.Attribute.String;
-    last_name: Schema.Attribute.String;
-    business_name: Schema.Attribute.String;
-    position: Schema.Attribute.String;
-    user: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    createdAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    publishedAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::account-detail.account-detail'
-    >;
-  };
-}
-
-export interface ApiPagePage extends Struct.CollectionTypeSchema {
-  collectionName: 'pages';
-  info: {
-    singularName: 'page';
-    pluralName: 'pages';
-    displayName: 'Page';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    title: Schema.Attribute.String;
-    slug: Schema.Attribute.String & Schema.Attribute.Unique;
-    sections: Schema.Attribute.DynamicZone<
-      [
-        'sections.warehouse-locations',
-        'sections.contact-us',
-        'sections.contact-details',
-        'sections.about',
-        'sections.image-slider',
-        'form.newsletter',
-        'form.inquiry',
-      ]
-    >;
-    createdAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    publishedAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<'oneToMany', 'api::page.page'>;
-  };
-}
-
-export interface ApiPriceListPriceList extends Struct.CollectionTypeSchema {
-  collectionName: 'price_lists';
-  info: {
-    singularName: 'price-list';
-    pluralName: 'price-lists';
-    displayName: 'Price List';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    level: Schema.Attribute.String;
-    createdAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    publishedAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::price-list.price-list'
-    >;
-  };
-}
-
-export interface ApiUserApprovalRequestUserApprovalRequest
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'user_approval_requests';
-  info: {
-    singularName: 'user-approval-request';
-    pluralName: 'user-approval-requests';
-    displayName: 'User Approval Request';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    email: Schema.Attribute.String;
-    request_link: Schema.Attribute.String;
-    approved: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
-    createdAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    publishedAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::user-approval-request.user-approval-request'
-    >;
-  };
-}
-
 export interface PluginUploadFile extends Struct.CollectionTypeSchema {
   collectionName: 'files';
   info: {
@@ -626,6 +491,141 @@ export interface PluginUsersPermissionsUser
   };
 }
 
+export interface ApiAccountDetailAccountDetail
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'account_details';
+  info: {
+    singularName: 'account-detail';
+    pluralName: 'account-details';
+    displayName: 'Account Detail';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    level: Schema.Attribute.Enumeration<['SMALL', 'MID-SIZED', 'VIP']>;
+    user_type: Schema.Attribute.Enumeration<['INSTALLER', 'RETAILER']>;
+    odoo_id: Schema.Attribute.String & Schema.Attribute.Unique;
+    first_name: Schema.Attribute.String;
+    middle_name: Schema.Attribute.String;
+    last_name: Schema.Attribute.String;
+    business_name: Schema.Attribute.String;
+    position: Schema.Attribute.String;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::account-detail.account-detail'
+    >;
+  };
+}
+
+export interface ApiPagePage extends Struct.CollectionTypeSchema {
+  collectionName: 'pages';
+  info: {
+    singularName: 'page';
+    pluralName: 'pages';
+    displayName: 'Page';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    title: Schema.Attribute.String;
+    slug: Schema.Attribute.String & Schema.Attribute.Unique;
+    sections: Schema.Attribute.DynamicZone<
+      [
+        'sections.warehouse-locations',
+        'sections.contact-us',
+        'sections.contact-details',
+        'sections.about',
+        'sections.image-slider',
+        'form.newsletter',
+        'form.inquiry',
+      ]
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::page.page'>;
+  };
+}
+
+export interface ApiPriceListPriceList extends Struct.CollectionTypeSchema {
+  collectionName: 'price_lists';
+  info: {
+    singularName: 'price-list';
+    pluralName: 'price-lists';
+    displayName: 'Price List';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    level: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::price-list.price-list'
+    >;
+  };
+}
+
+export interface ApiUserApprovalRequestUserApprovalRequest
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'user_approval_requests';
+  info: {
+    singularName: 'user-approval-request';
+    pluralName: 'user-approval-requests';
+    displayName: 'User Approval Request';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    email: Schema.Attribute.String;
+    request_link: Schema.Attribute.String;
+    approved: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-approval-request.user-approval-request'
+    >;
+  };
+}
+
 export interface AdminPermission extends Struct.CollectionTypeSchema {
   collectionName: 'admin_permissions';
   info: {
@@ -991,10 +991,6 @@ export interface AdminTransferTokenPermission
 declare module '@strapi/strapi' {
   export module Public {
     export interface ContentTypeSchemas {
-      'api::account-detail.account-detail': ApiAccountDetailAccountDetail;
-      'api::page.page': ApiPagePage;
-      'api::price-list.price-list': ApiPriceListPriceList;
-      'api::user-approval-request.user-approval-request': ApiUserApprovalRequestUserApprovalRequest;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::i18n.locale': PluginI18NLocale;
@@ -1005,6 +1001,10 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::account-detail.account-detail': ApiAccountDetailAccountDetail;
+      'api::page.page': ApiPagePage;
+      'api::price-list.price-list': ApiPriceListPriceList;
+      'api::user-approval-request.user-approval-request': ApiUserApprovalRequestUserApprovalRequest;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;
       'admin::role': AdminRole;
