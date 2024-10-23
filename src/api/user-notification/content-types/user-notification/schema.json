@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_notifications",
+  "info": {
+    "singularName": "user-notification",
+    "pluralName": "user-notifications",
+    "displayName": "User Notification",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "read": {
+      "type": "datetime"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "user_notifications"
+    }
+  }
+}

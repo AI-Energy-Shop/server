@@ -65,11 +65,10 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "account_details": {
+    "account_detail": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::account-detail.account-detail",
-      "inversedBy": "user"
+      "target": "api::account-detail.account-detail"
     },
     "account_status": {
       "type": "enumeration",
@@ -79,6 +78,12 @@
         "APPROVED",
         "DENIED"
       ]
+    },
+    "user_notifications": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::user-notification.user-notification",
+      "mappedBy": "user"
     }
   }
 }

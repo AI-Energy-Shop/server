@@ -1,4 +1,5 @@
 import type { Core } from '@strapi/strapi';
+import { UserApprovalRequestInput } from '../types/custom';
 
 export default {
   /**
@@ -42,8 +43,23 @@ export default {
         password: String!
       }
 
+      input UserAccountDetails {
+        odooId: String!
+        userPricingLevel: String
+      }
+
+      input UserApprovalRequestInputArgs {
+        email: String!
+        accountStatus: String!
+        role: Int!
+        confirmed: Boolean!
+        user: UserAccountDetails
+      }
+
       type Mutation {
         registerUser(data: RegisterUserInput!): UserResponse
+        loginUser(identifier: String!, password: String!, provider: String! = "local"): UserResponse
+        userApproval(data: UserApprovalRequestInputArgs!): UserResponse
       }
       
       type Query {
@@ -52,7 +68,7 @@ export default {
     `,
     resolvers: {
       Mutation: {
-        registerUser: async (_, args: any) => {
+        registerUser: async (_: any, args: any) => {
           try {
             const useremail = await strapi.documents("admin::user").findMany(
               {
@@ -153,6 +169,126 @@ export default {
             };
           }
         },
+        loginUser: async (_: any, {identifier, password, provider}: {identifier: string; password: string, provider: string}) => {
+          const user = await strapi.documents("plugin::users-permissions.user").findFirst(
+            {
+              filters: {
+                email: "ruentgen2@test.com"
+              }
+            }
+          );
+
+          
+          if(!user){
+            return {
+              error: "User not found",
+              success: false,
+            }
+          }
+
+          const decodedPassword = 
+
+          console.log(user)
+          
+          
+          
+          
+        },
+        userApproval: async (_: any, {data}: UserApprovalRequestInput) => {
+          try {
+
+            const userData = await strapi.documents("plugin::users-permissions.user").findFirst(
+              {
+                filters: {
+                  email: data.email
+                },
+              }
+            );
+
+            if (!userData) {
+              return {
+                error: "User not found!",
+                success: false,
+              };
+            }
+
+
+          
+            const updatedUserDetails = await strapi.documents("plugin::users-permissions.user").update({
+              documentId: userData.documentId,
+              data: {
+                account_status: data.accountStatus,
+                confirmed: data.confirmed,
+              },
+              populate: {
+                account_detail: true
+              }
+            })
+
+            if(!updatedUserDetails) {
+              return {
+                success: false,
+                error: "User data failed to update!",
+              };
+            }
+
+            if(!updatedUserDetails.account_detail) {
+              return {
+                error: "User account details is missing, aborting user registration!",
+                status: false,
+              }
+            }
+            
+            const userAccountDetailsUpdate = await strapi.documents("api::account-detail.account-detail").update({
+              documentId: updatedUserDetails.account_detail.documentId,
+              data: {
+                odoo_id: data.user.odooId,
+                level: data.user.userPricingLevel
+              }
+            })
+
+            if(!userAccountDetailsUpdate) {
+              return {
+                success: false,
+                error: "User account details failed to update!",
+              };
+            }
+
+            const userNotification = await strapi.documents("api::user-notification.user-notification").create({
+              data: {
+                title: "Account Registration",
+                description: `Your account registration has beed ${userData.account_status}`,
+                user: userData.id
+              }
+            })
+
+            if(!userNotification) {
+              return {
+                error: "User registration successful, But creating notification failed!",
+                status: false,
+              }
+            }
+
+            return {
+              success: true,
+              statusText: "Account registration successful!",
+            };
+
+          } catch (err) {
+            
+            if (err === null || err === undefined) {
+              return {
+                error: "Unknown error",
+                success: false,
+              };
+            }
+
+            return {
+              error: err.message,
+              success: false,
+            };
+          }
+        }, 
       },
       Query: {
         getPage: async (_: any, {slug}: {slug: string}) => {
@@ -183,6 +319,12 @@ export default {
     },
     resolversConfig: {
       "Mutation.registerUser": {
+        auth: false,
+      },
+      "Mutation.loginUser": {
+        auth: false,
+      },
+      "Mutation.userApproval": {
         auth: false,
       },
       "Query.getPage": {

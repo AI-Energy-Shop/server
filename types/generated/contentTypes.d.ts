@@ -469,12 +469,16 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
-    account_details: Schema.Attribute.Relation<
+    account_detail: Schema.Attribute.Relation<
       'oneToOne',
       'api::account-detail.account-detail'
     >;
     account_status: Schema.Attribute.Enumeration<
       ['PENDING', 'REVIEWING', 'APPROVED', 'DENIED']
+    >;
+    user_notifications: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-notification.user-notification'
     >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
@@ -512,10 +516,6 @@ export interface ApiAccountDetailAccountDetail
     last_name: Schema.Attribute.String;
     business_name: Schema.Attribute.String;
     position: Schema.Attribute.String;
-    user: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -622,6 +622,41 @@ export interface ApiUserApprovalRequestUserApprovalRequest
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::user-approval-request.user-approval-request'
+    >;
+  };
+}
+
+export interface ApiUserNotificationUserNotification
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'user_notifications';
+  info: {
+    singularName: 'user-notification';
+    pluralName: 'user-notifications';
+    displayName: 'User Notification';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    title: Schema.Attribute.String;
+    description: Schema.Attribute.String;
+    read: Schema.Attribute.DateTime;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::user-notification.user-notification'
     >;
   };
 }
@@ -1005,6 +1040,7 @@ declare module '@strapi/strapi' {
       'api::page.page': ApiPagePage;
       'api::price-list.price-list': ApiPriceListPriceList;
       'api::user-approval-request.user-approval-request': ApiUserApprovalRequestUserApprovalRequest;
+      'api::user-notification.user-notification': ApiUserNotificationUserNotification;
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;
       'admin::role': AdminRole;
