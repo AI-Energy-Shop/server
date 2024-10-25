@@ -463,7 +463,6 @@ export interface PluginUsersPermissionsUser
       }>;
     resetPasswordToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
-    confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     role: Schema.Attribute.Relation<
       'manyToOne',

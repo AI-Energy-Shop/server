@@ -48,11 +48,6 @@
       "private": true,
       "searchable": false
     },
-    "confirmed": {
-      "type": "boolean",
-      "default": false,
-      "configurable": false
-    },
     "blocked": {
       "type": "boolean",
       "default": false,
