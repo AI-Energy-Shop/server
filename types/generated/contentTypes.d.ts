@@ -573,12 +573,14 @@ export interface ApiPriceListPriceList extends Struct.CollectionTypeSchema {
     singularName: 'price-list';
     pluralName: 'price-lists';
     displayName: 'Price List';
+    description: '';
   };
   options: {
     draftAndPublish: true;
   };
   attributes: {
     level: Schema.Attribute.String;
+    price: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -590,6 +592,42 @@ export interface ApiPriceListPriceList extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::price-list.price-list'
+    >;
+  };
+}
+
+export interface ApiProductProduct extends Struct.CollectionTypeSchema {
+  collectionName: 'products';
+  info: {
+    singularName: 'product';
+    pluralName: 'products';
+    displayName: 'product';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    category: Schema.Attribute.String;
+    vendor: Schema.Attribute.String;
+    item_code: Schema.Attribute.String;
+    price_lists: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::price-list.price-list'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::product.product'
     >;
   };
 }
@@ -1038,6 +1076,7 @@ declare module '@strapi/strapi' {
       'api::account-detail.account-detail': ApiAccountDetailAccountDetail;
       'api::page.page': ApiPagePage;
       'api::price-list.price-list': ApiPriceListPriceList;
+      'api::product.product': ApiProductProduct;
       'api::user-approval-request.user-approval-request': ApiUserApprovalRequestUserApprovalRequest;
       'api::user-notification.user-notification': ApiUserNotificationUserNotification;
       'admin::permission': AdminPermission;
