@@ -56,7 +56,7 @@ export default {
       }
       
       type Query {
-        getPage(slug: String!): Response
+        getPage(slug: String!): Page
       }
     `,
       resolvers: {

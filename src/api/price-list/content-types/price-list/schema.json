@@ -17,6 +17,15 @@
     },
     "price": {
       "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "product": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::product.product",
+      "inversedBy": "price_lists"
     }
   }
 }

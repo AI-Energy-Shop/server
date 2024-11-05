@@ -4,7 +4,7 @@
   "info": {
     "singularName": "product",
     "pluralName": "products",
-    "displayName": "product",
+    "displayName": "Product",
     "description": ""
   },
   "options": {
@@ -30,7 +30,8 @@
     "price_lists": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::price-list.price-list"
+      "target": "api::price-list.price-list",
+      "mappedBy": "product"
     }
   }
 }

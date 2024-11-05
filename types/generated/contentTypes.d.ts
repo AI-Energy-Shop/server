@@ -581,6 +581,8 @@ export interface ApiPriceListPriceList extends Struct.CollectionTypeSchema {
   attributes: {
     level: Schema.Attribute.String;
     price: Schema.Attribute.String;
+    location: Schema.Attribute.String;
+    product: Schema.Attribute.Relation<'manyToOne', 'api::product.product'>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -601,7 +603,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   info: {
     singularName: 'product';
     pluralName: 'products';
-    displayName: 'product';
+    displayName: 'Product';
     description: '';
   };
   options: {
