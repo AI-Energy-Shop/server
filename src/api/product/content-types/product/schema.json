@@ -27,11 +27,11 @@
     "item_code": {
       "type": "string"
     },
-    "price_lists": {
+    "price_list": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "oneToOne",
       "target": "api::price-list.price-list",
-      "mappedBy": "product"
+      "inversedBy": "product"
     }
   }
 }

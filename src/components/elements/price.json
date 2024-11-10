@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_elements_prices",
+  "info": {
+    "displayName": "Price",
+    "icon": "priceTag"
+  },
+  "options": {},
+  "attributes": {
+    "price": {
+      "type": "decimal"
+    },
+    "min_quantity": {
+      "type": "integer"
+    },
+    "max_quantity": {
+      "type": "integer"
+    },
+    "location": {
+      "type": "string"
+    },
+    "user_level": {
+      "type": "string"
+    }
+  }
+}
