@@ -32,6 +32,11 @@
       "relation": "oneToOne",
       "target": "api::price-list.price-list",
       "inversedBy": "product"
+    },
+    "inventories": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::inventory.inventory"
     }
   }
 }
