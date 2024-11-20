@@ -1,6 +1,6 @@
 module.exports = ({ env }) => ({
   connection: {
-    client: "postgres",
+    client: env('DATABASE_CLIENT'),
     connection: {
       host: env("DATABASE_HOST"),
       port: env.int("DATABASE_PORT"),
@@ -10,10 +10,7 @@ module.exports = ({ env }) => ({
       ssl: {
         ca: env("DATABASE_CA"),
       },
-      pool: {
-        min: 2, // Minimum number of connections
-        max: 10, // Increase this limit (e.g., 15-20)
-      },
+      pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
     },
     debug: false,
   },
