@@ -10,6 +10,10 @@ module.exports = ({ env }) => ({
       ssl: {
         ca: env("DATABASE_CA"),
       },
+      pool: {
+        min: 2, // Minimum number of connections
+        max: 10, // Increase this limit (e.g., 15-20)
+      },
     },
     debug: false,
   },
