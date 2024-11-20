@@ -8,7 +8,7 @@ module.exports = ({ env }) => ({
       user: env("DATABASE_USERNAME"),
       password: env("DATABASE_PASSWORD"),
       ssl: {
-        ca: env("DATABASE_CA"),
+        rejectUnauthorized:env.bool('DATABASE_SSL_SELF', false),
       },
       pool: { min: env.int('DATABASE_POOL_MIN', 2), max: env.int('DATABASE_POOL_MAX', 10) },
     },
