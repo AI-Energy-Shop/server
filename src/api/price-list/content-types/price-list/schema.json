@@ -8,15 +8,20 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
-    "level": {
-      "type": "string"
+    "prices": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.price"
     },
-    "price": {
-      "type": "string"
+    "product": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::product.product",
+      "mappedBy": "price_list"
     }
   }
 }

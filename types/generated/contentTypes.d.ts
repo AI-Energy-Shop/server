@@ -576,11 +576,11 @@ export interface ApiPriceListPriceList extends Struct.CollectionTypeSchema {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
-    level: Schema.Attribute.String;
-    price: Schema.Attribute.String;
+    prices: Schema.Attribute.Component<'elements.price', true>;
+    product: Schema.Attribute.Relation<'oneToOne', 'api::product.product'>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -601,7 +601,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   info: {
     singularName: 'product';
     pluralName: 'products';
-    displayName: 'product';
+    displayName: 'Product';
     description: '';
   };
   options: {
@@ -613,8 +613,8 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     category: Schema.Attribute.String;
     vendor: Schema.Attribute.String;
     item_code: Schema.Attribute.String;
-    price_lists: Schema.Attribute.Relation<
-      'oneToMany',
+    price_list: Schema.Attribute.Relation<
+      'oneToOne',
       'api::price-list.price-list'
     >;
     createdAt: Schema.Attribute.DateTime;

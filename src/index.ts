@@ -12,7 +12,10 @@ export default {
     // Add your logic here
     const extensionService = strapi.plugin("graphql").service("extension");
 
-    // extensionService.shadowCRUD("admin::user").disable();
+    // disable shadow crud price list
+    // extensionService.shadowCRUD("api::price-list.price-list").disable();
+
+
     const extension = ({}) => ({
       types: {},
       plugins: [],
@@ -51,12 +54,11 @@ export default {
 
       type Mutation {
         registerUser(data: RegisterUserInput!): Response
-        loginUser(identifier: String!, password: String!, provider: String! = "local"): Response
         userApproval(data: UserApprovalRequestInputArgs!): Response
       }
       
       type Query {
-        getPage(slug: String!): Response
+        getPage(slug: String!): Page
       }
     `,
       resolvers: {
@@ -294,6 +296,19 @@ export default {
               return res;
             } catch (error) {}
           },
+          priceList: async () => {
+            try {
+              const priceList = await strapi.documents("api::price-list.price-list").findMany();
+
+              return priceList
+            } catch (error) {
+              console.log("Error fetching price list:", error.message);
+              return {
+                error: error.message,
+                success: false,
+              }
+            }  
+          }
         },
       },
       resolversConfig: {

@@ -4,7 +4,7 @@
   "info": {
     "singularName": "product",
     "pluralName": "products",
-    "displayName": "product",
+    "displayName": "Product",
     "description": ""
   },
   "options": {
@@ -27,10 +27,11 @@
     "item_code": {
       "type": "string"
     },
-    "price_lists": {
+    "price_list": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::price-list.price-list"
+      "relation": "oneToOne",
+      "target": "api::price-list.price-list",
+      "inversedBy": "product"
     }
   }
 }
