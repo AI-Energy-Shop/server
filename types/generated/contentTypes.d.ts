@@ -509,7 +509,9 @@ export interface ApiAccountDetailAccountDetail
   attributes: {
     level: Schema.Attribute.Enumeration<['SMALL', 'MID-SIZED', 'VIP']>;
     user_type: Schema.Attribute.Enumeration<['INSTALLER', 'RETAILER']>;
-    odoo_id: Schema.Attribute.String & Schema.Attribute.Unique;
+    odoo_user_id: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     first_name: Schema.Attribute.String;
     middle_name: Schema.Attribute.String;
     last_name: Schema.Attribute.String;
@@ -618,7 +620,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     description: Schema.Attribute.Text;
     category: Schema.Attribute.String;
     vendor: Schema.Attribute.String;
-    odoo_product_id: Schema.Attribute.String;
+    odoo_product_id: Schema.Attribute.String & Schema.Attribute.Unique;
     price_list: Schema.Attribute.Component<'elements.price', true>;
     inventory: Schema.Attribute.Component<'elements.inventory', true>;
     createdAt: Schema.Attribute.DateTime;

@@ -25,7 +25,8 @@
       "type": "string"
     },
     "odoo_product_id": {
-      "type": "string"
+      "type": "string",
+      "unique": true
     },
     "price_list": {
       "type": "component",

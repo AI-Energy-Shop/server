@@ -27,9 +27,10 @@
         "RETAILER"
       ]
     },
-    "odoo_id": {
+    "odoo_user_id": {
       "type": "string",
-      "unique": true
+      "unique": true,
+      "required": true
     },
     "first_name": {
       "type": "string"

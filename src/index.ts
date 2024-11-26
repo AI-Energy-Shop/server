@@ -100,6 +100,7 @@ export default {
                     first_name: args.data.firstName,
                     middle_name: args.data.middleName,
                     last_name: args.data.lastName,
+                    odoo_user_id: args.data.odoo_user_id,
                     business_name: args.data.businessName,
                   },
                 });
