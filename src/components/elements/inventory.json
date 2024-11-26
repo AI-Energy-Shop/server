@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_elements_inventories",
+  "info": {
+    "displayName": "Inventory",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "location": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "integer"
+    }
+  }
+}

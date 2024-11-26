@@ -2,7 +2,8 @@
   "collectionName": "components_elements_prices",
   "info": {
     "displayName": "Price",
-    "icon": "priceTag"
+    "icon": "priceTag",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -14,9 +15,6 @@
     },
     "max_quantity": {
       "type": "integer"
-    },
-    "location": {
-      "type": "string"
     },
     "user_level": {
       "type": "string"

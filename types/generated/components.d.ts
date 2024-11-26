@@ -140,13 +140,25 @@ export interface ElementsPrice extends Struct.ComponentSchema {
   info: {
     displayName: 'Price';
     icon: 'priceTag';
+    description: '';
   };
   attributes: {
     price: Schema.Attribute.Decimal;
     min_quantity: Schema.Attribute.Integer;
     max_quantity: Schema.Attribute.Integer;
-    location: Schema.Attribute.String;
     user_level: Schema.Attribute.String;
+  };
+}
+
+export interface ElementsInventory extends Struct.ComponentSchema {
+  collectionName: 'components_elements_inventories';
+  info: {
+    displayName: 'Inventory';
+    icon: 'bulletList';
+  };
+  attributes: {
+    location: Schema.Attribute.String;
+    quantity: Schema.Attribute.Integer;
   };
 }
 
@@ -176,6 +188,7 @@ declare module '@strapi/strapi' {
       'form.newsletter': FormNewsletter;
       'form.inquiry': FormInquiry;
       'elements.price': ElementsPrice;
+      'elements.inventory': ElementsInventory;
       'elements.input': ElementsInput;
     }
   }
