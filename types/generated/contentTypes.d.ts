@@ -565,35 +565,6 @@ export interface ApiCartCart extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiInventoryInventory extends Struct.CollectionTypeSchema {
-  collectionName: 'inventories';
-  info: {
-    singularName: 'inventory';
-    pluralName: 'inventories';
-    displayName: 'Inventory';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    location: Schema.Attribute.String;
-    location_code: Schema.Attribute.String;
-    quantity: Schema.Attribute.BigInteger;
-    createdAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    publishedAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::inventory.inventory'
-    >;
-  };
-}
-
 export interface ApiPagePage extends Struct.CollectionTypeSchema {
   collectionName: 'pages';
   info: {
@@ -631,35 +602,6 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
   };
 }
 
-export interface ApiPriceListPriceList extends Struct.CollectionTypeSchema {
-  collectionName: 'price_lists';
-  info: {
-    singularName: 'price-list';
-    pluralName: 'price-lists';
-    displayName: 'Price List';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    prices: Schema.Attribute.Component<'elements.price', true>;
-    product: Schema.Attribute.Relation<'oneToOne', 'api::product.product'>;
-    createdAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    publishedAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    locale: Schema.Attribute.String;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::price-list.price-list'
-    >;
-  };
-}
-
 export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   collectionName: 'products';
   info: {
@@ -676,15 +618,9 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     description: Schema.Attribute.Text;
     category: Schema.Attribute.String;
     vendor: Schema.Attribute.String;
-    item_code: Schema.Attribute.String;
-    price_list: Schema.Attribute.Relation<
-      'oneToOne',
-      'api::price-list.price-list'
-    >;
-    inventories: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::inventory.inventory'
-    >;
+    odoo_product_id: Schema.Attribute.String;
+    price_list: Schema.Attribute.Component<'elements.price', true>;
+    inventory: Schema.Attribute.Component<'elements.inventory', true>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -1143,9 +1079,7 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::account-detail.account-detail': ApiAccountDetailAccountDetail;
       'api::cart.cart': ApiCartCart;
-      'api::inventory.inventory': ApiInventoryInventory;
       'api::page.page': ApiPagePage;
-      'api::price-list.price-list': ApiPriceListPriceList;
       'api::product.product': ApiProductProduct;
       'api::user-approval-request.user-approval-request': ApiUserApprovalRequestUserApprovalRequest;
       'api::user-notification.user-notification': ApiUserNotificationUserNotification;

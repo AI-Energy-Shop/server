@@ -296,19 +296,6 @@ export default {
               return res;
             } catch (error) {}
           },
-          priceList: async () => {
-            try {
-              const priceList = await strapi.documents("api::price-list.price-list").findMany();
-
-              return priceList
-            } catch (error) {
-              console.log("Error fetching price list:", error.message);
-              return {
-                error: error.message,
-                success: false,
-              }
-            }  
-          }
         },
       },
       resolversConfig: {

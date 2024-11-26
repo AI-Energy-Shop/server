@@ -24,19 +24,18 @@
     "vendor": {
       "type": "string"
     },
-    "item_code": {
+    "odoo_product_id": {
       "type": "string"
     },
     "price_list": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::price-list.price-list",
-      "inversedBy": "product"
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.price"
     },
-    "inventories": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::inventory.inventory"
+    "inventory": {
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.inventory"
     }
   }
 }
