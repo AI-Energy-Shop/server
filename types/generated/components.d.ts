@@ -144,9 +144,12 @@ export interface ElementsPrice extends Struct.ComponentSchema {
   };
   attributes: {
     price: Schema.Attribute.Decimal;
-    min_quantity: Schema.Attribute.Integer;
-    max_quantity: Schema.Attribute.Integer;
-    user_level: Schema.Attribute.String;
+    sale_price: Schema.Attribute.Decimal;
+    min_quantity: Schema.Attribute.BigInteger;
+    max_quantity: Schema.Attribute.BigInteger;
+    user_level: Schema.Attribute.Enumeration<
+      ['SMALL', 'MID-SIZED', 'VIP', 'WHOLESALE']
+    >;
   };
 }
 

@@ -10,14 +10,23 @@
     "price": {
       "type": "decimal"
     },
+    "sale_price": {
+      "type": "decimal"
+    },
     "min_quantity": {
-      "type": "integer"
+      "type": "biginteger"
     },
     "max_quantity": {
-      "type": "integer"
+      "type": "biginteger"
     },
     "user_level": {
-      "type": "string"
+      "type": "enumeration",
+      "enum": [
+        "SMALL",
+        "MID-SIZED",
+        "VIP",
+        "WHOLESALE"
+      ]
     }
   }
 }

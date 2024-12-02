@@ -1,19 +1,18 @@
-export default () => ({
+export default ({env}) => ({
   upload: {
     config: {
       provider: "aws-s3",
       providerOptions: {
-        baseUrl: process.env.DO_CDN_URL,
-        rootPath: process.env.DO_ROOT_PATH,
+        rootPath: env("DO_SPACES_ROOT_PATH"),
         s3Options: {
           credentials: {
-            accessKeyId: process.env.DO_SPACE_ACCESS_KEY,
-            secretAccessKey: process.env.DO_SPACE_SECRET_KEY,
+            accessKeyId: env("DO_SPACES_ACCESS_KEY"),
+            secretAccessKey: env("DO_SPACES_SECRET_KEY"),
           },
-          endpoint: process.env.DO_SPACE_ENDPOINT, // aws-s3 v3 needs a prefixed https:// endpoint
-          region: process.env.DO_SPACE_REGION,
+          endpoint: env("DO_SPACES_ENDPOINT"),
+          region: env("DO_SPACES_REGION"),
           params: {
-            Bucket: process.env.DO_SPACE_BUCKET,
+            Bucket: env("DO_SPACES_NAME"),
           },
         },
       },
