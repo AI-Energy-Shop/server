@@ -135,6 +135,18 @@ export interface FormInquiry extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsSpecification extends Struct.ComponentSchema {
+  collectionName: 'components_elements_specifications';
+  info: {
+    displayName: 'Specification';
+    icon: 'bulletList';
+  };
+  attributes: {
+    key: Schema.Attribute.String;
+    value: Schema.Attribute.String;
+  };
+}
+
 export interface ElementsPrice extends Struct.ComponentSchema {
   collectionName: 'components_elements_prices';
   info: {
@@ -190,6 +202,7 @@ declare module '@strapi/strapi' {
       'layout.slide': LayoutSlide;
       'form.newsletter': FormNewsletter;
       'form.inquiry': FormInquiry;
+      'elements.specification': ElementsSpecification;
       'elements.price': ElementsPrice;
       'elements.inventory': ElementsInventory;
       'elements.input': ElementsInput;

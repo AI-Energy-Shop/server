@@ -617,21 +617,18 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   };
   attributes: {
     name: Schema.Attribute.String;
-    description: Schema.Attribute.Blocks;
+    description: Schema.Attribute.Text;
     category: Schema.Attribute.String;
     vendor: Schema.Attribute.String;
     odoo_product_id: Schema.Attribute.String & Schema.Attribute.Unique;
     price_list: Schema.Attribute.Component<'elements.price', true>;
     inventory: Schema.Attribute.Component<'elements.inventory', true>;
-    downloads: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios',
-      true
-    >;
+    files: Schema.Attribute.Media<'files', true>;
     images: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
     >;
-    specification: Schema.Attribute.Blocks;
+    specification: Schema.Attribute.Component<'elements.specification', true>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;

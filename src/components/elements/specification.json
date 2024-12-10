@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_elements_specifications",
+  "info": {
+    "displayName": "Specification",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "key": {
+      "type": "string"
+    },
+    "value": {
+      "type": "string"
+    }
+  }
+}

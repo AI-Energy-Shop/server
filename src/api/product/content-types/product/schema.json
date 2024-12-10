@@ -16,7 +16,7 @@
       "type": "string"
     },
     "description": {
-      "type": "blocks"
+      "type": "text"
     },
     "category": {
       "type": "string"
@@ -38,15 +38,12 @@
       "repeatable": true,
       "component": "elements.inventory"
     },
-    "downloads": {
+    "files": {
       "type": "media",
       "multiple": true,
       "required": false,
       "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
+        "files"
       ]
     },
     "images": {
@@ -61,7 +58,9 @@
       ]
     },
     "specification": {
-      "type": "blocks"
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.specification"
     }
   }
 }

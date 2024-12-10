@@ -21,6 +21,7 @@ export default {
       plugins: [],
       typeDefs: `
 
+      scalar Upload
       union DataUnion = UsersPermissionsUser | Page | UserNotification
 
       type Response {
@@ -52,6 +53,11 @@ export default {
         user: UserAccountDetails
       }
 
+      input FilesFiltersArgs {
+        name: String
+        mimeTypes: [String]
+      }
+
       type Mutation {
         registerUser(data: RegisterUserInput!): Response
         userApproval(data: UserApprovalRequestInputArgs!): Response
@@ -59,6 +65,7 @@ export default {
       
       type Query {
         getPage(slug: String!): Page
+        files(filters: FilesFiltersArgs): [UploadFile]!
       }
     `,
       resolvers: {
@@ -297,6 +304,32 @@ export default {
               return res;
             } catch (error) {}
           },
+          files: async (_: any, args: any) => {
+            const { filters } = args
+            if (!filters || !filters.mimeTypes || filters.mimeTypes.length === 0) {
+              return []
+            }
+
+            try {
+              const filterData = {
+                $or: filters.mimeTypes.map((type: string) => {
+                  return {
+                    mime: type
+                  }
+                })
+              }
+              
+              const files = await strapi.documents("plugin::upload.file").findMany({
+                filters: filterData,
+              })
+  
+              return files
+              
+            } catch (error) {
+              console.error(error)
+              return []
+            }
+          }
         },
       },
       resolversConfig: {
@@ -307,6 +340,9 @@ export default {
           auth: false,
         },
         "Query.getPage": {
+          auth: false,
+        },
+        "Query.files": {
           auth: false,
         },
       },

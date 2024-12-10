@@ -11,3 +11,4 @@ export type UserApprovalRequestInput = {
     user: UserAccountDetails;
   };
 };
+
