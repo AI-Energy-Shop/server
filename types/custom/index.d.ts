@@ -12,3 +12,25 @@ export type UserApprovalRequestInput = {
   };
 };
 
+type  = "SMALL" | "MID-SIZED" | "VIP" | "WHOLESALE"
+
+export type ProductInputArgs = {
+  documentId: string;
+  data: {
+    name: string;
+    description: string;
+    odoo_product_id: string;
+    product_catergory: string;
+    vendor: string;
+    collection: string[];
+    tags: string[];
+    specification: any[]
+    price_list: {price: number; sale_price: number; min_quantity: number; max_quantity: number; user_level: UserLevel}[]
+    inventory: {location: string; quantity: number}[]
+    files: string[];
+    images: string[];
+  }
+}
+
+export type PaginationInputArgs = { limit: number; page: number; pageSize: number; start: number;}
+export type SortInputArgs = string[]

@@ -1,5 +1,5 @@
 import type { Core } from "@strapi/strapi";
-import { UserApprovalRequestInput } from "../types/custom";
+import { PaginationInputArgs, ProductInputArgs, SortInputArgs, UserApprovalRequestInput } from "../types/custom";
 
 export default {
   /**
@@ -13,7 +13,7 @@ export default {
     const extensionService = strapi.plugin("graphql").service("extension");
 
     // disable shadow crud price list
-    // extensionService.shadowCRUD("api::price-list.price-list").disable();
+    // extensionService.shadowCRUD("api::product.product")
 
 
     const extension = ({}) => ({
@@ -61,11 +61,14 @@ export default {
       type Mutation {
         registerUser(data: RegisterUserInput!): Response
         userApproval(data: UserApprovalRequestInputArgs!): Response
+        customProductUpdate(documentId: ID!, data: ProductInput!): Product
       }
       
       type Query {
         getPage(slug: String!): Page
         files(filters: FilesFiltersArgs): [UploadFile]!
+        getProduct(documentId: ID!, status: PublicationStatus = PUBLISHED): Product
+        getProducts(filters: ProductFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Product]!
       }
     `,
       resolvers: {
@@ -279,6 +282,73 @@ export default {
               };
             }
           },
+          customProductUpdate: async (_: any, args: ProductInputArgs) => {
+            try {
+              if (!args || !args.documentId || !args.data) {
+                throw new Error("Invalid arguments provided");
+              }
+
+              const product = await strapi
+                .documents("api::product.product")
+                .findOne({ documentId: args.documentId });
+
+              if (!product) {
+                throw new Error("Product not found");
+              }
+
+              const files = await strapi
+                .documents("plugin::upload.file")
+                .findMany();
+
+              if (!files || files.length === 0) {
+                throw new Error("No files found");
+              }
+
+              const filteredFiles = files
+                .filter((file: any) => args.data.files.includes(file.documentId))
+                .map((file: any) => file);
+
+              const filteredMedia = files
+                .filter((file: any) => args.data.images.includes(file.documentId))
+                .map((file: any) => file);
+
+              const updateProductRes = await strapi
+                .documents("api::product.product")
+                .update({
+                  documentId: product.documentId,
+                  data: {
+                    name: args.data.name,
+                    description: args.data.description,
+                    odoo_product_id: args.data.odoo_product_id,
+                    category: args.data.product_catergory,
+                    vendor: args.data.vendor,
+                    // collection: args.data.collection,
+                    // tags: args.data.tags,
+                    specification: args.data.specification,
+                    price_list: args.data.price_list,
+                    inventory: args.data.inventory,
+                    files: filteredFiles,
+                    images: filteredMedia,
+                  },
+                  populate: {
+                    files: true,
+                    images: true,
+                  },
+                });
+
+              if (!updateProductRes) {
+                throw new Error("Failed to update product");
+              }
+
+              return updateProductRes;
+            } catch (error) {
+              console.error("Error updating product:", error.message);
+              return {
+                success: false,
+                error: error.message || "Unknown error occurred",
+              };
+            }
+          }
         },
         Query: {
           getPage: async (_: any, { slug }: { slug: string }) => {
@@ -329,22 +399,73 @@ export default {
               console.error(error)
               return []
             }
+          },
+          getProduct: async (_: any, args: { documentId: string}) => {
+            try {
+              const product = await strapi.documents("api::product.product").findOne({ 
+                documentId: args.documentId,
+              });
+
+              if (!product) {
+                throw new Error("Product not found");
+              }
+
+              console.log(product)
+
+              return product
+  
+            } catch (error) {
+              console.log(error)
+              return error
+            }
+          },
+          getProducts: async (_: any, args: { pagination: PaginationInputArgs, sort: SortInputArgs}) => {
+            try {
+
+              const products = await strapi.documents("api::product.product").findMany({
+                start: args.pagination.start,
+                limit: args.pagination.limit,
+              })
+
+              if (!products) {
+                throw new Error("No products found");
+              }
+
+              return products;
+
+            } catch (error) {
+              console.error("Error getting products:", error.message)
+              return error
+            }
           }
         },
       },
       resolversConfig: {
-        "Mutation.registerUser": {
-          auth: false,
+        Mutation: {
+          customProductUpdate: {
+            auth: true,
+          },
+          registerUser: {
+            auth: false,
+          },
+          userApproval: {
+            auth: false,
+          },
         },
-        "Mutation.userApproval": {
-          auth: false,
-        },
-        "Query.getPage": {
-          auth: false,
-        },
-        "Query.files": {
-          auth: false,
-        },
+        Query: {
+          getProduct: {
+            auth: true
+          },
+          getProducts: {
+            auth: true
+          },
+          getPage: {
+            auth: false
+          },
+          files: {
+            auth: false
+          }
+        }
       },
     });
 
