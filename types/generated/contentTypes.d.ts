@@ -629,6 +629,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       true
     >;
     specification: Schema.Attribute.Component<'elements.specification', true>;
+    key_features: Schema.Attribute.Component<'elements.key-features', true>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;

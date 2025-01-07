@@ -322,11 +322,12 @@ export default {
                     odoo_product_id: args.data.odoo_product_id,
                     category: args.data.product_catergory,
                     vendor: args.data.vendor,
-                    // collection: args.data.collection,
-                    // tags: args.data.tags,
+                    collection: args.data.collection,
+                    tags: args.data.tags,
                     specification: args.data.specification,
                     price_list: args.data.price_list,
                     inventory: args.data.inventory,
+                    key_features: args.data.key_features,
                     files: filteredFiles,
                     images: filteredMedia,
                   },
@@ -409,8 +410,6 @@ export default {
               if (!product) {
                 throw new Error("Product not found");
               }
-
-              console.log(product)
 
               return product
   

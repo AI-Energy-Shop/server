@@ -27,6 +27,7 @@ export type ProductInputArgs = {
     specification: any[]
     price_list: {price: number; sale_price: number; min_quantity: number; max_quantity: number; user_level: UserLevel}[]
     inventory: {location: string; quantity: number}[]
+    key_features: {feature: string}[]
     files: string[];
     images: string[];
   }

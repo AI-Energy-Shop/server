@@ -165,6 +165,16 @@ export interface ElementsPrice extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsKeyFeatures extends Struct.ComponentSchema {
+  collectionName: 'components_elements_key_features';
+  info: {
+    displayName: 'key_features';
+  };
+  attributes: {
+    feature: Schema.Attribute.String;
+  };
+}
+
 export interface ElementsInventory extends Struct.ComponentSchema {
   collectionName: 'components_elements_inventories';
   info: {
@@ -204,6 +214,7 @@ declare module '@strapi/strapi' {
       'form.inquiry': FormInquiry;
       'elements.specification': ElementsSpecification;
       'elements.price': ElementsPrice;
+      'elements.key-features': ElementsKeyFeatures;
       'elements.inventory': ElementsInventory;
       'elements.input': ElementsInput;
     }
