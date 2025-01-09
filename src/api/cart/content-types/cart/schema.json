@@ -4,10 +4,11 @@
   "info": {
     "singularName": "cart",
     "pluralName": "carts",
-    "displayName": "Cart"
+    "displayName": "Cart",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -17,35 +18,17 @@
     "quantity": {
       "type": "biginteger"
     },
-    "price": {
-      "type": "string"
-    },
-    "product_id": {
+    "odoo_product_id": {
       "type": "string"
     },
     "reference_id": {
       "type": "string"
     },
-    "line_price": {
+    "price": {
+      "type": "decimal"
+    },
+    "image": {
       "type": "string"
-    },
-    "note": {
-      "type": "string"
-    },
-    "subtotal_price": {
-      "type": "decimal"
-    },
-    "total_price": {
-      "type": "decimal"
-    },
-    "total_tax": {
-      "type": "decimal"
-    },
-    "discount_code": {
-      "type": "string"
-    },
-    "discount_amount": {
-      "type": "decimal"
     }
   }
 }

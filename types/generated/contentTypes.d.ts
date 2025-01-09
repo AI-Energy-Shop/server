@@ -538,23 +538,18 @@ export interface ApiCartCart extends Struct.CollectionTypeSchema {
     singularName: 'cart';
     pluralName: 'carts';
     displayName: 'Cart';
+    description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     title: Schema.Attribute.String;
     quantity: Schema.Attribute.BigInteger;
-    price: Schema.Attribute.String;
-    product_id: Schema.Attribute.String;
+    odoo_product_id: Schema.Attribute.String;
     reference_id: Schema.Attribute.String;
-    line_price: Schema.Attribute.String;
-    note: Schema.Attribute.String;
-    subtotal_price: Schema.Attribute.Decimal;
-    total_price: Schema.Attribute.Decimal;
-    total_tax: Schema.Attribute.Decimal;
-    discount_code: Schema.Attribute.String;
-    discount_amount: Schema.Attribute.Decimal;
+    price: Schema.Attribute.Decimal;
+    image: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
