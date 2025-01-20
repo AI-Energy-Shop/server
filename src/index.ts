@@ -31,6 +31,7 @@ export default {
         statusText: String
       }
 
+
       input RegisterUserInput {
         firstName: String!
         middleName: String
@@ -58,6 +59,11 @@ export default {
         mimeTypes: [String]
       }
 
+      input UserFiltersInput {
+        email: String
+        username: String
+      }
+
       type Mutation {
         registerUser(data: RegisterUserInput!): Response
         userApproval(data: UserApprovalRequestInputArgs!): Response
@@ -69,6 +75,7 @@ export default {
         files(filters: FilesFiltersArgs): [UploadFile]!
         getProduct(documentId: ID!, status: PublicationStatus = PUBLISHED): Product
         getProducts(filters: ProductFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Product]!
+        user(filters: UserFiltersInput): UsersPermissionsUser
       }
     `,
       resolvers: {
@@ -172,6 +179,7 @@ export default {
               };
             }
           },
+
           userApproval: async (_: any, { data }: UserApprovalRequestInput) => {
             try {
               const userData = await strapi
@@ -436,6 +444,27 @@ export default {
               console.error("Error getting products:", error.message)
               return error
             }
+          },
+          user: async (_: any, args: { filters: { email: string; username: string}}) => {
+            try {
+              const user = await strapi
+                .documents("plugin::users-permissions.user")
+                .findFirst({
+                  filters: {
+                    email: args.filters.email,
+                    username: args.filters.username,
+                  },
+                  populate: {
+                    account_detail: true,
+                    user_notifications: true,
+                  }
+                });
+  
+              return user;
+            } catch (error) {
+              console.error("Error getting user:", error.message)
+              return error
+            }
           }
         },
       },
@@ -463,6 +492,9 @@ export default {
           },
           files: {
             auth: false
+          },
+          user: {
+            auth: true
           }
         }
       },

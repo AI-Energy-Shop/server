@@ -508,7 +508,9 @@ export interface ApiAccountDetailAccountDetail
   };
   attributes: {
     level: Schema.Attribute.Enumeration<['SMALL', 'MID-SIZED', 'VIP']>;
-    user_type: Schema.Attribute.Enumeration<['INSTALLER', 'RETAILER']>;
+    user_type: Schema.Attribute.Enumeration<
+      ['INSTALLER', 'RETAILER', 'ADMINISTRATOR', 'SALES']
+    >;
     odoo_user_id: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
@@ -517,6 +519,7 @@ export interface ApiAccountDetailAccountDetail
     last_name: Schema.Attribute.String;
     business_name: Schema.Attribute.String;
     position: Schema.Attribute.String;
+    shipping_addresses: Schema.Attribute.Component<'elements.address', true>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -559,6 +562,35 @@ export interface ApiCartCart extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::cart.cart'>;
+  };
+}
+
+export interface ApiInventoryInventory extends Struct.CollectionTypeSchema {
+  collectionName: 'inventories';
+  info: {
+    singularName: 'inventory';
+    pluralName: 'inventories';
+    displayName: 'Inventory';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    location: Schema.Attribute.String;
+    quantity: Schema.Attribute.Integer;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::inventory.inventory'
+    >;
   };
 }
 
@@ -625,6 +657,10 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     >;
     specification: Schema.Attribute.Component<'elements.specification', true>;
     key_features: Schema.Attribute.Component<'elements.key-features', true>;
+    inventories: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::inventory.inventory'
+    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -1083,6 +1119,7 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::account-detail.account-detail': ApiAccountDetailAccountDetail;
       'api::cart.cart': ApiCartCart;
+      'api::inventory.inventory': ApiInventoryInventory;
       'api::page.page': ApiPagePage;
       'api::product.product': ApiProductProduct;
       'api::user-approval-request.user-approval-request': ApiUserApprovalRequestUserApprovalRequest;

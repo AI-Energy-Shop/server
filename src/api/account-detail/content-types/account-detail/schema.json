@@ -24,7 +24,9 @@
       "type": "enumeration",
       "enum": [
         "INSTALLER",
-        "RETAILER"
+        "RETAILER",
+        "ADMINISTRATOR",
+        "SALES"
       ]
     },
     "odoo_user_id": {
@@ -46,6 +48,12 @@
     },
     "position": {
       "type": "string"
+    },
+    "shipping_addresses": {
+      "displayName": "Address",
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.address"
     }
   }
 }

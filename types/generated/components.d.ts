@@ -200,6 +200,22 @@ export interface ElementsInput extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsAddress extends Struct.ComponentSchema {
+  collectionName: 'components_elements_addresses';
+  info: {
+    displayName: 'Address';
+    icon: 'bulletList';
+    description: '';
+  };
+  attributes: {
+    street: Schema.Attribute.String;
+    suburb: Schema.Attribute.String;
+    state_territory: Schema.Attribute.String;
+    postcode: Schema.Attribute.String;
+    country: Schema.Attribute.String;
+  };
+}
+
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
@@ -217,6 +233,7 @@ declare module '@strapi/strapi' {
       'elements.key-features': ElementsKeyFeatures;
       'elements.inventory': ElementsInventory;
       'elements.input': ElementsInput;
+      'elements.address': ElementsAddress;
     }
   }
 }
