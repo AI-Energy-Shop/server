@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_elements_shippings",
+  "info": {
+    "displayName": "Shipping",
+    "icon": "house",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "type": {
+      "type": "string"
+    },
+    "delivery_address": {
+      "type": "string"
+    },
+    "delivery_option": {
+      "displayName": "Delivery Option",
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.delivery-option"
+    },
+    "shipping_details": {
+      "displayName": "Shipping Details",
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.shipping-details"
+    }
+  }
+}

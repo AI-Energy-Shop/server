@@ -147,6 +147,39 @@ export interface ElementsSpecification extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsShipping extends Struct.ComponentSchema {
+  collectionName: 'components_elements_shippings';
+  info: {
+    displayName: 'Shipping';
+    icon: 'house';
+    description: '';
+  };
+  attributes: {
+    type: Schema.Attribute.String;
+    delivery_address: Schema.Attribute.String;
+    delivery_option: Schema.Attribute.Component<
+      'elements.delivery-option',
+      false
+    >;
+    shipping_details: Schema.Attribute.Component<
+      'elements.shipping-details',
+      false
+    >;
+  };
+}
+
+export interface ElementsShippingDetails extends Struct.ComponentSchema {
+  collectionName: 'components_elements_shipping_details';
+  info: {
+    displayName: 'Shipping Details';
+    description: '';
+  };
+  attributes: {
+    company_name: Schema.Attribute.String;
+    address: Schema.Attribute.Component<'elements.address', false>;
+  };
+}
+
 export interface ElementsPrice extends Struct.ComponentSchema {
   collectionName: 'components_elements_prices';
   info: {
@@ -162,6 +195,16 @@ export interface ElementsPrice extends Struct.ComponentSchema {
     user_level: Schema.Attribute.Enumeration<
       ['SMALL', 'MID-SIZED', 'VIP', 'WHOLESALE']
     >;
+  };
+}
+
+export interface ElementsPayment extends Struct.ComponentSchema {
+  collectionName: 'components_elements_payments';
+  info: {
+    displayName: 'Payment';
+  };
+  attributes: {
+    method: Schema.Attribute.String;
   };
 }
 
@@ -200,6 +243,36 @@ export interface ElementsInput extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsDeliveryOption extends Struct.ComponentSchema {
+  collectionName: 'components_elements_delivery_options';
+  info: {
+    displayName: 'Delivery Option';
+    icon: 'train';
+    description: '';
+  };
+  attributes: {
+    price: Schema.Attribute.Decimal;
+    title: Schema.Attribute.String;
+    eta: Schema.Attribute.String;
+    notes: Schema.Attribute.Text;
+  };
+}
+
+export interface ElementsCartItem extends Struct.ComponentSchema {
+  collectionName: 'components_elements_cart_items';
+  info: {
+    displayName: 'CartItem';
+    icon: 'bulletList';
+    description: '';
+  };
+  attributes: {
+    title: Schema.Attribute.String;
+    quantity: Schema.Attribute.Integer;
+    price: Schema.Attribute.Decimal;
+    odoo_product_id: Schema.Attribute.String;
+  };
+}
+
 export interface ElementsAddress extends Struct.ComponentSchema {
   collectionName: 'components_elements_addresses';
   info: {
@@ -229,10 +302,15 @@ declare module '@strapi/strapi' {
       'form.newsletter': FormNewsletter;
       'form.inquiry': FormInquiry;
       'elements.specification': ElementsSpecification;
+      'elements.shipping': ElementsShipping;
+      'elements.shipping-details': ElementsShippingDetails;
       'elements.price': ElementsPrice;
+      'elements.payment': ElementsPayment;
       'elements.key-features': ElementsKeyFeatures;
       'elements.inventory': ElementsInventory;
       'elements.input': ElementsInput;
+      'elements.delivery-option': ElementsDeliveryOption;
+      'elements.cart-item': ElementsCartItem;
       'elements.address': ElementsAddress;
     }
   }

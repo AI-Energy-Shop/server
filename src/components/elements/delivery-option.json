@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_elements_delivery_options",
+  "info": {
+    "displayName": "Delivery Option",
+    "icon": "train",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "price": {
+      "type": "decimal"
+    },
+    "title": {
+      "type": "string"
+    },
+    "eta": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "text"
+    }
+  }
+}

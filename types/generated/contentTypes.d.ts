@@ -594,6 +594,33 @@ export interface ApiInventoryInventory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
+  collectionName: 'orders';
+  info: {
+    singularName: 'order';
+    pluralName: 'orders';
+    displayName: 'Order';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    cart_items: Schema.Attribute.Component<'elements.cart-item', true>;
+    shipping: Schema.Attribute.Component<'elements.shipping', false>;
+    payment: Schema.Attribute.Component<'elements.payment', false>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::order.order'>;
+  };
+}
+
 export interface ApiPagePage extends Struct.CollectionTypeSchema {
   collectionName: 'pages';
   info: {
@@ -1120,6 +1147,7 @@ declare module '@strapi/strapi' {
       'api::account-detail.account-detail': ApiAccountDetailAccountDetail;
       'api::cart.cart': ApiCartCart;
       'api::inventory.inventory': ApiInventoryInventory;
+      'api::order.order': ApiOrderOrder;
       'api::page.page': ApiPagePage;
       'api::product.product': ApiProductProduct;
       'api::user-approval-request.user-approval-request': ApiUserApprovalRequestUserApprovalRequest;
