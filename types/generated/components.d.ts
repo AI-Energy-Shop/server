@@ -1,5 +1,37 @@
 import type { Struct, Schema } from '@strapi/strapi';
 
+export interface LayoutWarehouseLocation extends Struct.ComponentSchema {
+  collectionName: 'components_layout_warehouse_locations';
+  info: {
+    displayName: 'Warehouse Location';
+    icon: 'bulletList';
+    description: '';
+  };
+  attributes: {
+    address: Schema.Attribute.String;
+    warehouse_time: Schema.Attribute.String;
+    office_time: Schema.Attribute.String;
+    google_maps_link: Schema.Attribute.Text;
+    name: Schema.Attribute.String;
+  };
+}
+
+export interface LayoutSlide extends Struct.ComponentSchema {
+  collectionName: 'components_layout_slides';
+  info: {
+    displayName: 'Slide';
+    icon: 'bulletList';
+    description: '';
+  };
+  attributes: {
+    title: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    link: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    type: Schema.Attribute.Enumeration<['DESKTOP', 'TABLET', 'MOBILE']>;
+  };
+}
+
 export interface SectionsWarehouseLocations extends Struct.ComponentSchema {
   collectionName: 'components_sections_warehouse_locations';
   info: {
@@ -73,35 +105,33 @@ export interface SectionsAbout extends Struct.ComponentSchema {
   };
 }
 
-export interface LayoutWarehouseLocation extends Struct.ComponentSchema {
-  collectionName: 'components_layout_warehouse_locations';
+export interface FormNewsletter extends Struct.ComponentSchema {
+  collectionName: 'components_form_newsletters';
   info: {
-    displayName: 'Warehouse Location';
-    icon: 'bulletList';
+    displayName: 'Newsletter';
+    icon: 'envelop';
     description: '';
   };
   attributes: {
-    address: Schema.Attribute.String;
-    warehouse_time: Schema.Attribute.String;
-    office_time: Schema.Attribute.String;
-    google_maps_link: Schema.Attribute.Text;
-    name: Schema.Attribute.String;
+    heading: Schema.Attribute.String;
+    sub_heading: Schema.Attribute.String;
+    inputs: Schema.Attribute.Component<'elements.input', true>;
+    sub_text: Schema.Attribute.String;
+    button_title: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
   };
 }
 
-export interface LayoutSlide extends Struct.ComponentSchema {
-  collectionName: 'components_layout_slides';
+export interface FormInquiry extends Struct.ComponentSchema {
+  collectionName: 'components_form_inquiries';
   info: {
-    displayName: 'Slide';
-    icon: 'bulletList';
-    description: '';
+    displayName: 'Inquiry';
+    icon: 'apps';
   };
   attributes: {
-    title: Schema.Attribute.String;
-    description: Schema.Attribute.Text;
-    link: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    type: Schema.Attribute.Enumeration<['DESKTOP', 'TABLET', 'MOBILE']>;
+    heading: Schema.Attribute.String;
+    button_title: Schema.Attribute.String;
+    inputs: Schema.Attribute.Component<'elements.input', true>;
   };
 }
 
@@ -275,46 +305,18 @@ export interface ElementsAddress extends Struct.ComponentSchema {
   };
 }
 
-export interface FormNewsletter extends Struct.ComponentSchema {
-  collectionName: 'components_form_newsletters';
-  info: {
-    displayName: 'Newsletter';
-    icon: 'envelop';
-    description: '';
-  };
-  attributes: {
-    heading: Schema.Attribute.String;
-    sub_heading: Schema.Attribute.String;
-    inputs: Schema.Attribute.Component<'elements.input', true>;
-    sub_text: Schema.Attribute.String;
-    button_title: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images'>;
-  };
-}
-
-export interface FormInquiry extends Struct.ComponentSchema {
-  collectionName: 'components_form_inquiries';
-  info: {
-    displayName: 'Inquiry';
-    icon: 'apps';
-  };
-  attributes: {
-    heading: Schema.Attribute.String;
-    button_title: Schema.Attribute.String;
-    inputs: Schema.Attribute.Component<'elements.input', true>;
-  };
-}
-
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'layout.warehouse-location': LayoutWarehouseLocation;
+      'layout.slide': LayoutSlide;
       'sections.warehouse-locations': SectionsWarehouseLocations;
       'sections.image-slider': SectionsImageSlider;
       'sections.contact-us': SectionsContactUs;
       'sections.contact-details': SectionsContactDetails;
       'sections.about': SectionsAbout;
-      'layout.warehouse-location': LayoutWarehouseLocation;
-      'layout.slide': LayoutSlide;
+      'form.newsletter': FormNewsletter;
+      'form.inquiry': FormInquiry;
       'elements.warehouse-location': ElementsWarehouseLocation;
       'elements.specification': ElementsSpecification;
       'elements.shipping': ElementsShipping;
@@ -327,8 +329,6 @@ declare module '@strapi/strapi' {
       'elements.delivery-option': ElementsDeliveryOption;
       'elements.cart-item': ElementsCartItem;
       'elements.address': ElementsAddress;
-      'form.newsletter': FormNewsletter;
-      'form.inquiry': FormInquiry;
     }
   }
 }
