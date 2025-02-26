@@ -2,15 +2,18 @@
   "collectionName": "components_elements_specifications",
   "info": {
     "displayName": "Specification",
-    "icon": "bulletList"
+    "icon": "bulletList",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "key": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "value": {
-      "type": "string"
+      "type": "string",
+      "required": true
     }
   }
 }

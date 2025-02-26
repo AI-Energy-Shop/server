@@ -20,7 +20,7 @@ export type ProductInputArgs = {
     name: string;
     description: string;
     odoo_product_id: string;
-    product_catergory: string;
+    category: string;
     vendor: string;
     collection: string[];
     tags: string[];

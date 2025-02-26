@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -68,10 +68,8 @@
       "repeatable": true,
       "component": "elements.key-features"
     },
-    "inventories": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::inventory.inventory"
+    "model": {
+      "type": "string"
     }
   }
 }

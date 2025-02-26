@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_elements_delivery_options",
+  "info": {
+    "displayName": "Delivery Option"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "eta": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "text"
+    },
+    "price": {
+      "type": "decimal"
+    }
+  }
+}

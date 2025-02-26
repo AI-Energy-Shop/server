@@ -21,6 +21,18 @@
     },
     "country": {
       "type": "string"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "name": {
+      "displayName": "Name",
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.name"
     }
   }
 }

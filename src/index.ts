@@ -11,73 +11,115 @@ export default {
   register({ strapi }: { strapi: Core.Strapi }) {
     // Add your logic here
     const extensionService = strapi.plugin("graphql").service("extension");
+    // disable carts shadow crud
+    extensionService.shadowCRUD("api::cart.cart").disable();
 
-    // disable shadow crud price list
-    // extensionService.shadowCRUD("api::product.product")
-
-
-    const extension = ({}) => ({
+    const extension = ({ strapiExt }: { strapiExt: Core.Strapi }) => ({
       types: {},
       plugins: [],
       typeDefs: `
+        scalar Upload
+        union DataUnion = UsersPermissionsUser | Page | UserNotification
 
-      scalar Upload
-      union DataUnion = UsersPermissionsUser | Page | UserNotification
+        type DeleteResponse {
+          documentId: ID
+        }
 
-      type Response {
-        error: String
-        data: DataUnion
-        success: Boolean
-        statusText: String
-      }
+        type Response {
+          error: String
+          data: DataUnion
+          success: Boolean
+          statusText: String
+        }
 
+        input CartFiltersInput {
+          documentId: IDFilterInput
+          item: CartItemFiltersInput
+          and: [ProductFiltersInput]
+          or: [ProductFiltersInput]
+          not: ProductFiltersInput
+        }
 
-      input RegisterUserInput {
-        firstName: String!
-        middleName: String
-        lastName: String!
-        userType: String!
-        businessName: String!
-        email: String!
-        username: String!
-        password: String!
-      }
+        input CartItemFiltersInput {
+          id: IDFilterInput
+          title: StringFilterInput
+          quantity: IntFilterInput
+          price: FloatFilterInput
+          odoo_product_id: StringFilterInput
+          model: StringFilterInput
+          image: StringFilterInput
+        }
 
-      input UserAccountDetails {
-        odooId: String!
-        userPricingLevel: String
-      }
+        input CartItemInput {
+          title: String!
+          quantity: Int!
+          price: Float!
+          odoo_product_id: String!
+          model: String!
+          image: String!
+        }
 
-      input UserApprovalRequestInputArgs {
-        email: String!
-        accountStatus: String!
-        user: UserAccountDetails
-      }
+        type Cart {
+          documentId: ID!
+          item: ComponentElementsCartItem!
+          user: UsersPermissionsUser
+          createdAt: DateTime
+          updatedAt: DateTime
+          publishedAt: DateTime
+        }
 
-      input FilesFiltersArgs {
-        name: String
-        mimeTypes: [String]
-      }
+        input RegisterUserInput {
+          firstName: String!
+          middleName: String
+          lastName: String!
+          userType: String!
+          businessName: String!
+          email: String!
+          username: String!
+          password: String!
+        }
 
-      input UserFiltersInput {
-        email: String
-        username: String
-      }
+        input UserAccountDetails {
+          odooId: String!
+          userPricingLevel: String
+        }
 
-      type Mutation {
-        registerUser(data: RegisterUserInput!): Response
-        userApproval(data: UserApprovalRequestInputArgs!): Response
-        customProductUpdate(documentId: ID!, data: ProductInput!): Product
-      }
-      
-      type Query {
-        getPage(slug: String!): Page
-        files(filters: FilesFiltersArgs): [UploadFile]!
-        getProduct(documentId: ID!, status: PublicationStatus = PUBLISHED): Product
-        getProducts(filters: ProductFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Product]!
-        user(filters: UserFiltersInput): UsersPermissionsUser
-      }
-    `,
+        input UserApprovalRequestInputArgs {
+          email: String!
+          accountStatus: String!
+          user: UserAccountDetails
+        }
+
+        input FilesFiltersArgs {
+          name: String
+          mimeTypes: [String]
+        }
+
+        input UserFiltersInput {
+          email: String
+          username: String
+        }
+
+        type Mutation {
+          addToCart(data: CartItemInput!): Cart
+          updateCartItem(documentId: ID!, data: CartItemInput!): Cart
+          deleteCartItem(documentId: ID!): DeleteResponse
+          updateCart(documentId: ID!, data: CartItemInput!): Cart
+          registerUser(data: RegisterUserInput!): Response
+          userApproval(data: UserApprovalRequestInputArgs!): Response
+          customProductUpdate(documentId: ID!, data: ProductInput!): Product
+        }
+        
+        type Query {
+          cart(documentId: ID!): Cart
+          carts(filters: CartFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Cart]
+          getPage(slug: String!): Page
+          files(filters: FilesFiltersArgs): [UploadFile]!
+          getProduct(documentId: ID!, status: PublicationStatus = PUBLISHED): Product
+          getProducts(filters: ProductFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Product]!
+          user(filters: UserFiltersInput): UsersPermissionsUser
+        }
+      `,
       resolvers: {
         Mutation: {
           registerUser: async (_: any, args: any) => {
@@ -179,7 +221,6 @@ export default {
               };
             }
           },
-
           userApproval: async (_: any, { data }: UserApprovalRequestInput) => {
             try {
               const userData = await strapi
@@ -328,7 +369,7 @@ export default {
                     name: args.data.name,
                     description: args.data.description,
                     odoo_product_id: args.data.odoo_product_id,
-                    category: args.data.product_catergory,
+                    category: args.data.category,
                     vendor: args.data.vendor,
                     collection: args.data.collection,
                     tags: args.data.tags,
@@ -357,7 +398,78 @@ export default {
                 error: error.message || "Unknown error occurred",
               };
             }
-          }
+          },
+          addToCart: async (_: any, args: any, ctx: any) => {
+            try {
+              console.log(args)
+              const { user } = ctx?.state;
+              const cart = await strapi.documents("api::cart.cart").create({
+                data: {
+                  user: user.id,
+                  item: {
+                    ...args.data
+                  },
+                },
+                populate: {
+                  item: true,
+                  user: true
+                }
+              });
+
+              if (!cart) {
+                throw new Error("Failed to add to cart");
+              }
+
+              return cart;
+            } catch (error) {
+              console.error("Error adding to cart:", error.message);
+              return {
+                success: false,
+                error: error.message || "Unknown error occurred",
+              };
+            }
+          },
+          updateCartItem: async (_: any, args: any, ctx: any) => {
+            try {
+              const { documentId, data } = args;
+              const cart = await strapi.documents("api::cart.cart").update({
+                documentId: documentId,
+                data: {
+                  item: data
+                }
+              });
+
+              return cart;
+            } catch (error) {
+              console.error("Error updating cart item:", error.message);
+              return {
+                success: false,
+                error: error.message || "Unknown error occurred",
+              };
+            }
+          },
+          deleteCartItem: async (_: any, args: any, ctx: any) => {
+            try {
+              const { documentId } = args;
+              const cart = await strapi.documents("api::cart.cart").delete({
+                documentId: documentId,
+              });
+
+              if (!cart) {
+                throw new Error("Failed to delete cart item");
+              }
+
+              return {
+                documentId: documentId,
+              };
+            } catch (error) {
+              console.error("Error deleting cart item:", error.message);
+              return {
+                success: false,
+                error: error.message || "Unknown error occurred",
+              };  
+            }
+          },
         },
         Query: {
           getPage: async (_: any, { slug }: { slug: string }) => {
@@ -445,14 +557,49 @@ export default {
               return error
             }
           },
+          cart: async (_: any, args: { documentId: string }) => {
+            try {
+              const cart = await strapi.documents("api::cart.cart").findOne({
+                documentId: args.documentId,
+              });
+            } catch (error) {
+              console.error("Error getting cart:", error.message)
+              return error
+            }
+          },
+          carts: async (_: any, args: {filters: any}, ctx: any) => {
+            try {
+              const { user } = ctx?.state;
+              const carts = await strapi.documents("api::cart.cart").findMany({
+                filters: {
+                  user: {
+                    id: {
+                      $contains: user.id
+                    }
+                  }
+                },
+                populate: {
+                  item: true
+                }
+              });
+
+              return carts;
+            } catch (error) {
+              console.error("Error getting carts:", error.message)
+              return error
+            }
+          },
           user: async (_: any, args: { filters: { email: string; username: string}}) => {
             try {
+              
               const user = await strapi
                 .documents("plugin::users-permissions.user")
                 .findFirst({
                   filters: {
-                    email: args.filters.email,
-                    username: args.filters.username,
+                    $or: [
+                      { email: args.filters.email },
+                      { username: args.filters.username }
+                    ]
                   },
                   populate: {
                     account_detail: true,
@@ -479,6 +626,15 @@ export default {
           userApproval: {
             auth: false,
           },
+          addToCart: {
+            auth: true,
+          },
+          updateCartItem: {
+            auth: true,
+          },
+          deleteCartItem: {
+            auth: true,
+          },
         },
         Query: {
           getProduct: {
@@ -492,6 +648,12 @@ export default {
           },
           files: {
             auth: false
+          },
+          cart: {
+            auth: true
+          },
+          carts: {
+            auth: true
           },
           user: {
             auth: true

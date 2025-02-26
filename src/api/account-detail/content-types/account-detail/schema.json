@@ -46,7 +46,7 @@
     "business_name": {
       "type": "string"
     },
-    "position": {
+    "phone": {
       "type": "string"
     },
     "shipping_addresses": {
@@ -54,6 +54,12 @@
       "type": "component",
       "repeatable": true,
       "component": "elements.address"
+    },
+    "payment_options": {
+      "displayName": "Payment Option",
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.payment-option"
     }
   }
 }

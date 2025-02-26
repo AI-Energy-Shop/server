@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_elements_shippings",
+  "info": {
+    "displayName": "Shipping",
+    "icon": "bulletList",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "delivery_option": {
+      "displayName": "Delivery Option",
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.delivery-option"
+    },
+    "shipping_details": {
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.address"
+    },
+    "warehouse_location": {
+      "type": "integer"
+    }
+  }
+}

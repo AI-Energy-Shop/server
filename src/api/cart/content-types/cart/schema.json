@@ -8,27 +8,28 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": false
+    "draftAndPublish": false,
+    "populateCreatorFields": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "graphql": {
+      "enabled": true,
+      "apiName": "cart"
+    }, 
+    "populate": ["createdBy", "updatedBy"]
+  },
   "attributes": {
-    "title": {
-      "type": "string"
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "carts"
     },
-    "quantity": {
-      "type": "biginteger"
-    },
-    "odoo_product_id": {
-      "type": "string"
-    },
-    "reference_id": {
-      "type": "string"
-    },
-    "price": {
-      "type": "decimal"
-    },
-    "image": {
-      "type": "string"
+    "item": {
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.cart-item",
+      "required": true
     }
   }
 }

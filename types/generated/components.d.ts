@@ -1,5 +1,67 @@
 import type { Struct, Schema } from '@strapi/strapi';
 
+export interface LayoutWarehouseLocation extends Struct.ComponentSchema {
+  collectionName: 'components_layout_warehouse_locations';
+  info: {
+    displayName: 'Warehouse Location';
+    icon: 'bulletList';
+    description: '';
+  };
+  attributes: {
+    address: Schema.Attribute.String;
+    warehouse_time: Schema.Attribute.String;
+    office_time: Schema.Attribute.String;
+    google_maps_link: Schema.Attribute.Text;
+    name: Schema.Attribute.String;
+  };
+}
+
+export interface LayoutSlide extends Struct.ComponentSchema {
+  collectionName: 'components_layout_slides';
+  info: {
+    displayName: 'Slide';
+    icon: 'bulletList';
+    description: '';
+  };
+  attributes: {
+    title: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    link: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    type: Schema.Attribute.Enumeration<['DESKTOP', 'TABLET', 'MOBILE']>;
+  };
+}
+
+export interface FormNewsletter extends Struct.ComponentSchema {
+  collectionName: 'components_form_newsletters';
+  info: {
+    displayName: 'Newsletter';
+    icon: 'envelop';
+    description: '';
+  };
+  attributes: {
+    heading: Schema.Attribute.String;
+    sub_heading: Schema.Attribute.String;
+    inputs: Schema.Attribute.Component<'elements.input', true>;
+    sub_text: Schema.Attribute.String;
+    button_title: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
+  };
+}
+
+export interface FormInquiry extends Struct.ComponentSchema {
+  collectionName: 'components_form_inquiries';
+  info: {
+    displayName: 'Inquiry';
+    icon: 'apps';
+  };
+  attributes: {
+    heading: Schema.Attribute.String;
+    button_title: Schema.Attribute.String;
+    inputs: Schema.Attribute.Component<'elements.input', true>;
+  };
+}
+
 export interface SectionsWarehouseLocations extends Struct.ComponentSchema {
   collectionName: 'components_sections_warehouse_locations';
   info: {
@@ -73,65 +135,15 @@ export interface SectionsAbout extends Struct.ComponentSchema {
   };
 }
 
-export interface LayoutWarehouseLocation extends Struct.ComponentSchema {
-  collectionName: 'components_layout_warehouse_locations';
+export interface ElementsWarehouseLocation extends Struct.ComponentSchema {
+  collectionName: 'components_elements_warehouse_locations';
   info: {
     displayName: 'Warehouse Location';
     icon: 'bulletList';
-    description: '';
-  };
-  attributes: {
-    address: Schema.Attribute.String;
-    warehouse_time: Schema.Attribute.String;
-    office_time: Schema.Attribute.String;
-    google_maps_link: Schema.Attribute.Text;
-    name: Schema.Attribute.String;
-  };
-}
-
-export interface LayoutSlide extends Struct.ComponentSchema {
-  collectionName: 'components_layout_slides';
-  info: {
-    displayName: 'Slide';
-    icon: 'bulletList';
-    description: '';
   };
   attributes: {
     title: Schema.Attribute.String;
-    description: Schema.Attribute.Text;
-    link: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    type: Schema.Attribute.Enumeration<['DESKTOP', 'TABLET', 'MOBILE']>;
-  };
-}
-
-export interface FormNewsletter extends Struct.ComponentSchema {
-  collectionName: 'components_form_newsletters';
-  info: {
-    displayName: 'Newsletter';
-    icon: 'envelop';
-    description: '';
-  };
-  attributes: {
-    heading: Schema.Attribute.String;
-    sub_heading: Schema.Attribute.String;
-    inputs: Schema.Attribute.Component<'elements.input', true>;
-    sub_text: Schema.Attribute.String;
-    button_title: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images'>;
-  };
-}
-
-export interface FormInquiry extends Struct.ComponentSchema {
-  collectionName: 'components_form_inquiries';
-  info: {
-    displayName: 'Inquiry';
-    icon: 'apps';
-  };
-  attributes: {
-    heading: Schema.Attribute.String;
-    button_title: Schema.Attribute.String;
-    inputs: Schema.Attribute.Component<'elements.input', true>;
+    address: Schema.Attribute.Component<'elements.address', false>;
   };
 }
 
@@ -140,10 +152,28 @@ export interface ElementsSpecification extends Struct.ComponentSchema {
   info: {
     displayName: 'Specification';
     icon: 'bulletList';
+    description: '';
   };
   attributes: {
-    key: Schema.Attribute.String;
-    value: Schema.Attribute.String;
+    key: Schema.Attribute.String & Schema.Attribute.Required;
+    value: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ElementsShipping extends Struct.ComponentSchema {
+  collectionName: 'components_elements_shippings';
+  info: {
+    displayName: 'Shipping';
+    icon: 'bulletList';
+    description: '';
+  };
+  attributes: {
+    delivery_option: Schema.Attribute.Component<
+      'elements.delivery-option',
+      false
+    >;
+    shipping_details: Schema.Attribute.Component<'elements.address', false>;
+    warehouse_location: Schema.Attribute.Integer;
   };
 }
 
@@ -162,6 +192,32 @@ export interface ElementsPrice extends Struct.ComponentSchema {
     user_level: Schema.Attribute.Enumeration<
       ['SMALL', 'MID-SIZED', 'VIP', 'WHOLESALE']
     >;
+  };
+}
+
+export interface ElementsPaymentOption extends Struct.ComponentSchema {
+  collectionName: 'components_elements_payment_options';
+  info: {
+    displayName: 'Payment Option';
+  };
+  attributes: {
+    card_number: Schema.Attribute.String;
+    expiration_date: Schema.Attribute.Date;
+    cvv: Schema.Attribute.String;
+    card_holder_name: Schema.Attribute.String;
+    billing_zip: Schema.Attribute.String;
+  };
+}
+
+export interface ElementsName extends Struct.ComponentSchema {
+  collectionName: 'components_elements_names';
+  info: {
+    displayName: 'Name';
+  };
+  attributes: {
+    first_name: Schema.Attribute.String;
+    middle_name: Schema.Attribute.String;
+    last_name: Schema.Attribute.String;
   };
 }
 
@@ -200,6 +256,36 @@ export interface ElementsInput extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsDeliveryOption extends Struct.ComponentSchema {
+  collectionName: 'components_elements_delivery_options';
+  info: {
+    displayName: 'Delivery Option';
+  };
+  attributes: {
+    title: Schema.Attribute.String;
+    eta: Schema.Attribute.String;
+    notes: Schema.Attribute.Text;
+    price: Schema.Attribute.Decimal;
+  };
+}
+
+export interface ElementsCartItem extends Struct.ComponentSchema {
+  collectionName: 'components_elements_cart_items';
+  info: {
+    displayName: 'Cart Item';
+    icon: 'bulletList';
+    description: '';
+  };
+  attributes: {
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    quantity: Schema.Attribute.Integer & Schema.Attribute.Required;
+    price: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    odoo_product_id: Schema.Attribute.String & Schema.Attribute.Required;
+    model: Schema.Attribute.String & Schema.Attribute.Required;
+    image: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
 export interface ElementsAddress extends Struct.ComponentSchema {
   collectionName: 'components_elements_addresses';
   info: {
@@ -213,26 +299,35 @@ export interface ElementsAddress extends Struct.ComponentSchema {
     state_territory: Schema.Attribute.String;
     postcode: Schema.Attribute.String;
     country: Schema.Attribute.String;
+    isActive: Schema.Attribute.Boolean;
+    phone: Schema.Attribute.String;
+    name: Schema.Attribute.Component<'elements.name', false>;
   };
 }
 
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
+      'layout.warehouse-location': LayoutWarehouseLocation;
+      'layout.slide': LayoutSlide;
+      'form.newsletter': FormNewsletter;
+      'form.inquiry': FormInquiry;
       'sections.warehouse-locations': SectionsWarehouseLocations;
       'sections.image-slider': SectionsImageSlider;
       'sections.contact-us': SectionsContactUs;
       'sections.contact-details': SectionsContactDetails;
       'sections.about': SectionsAbout;
-      'layout.warehouse-location': LayoutWarehouseLocation;
-      'layout.slide': LayoutSlide;
-      'form.newsletter': FormNewsletter;
-      'form.inquiry': FormInquiry;
+      'elements.warehouse-location': ElementsWarehouseLocation;
       'elements.specification': ElementsSpecification;
+      'elements.shipping': ElementsShipping;
       'elements.price': ElementsPrice;
+      'elements.payment-option': ElementsPaymentOption;
+      'elements.name': ElementsName;
       'elements.key-features': ElementsKeyFeatures;
       'elements.inventory': ElementsInventory;
       'elements.input': ElementsInput;
+      'elements.delivery-option': ElementsDeliveryOption;
+      'elements.cart-item': ElementsCartItem;
       'elements.address': ElementsAddress;
     }
   }

@@ -28,11 +28,35 @@ export default ({env}) => ({
       endpoint: '/graphql',
       shadowCRUD: true,
       playgroundAlways: false,
-      depthLimit: 7,
+      depthLimit: 10,
+      defaultLimit: 50,
       amountLimit: 100,
+      createAdminUser: true,
       apolloServer: {
         tracing: false,
       },
     },
   },
+  // "users-permissions": {
+  //   config: {
+  //     register: {
+  //       allowedFields: ["nickname"],
+  //     },
+  //     validationRules: {
+  //       validatePassword(value) {
+  //         if (value.length < 8) {
+  //           // custom error message
+  //           throw new Error('password should be more than 8 letters');
+  //         }
+
+  //         if (value.length > 24) {
+  //           // throws default error message 
+  //           return false;
+  //         }
+
+  //         return true; // Validation passed
+  //       },
+  //     },
+  //   },
+  // },
 });

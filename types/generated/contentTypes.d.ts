@@ -479,6 +479,8 @@ export interface PluginUsersPermissionsUser
       'oneToMany',
       'api::user-notification.user-notification'
     >;
+    orders: Schema.Attribute.Relation<'oneToMany', 'api::order.order'>;
+    carts: Schema.Attribute.Relation<'oneToMany', 'api::cart.cart'>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -518,8 +520,12 @@ export interface ApiAccountDetailAccountDetail
     middle_name: Schema.Attribute.String;
     last_name: Schema.Attribute.String;
     business_name: Schema.Attribute.String;
-    position: Schema.Attribute.String;
+    phone: Schema.Attribute.String;
     shipping_addresses: Schema.Attribute.Component<'elements.address', true>;
+    payment_options: Schema.Attribute.Component<
+      'elements.payment-option',
+      true
+    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -545,21 +551,27 @@ export interface ApiCartCart extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: false;
+    populateCreatorFields: true;
+  };
+  pluginOptions: {
+    graphql: {
+      enabled: true;
+      apiName: 'cart';
+    };
+    populate: ['createdBy', 'updatedBy'];
   };
   attributes: {
-    title: Schema.Attribute.String;
-    quantity: Schema.Attribute.BigInteger;
-    odoo_product_id: Schema.Attribute.String;
-    reference_id: Schema.Attribute.String;
-    price: Schema.Attribute.Decimal;
-    image: Schema.Attribute.String;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    item: Schema.Attribute.Component<'elements.cart-item', false> &
+      Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::cart.cart'>;
   };
@@ -591,6 +603,36 @@ export interface ApiInventoryInventory extends Struct.CollectionTypeSchema {
       'oneToMany',
       'api::inventory.inventory'
     >;
+  };
+}
+
+export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
+  collectionName: 'orders';
+  info: {
+    singularName: 'order';
+    pluralName: 'orders';
+    displayName: 'Order';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    cart_items: Schema.Attribute.Component<'elements.cart-item', true>;
+    shipping: Schema.Attribute.Component<'elements.shipping', false>;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::order.order'>;
   };
 }
 
@@ -640,7 +682,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     description: '';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     name: Schema.Attribute.String;
@@ -657,10 +699,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     >;
     specification: Schema.Attribute.Component<'elements.specification', true>;
     key_features: Schema.Attribute.Component<'elements.key-features', true>;
-    inventories: Schema.Attribute.Relation<
-      'oneToMany',
-      'api::inventory.inventory'
-    >;
+    model: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -1120,6 +1159,7 @@ declare module '@strapi/strapi' {
       'api::account-detail.account-detail': ApiAccountDetailAccountDetail;
       'api::cart.cart': ApiCartCart;
       'api::inventory.inventory': ApiInventoryInventory;
+      'api::order.order': ApiOrderOrder;
       'api::page.page': ApiPagePage;
       'api::product.product': ApiProductProduct;
       'api::user-approval-request.user-approval-request': ApiUserApprovalRequestUserApprovalRequest;
