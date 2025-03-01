@@ -401,7 +401,7 @@ export default {
           },
           addToCart: async (_: any, args: any, ctx: any) => {
             try {
-              console.log(args)
+
               const { user } = ctx?.state;
               const cart = await strapi.documents("api::cart.cart").create({
                 data: {
