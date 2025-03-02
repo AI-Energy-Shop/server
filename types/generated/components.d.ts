@@ -140,6 +140,7 @@ export interface ElementsWarehouseLocation extends Struct.ComponentSchema {
   info: {
     displayName: 'Warehouse Location';
     icon: 'bulletList';
+    description: '';
   };
   attributes: {
     title: Schema.Attribute.String;
@@ -301,6 +302,7 @@ export interface ElementsAddress extends Struct.ComponentSchema {
     country: Schema.Attribute.String;
     isActive: Schema.Attribute.Boolean;
     phone: Schema.Attribute.String;
+    city: Schema.Attribute.String;
     name: Schema.Attribute.Component<'elements.name', false>;
   };
 }

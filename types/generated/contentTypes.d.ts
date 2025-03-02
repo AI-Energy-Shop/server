@@ -516,15 +516,17 @@ export interface ApiAccountDetailAccountDetail
     odoo_user_id: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
-    first_name: Schema.Attribute.String;
-    middle_name: Schema.Attribute.String;
-    last_name: Schema.Attribute.String;
     business_name: Schema.Attribute.String;
     phone: Schema.Attribute.String;
     shipping_addresses: Schema.Attribute.Component<'elements.address', true>;
     payment_options: Schema.Attribute.Component<
       'elements.payment-option',
       true
+    >;
+    name: Schema.Attribute.Component<'elements.name', false>;
+    warehouse_location: Schema.Attribute.Component<
+      'elements.warehouse-location',
+      false
     >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;

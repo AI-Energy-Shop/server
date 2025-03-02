@@ -28,8 +28,10 @@
     "phone": {
       "type": "string"
     },
+    "city": {
+      "type": "string"
+    },
     "name": {
-      "displayName": "Name",
       "type": "component",
       "repeatable": false,
       "component": "elements.name"

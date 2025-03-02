@@ -34,15 +34,6 @@
       "unique": true,
       "required": true
     },
-    "first_name": {
-      "type": "string"
-    },
-    "middle_name": {
-      "type": "string"
-    },
-    "last_name": {
-      "type": "string"
-    },
     "business_name": {
       "type": "string"
     },
@@ -60,6 +51,16 @@
       "type": "component",
       "repeatable": true,
       "component": "elements.payment-option"
+    },
+    "name": {
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.name"
+    },
+    "warehouse_location": {
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.warehouse-location"
     }
   }
 }
