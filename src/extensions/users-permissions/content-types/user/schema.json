@@ -91,6 +91,15 @@
       "relation": "oneToMany",
       "target": "api::cart.cart",
       "mappedBy": "user"
+    },
+    "business_name": {
+      "type": "string"
+    },
+    "business_number": {
+      "type": "string"
+    },
+    "user_type": {
+      "type": "string"
     }
   }
 }

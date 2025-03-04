@@ -481,6 +481,9 @@ export interface PluginUsersPermissionsUser
     >;
     orders: Schema.Attribute.Relation<'oneToMany', 'api::order.order'>;
     carts: Schema.Attribute.Relation<'oneToMany', 'api::cart.cart'>;
+    business_name: Schema.Attribute.String;
+    business_number: Schema.Attribute.String;
+    user_type: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -510,13 +513,9 @@ export interface ApiAccountDetailAccountDetail
   };
   attributes: {
     level: Schema.Attribute.Enumeration<['SMALL', 'MID-SIZED', 'VIP']>;
-    user_type: Schema.Attribute.Enumeration<
-      ['INSTALLER', 'RETAILER', 'ADMINISTRATOR', 'SALES']
-    >;
     odoo_user_id: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
-    business_name: Schema.Attribute.String;
     phone: Schema.Attribute.String;
     shipping_addresses: Schema.Attribute.Component<'elements.address', true>;
     payment_options: Schema.Attribute.Component<

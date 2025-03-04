@@ -15,8 +15,11 @@
     "graphql": {
       "enabled": true,
       "apiName": "cart"
-    }, 
-    "populate": ["createdBy", "updatedBy"]
+    },
+    "populate": [
+      "createdBy",
+      "updatedBy"
+    ]
   },
   "attributes": {
     "user": {

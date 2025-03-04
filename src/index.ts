@@ -1,5 +1,11 @@
 import type { Core } from "@strapi/strapi";
-import { PaginationInputArgs, ProductInputArgs, SortInputArgs, UserApprovalRequestInput } from "../types/custom";
+import {
+  PaginationInputArgs,
+  ProductInputArgs,
+  RegisterUserInput,
+  SortInputArgs,
+  UserApprovalRequestInput,
+} from "../types/custom";
 
 export default {
   /**
@@ -31,7 +37,6 @@ export default {
           success: Boolean
           statusText: String
         }
-
         input CartFiltersInput {
           documentId: IDFilterInput
           item: CartItemFiltersInput
@@ -69,14 +74,12 @@ export default {
         }
 
         input RegisterUserInput {
-          firstName: String!
-          middleName: String
-          lastName: String!
           userType: String!
-          businessName: String!
           email: String!
           username: String!
           password: String!
+          businessName: String!
+          businessNumber: String!
         }
 
         input UserAccountDetails {
@@ -105,7 +108,7 @@ export default {
           updateCartItem(documentId: ID!, data: CartItemInput!): Cart
           deleteCartItem(documentId: ID!): DeleteResponse
           updateCart(documentId: ID!, data: CartItemInput!): Cart
-          registerUser(data: RegisterUserInput!): Response
+          registerUser(data: RegisterUserInput!): UsersPermissionsUser
           userApproval(data: UserApprovalRequestInputArgs!): Response
           customProductUpdate(documentId: ID!, data: ProductInput!): Product
         }
@@ -122,65 +125,55 @@ export default {
       `,
       resolvers: {
         Mutation: {
-          registerUser: async (_: any, args: any) => {
+          registerUser: async (
+            _: any,
+            args: { data: RegisterUserInput },
+            ctx: any
+          ) => {
             try {
-              const useremail = await strapi.documents("admin::user").findMany({
-                filters: {
-                  email: args.data.email,
-                },
-              });
-
-              const username = await strapi.documents("admin::user").findMany({
-                filters: {
-                  username: args.data.username,
-                },
-              });
-
-              if (useremail.length > 0) {
-                return {
-                  error: "User email already exists!",
-                  success: false,
-                };
-              }
-
-              if (username.length > 0) {
-                return {
-                  error: "Username already exists!",
-                  success: false,
-                };
-              }
-
-              const accountDetails = await strapi
-                .documents("api::account-detail.account-detail")
-                .create({
-                  data: {
-                    level: "SMALL",
-                    user_type: args.data.userType,
-                    first_name: args.data.firstName,
-                    middle_name: args.data.middleName,
-                    last_name: args.data.lastName,
-                    odoo_user_id: args.data.odoo_user_id,
-                    business_name: args.data.businessName,
+              const useremail = await strapi
+                .documents("plugin::users-permissions.user")
+                .findFirst({
+                  filters: {
+                    email: {
+                      $contains: args.data.email,
+                    },
                   },
                 });
+              if (useremail) {
+                throw new Error("Email already exists!");
+              }
+
+              const username = await strapi
+                .documents("plugin::users-permissions.user")
+                .findFirst({
+                  filters: {
+                    username: {
+                      $contains: args.data.username,
+                    },
+                  },
+                });
+
+              if (username) {
+                throw new Error("Username already exists!");
+              }
 
               const createdUser = await strapi
                 .documents("plugin::users-permissions.user")
                 .create({
                   data: {
+                    provider: "local",
                     email: args.data.email,
                     username: args.data.username,
+                    business_name: args.data.businessName,
+                    business_number: args.data.businessNumber,
+                    user_type: args.data.userType,
                     password: args.data.password,
-                    provider: "local",
-                    account_detail: accountDetails.documentId,
                   },
                 });
 
               if (!createdUser) {
-                return {
-                  error: "User registration failed",
-                  success: false,
-                };
+                throw new Error("User creation failed");
               }
 
               const userApprovalRequest = await strapi
@@ -197,28 +190,12 @@ export default {
                 });
 
               if (!userApprovalRequest) {
-                return {
-                  error: "User registration failed",
-                  success: false,
-                };
+                throw new Error("User approval request failed");
               }
 
-              return {
-                success: true,
-                statusText: "Your account is pending for approval!",
-              };
+              return createdUser;
             } catch (err) {
-              if (err === null || err === undefined) {
-                return {
-                  error: "Unknown error",
-                  success: false,
-                };
-              }
-
-              return {
-                error: err.message,
-                success: false,
-              };
+              throw new Error(err.message);
             }
           },
           userApproval: async (_: any, { data }: UserApprovalRequestInput) => {
@@ -354,11 +331,15 @@ export default {
               }
 
               const filteredFiles = files
-                .filter((file: any) => args.data.files.includes(file.documentId))
+                .filter((file: any) =>
+                  args.data.files.includes(file.documentId)
+                )
                 .map((file: any) => file);
 
               const filteredMedia = files
-                .filter((file: any) => args.data.images.includes(file.documentId))
+                .filter((file: any) =>
+                  args.data.images.includes(file.documentId)
+                )
                 .map((file: any) => file);
 
               const updateProductRes = await strapi
@@ -401,19 +382,18 @@ export default {
           },
           addToCart: async (_: any, args: any, ctx: any) => {
             try {
-
               const { user } = ctx?.state;
               const cart = await strapi.documents("api::cart.cart").create({
                 data: {
                   user: user.id,
                   item: {
-                    ...args.data
+                    ...args.data,
                   },
                 },
                 populate: {
                   item: true,
-                  user: true
-                }
+                  user: true,
+                },
               });
 
               if (!cart) {
@@ -435,8 +415,8 @@ export default {
               const cart = await strapi.documents("api::cart.cart").update({
                 documentId: documentId,
                 data: {
-                  item: data
-                }
+                  item: data,
+                },
               });
 
               return cart;
@@ -467,7 +447,7 @@ export default {
               return {
                 success: false,
                 error: error.message || "Unknown error occurred",
-              };  
+              };
             }
           },
         },
@@ -496,65 +476,74 @@ export default {
             } catch (error) {}
           },
           files: async (_: any, args: any) => {
-            const { filters } = args
-            if (!filters || !filters.mimeTypes || filters.mimeTypes.length === 0) {
-              return []
+            const { filters } = args;
+            if (
+              !filters ||
+              !filters.mimeTypes ||
+              filters.mimeTypes.length === 0
+            ) {
+              return [];
             }
 
             try {
               const filterData = {
                 $or: filters.mimeTypes.map((type: string) => {
                   return {
-                    mime: type
-                  }
-                })
-              }
-              
-              const files = await strapi.documents("plugin::upload.file").findMany({
-                filters: filterData,
-              })
-  
-              return files
-              
+                    mime: type,
+                  };
+                }),
+              };
+
+              const files = await strapi
+                .documents("plugin::upload.file")
+                .findMany({
+                  filters: filterData,
+                });
+
+              return files;
             } catch (error) {
-              console.error(error)
-              return []
+              console.error(error);
+              return [];
             }
           },
-          getProduct: async (_: any, args: { documentId: string}) => {
+          getProduct: async (_: any, args: { documentId: string }) => {
             try {
-              const product = await strapi.documents("api::product.product").findOne({ 
-                documentId: args.documentId,
-              });
+              const product = await strapi
+                .documents("api::product.product")
+                .findOne({
+                  documentId: args.documentId,
+                });
 
               if (!product) {
                 throw new Error("Product not found");
               }
 
-              return product
-  
+              return product;
             } catch (error) {
-              console.log(error)
-              return error
+              console.log(error);
+              return error;
             }
           },
-          getProducts: async (_: any, args: { pagination: PaginationInputArgs, sort: SortInputArgs}) => {
+          getProducts: async (
+            _: any,
+            args: { pagination: PaginationInputArgs; sort: SortInputArgs }
+          ) => {
             try {
-
-              const products = await strapi.documents("api::product.product").findMany({
-                start: args.pagination.start,
-                limit: args.pagination.limit,
-              })
+              const products = await strapi
+                .documents("api::product.product")
+                .findMany({
+                  start: args.pagination.start,
+                  limit: args.pagination.limit,
+                });
 
               if (!products) {
                 throw new Error("No products found");
               }
 
               return products;
-
             } catch (error) {
-              console.error("Error getting products:", error.message)
-              return error
+              console.error("Error getting products:", error.message);
+              return error;
             }
           },
           cart: async (_: any, args: { documentId: string }) => {
@@ -563,56 +552,58 @@ export default {
                 documentId: args.documentId,
               });
             } catch (error) {
-              console.error("Error getting cart:", error.message)
-              return error
+              console.error("Error getting cart:", error.message);
+              return error;
             }
           },
-          carts: async (_: any, args: {filters: any}, ctx: any) => {
+          carts: async (_: any, args: { filters: any }, ctx: any) => {
             try {
               const { user } = ctx?.state;
               const carts = await strapi.documents("api::cart.cart").findMany({
                 filters: {
                   user: {
                     id: {
-                      $contains: user.id
-                    }
-                  }
+                      $contains: user.id,
+                    },
+                  },
                 },
                 populate: {
-                  item: true
-                }
+                  item: true,
+                },
               });
 
               return carts;
             } catch (error) {
-              console.error("Error getting carts:", error.message)
-              return error
+              console.error("Error getting carts:", error.message);
+              return error;
             }
           },
-          user: async (_: any, args: { filters: { email: string; username: string}}) => {
+          user: async (
+            _: any,
+            args: { filters: { email: string; username: string } }
+          ) => {
             try {
-              
               const user = await strapi
                 .documents("plugin::users-permissions.user")
                 .findFirst({
                   filters: {
                     $or: [
                       { email: args.filters.email },
-                      { username: args.filters.username }
-                    ]
+                      { username: args.filters.username },
+                    ],
                   },
                   populate: {
                     account_detail: true,
                     user_notifications: true,
-                  }
+                  },
                 });
-  
+
               return user;
             } catch (error) {
-              console.error("Error getting user:", error.message)
-              return error
+              console.error("Error getting user:", error.message);
+              return error;
             }
-          }
+          },
         },
       },
       resolversConfig: {
@@ -638,27 +629,27 @@ export default {
         },
         Query: {
           getProduct: {
-            auth: true
+            auth: true,
           },
           getProducts: {
-            auth: true
+            auth: true,
           },
           getPage: {
-            auth: false
+            auth: false,
           },
           files: {
-            auth: false
+            auth: false,
           },
           cart: {
-            auth: true
+            auth: true,
           },
           carts: {
-            auth: true
+            auth: true,
           },
           user: {
-            auth: true
-          }
-        }
+            auth: true,
+          },
+        },
       },
     });
 

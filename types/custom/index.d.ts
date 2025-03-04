@@ -1,9 +1,19 @@
 import type { Struct, Schema } from "@strapi/strapi";
 
+export type RegisterUserInput = {
+  userType: string;
+  email: string;
+  username: string;
+  password: string;
+  businessName: string;
+  businessNumber: string;
+};
+
 type UserAccountDetails = {
   odooId: string;
   userPricingLevel: "SMALL" | "MID-SIZED" | "VIP";
 };
+
 export type UserApprovalRequestInput = {
   data: {
     email: string;
@@ -12,7 +22,7 @@ export type UserApprovalRequestInput = {
   };
 };
 
-type  = "SMALL" | "MID-SIZED" | "VIP" | "WHOLESALE"
+type = "SMALL" | "MID-SIZED" | "VIP" | "WHOLESALE";
 
 export type ProductInputArgs = {
   documentId: string;
@@ -24,14 +34,25 @@ export type ProductInputArgs = {
     vendor: string;
     collection: string[];
     tags: string[];
-    specification: any[]
-    price_list: {price: number; sale_price: number; min_quantity: number; max_quantity: number; user_level: UserLevel}[]
-    inventory: {location: string; quantity: number}[]
-    key_features: {feature: string}[]
+    specification: any[];
+    price_list: {
+      price: number;
+      sale_price: number;
+      min_quantity: number;
+      max_quantity: number;
+      user_level: UserLevel;
+    }[];
+    inventory: { location: string; quantity: number }[];
+    key_features: { feature: string }[];
     files: string[];
     images: string[];
-  }
-}
+  };
+};
 
-export type PaginationInputArgs = { limit: number; page: number; pageSize: number; start: number;}
-export type SortInputArgs = string[]
+export type PaginationInputArgs = {
+  limit: number;
+  page: number;
+  pageSize: number;
+  start: number;
+};
+export type SortInputArgs = string[];

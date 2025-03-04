@@ -20,22 +20,10 @@
         "VIP"
       ]
     },
-    "user_type": {
-      "type": "enumeration",
-      "enum": [
-        "INSTALLER",
-        "RETAILER",
-        "ADMINISTRATOR",
-        "SALES"
-      ]
-    },
     "odoo_user_id": {
       "type": "string",
       "unique": true,
       "required": true
-    },
-    "business_name": {
-      "type": "string"
     },
     "phone": {
       "type": "string"
