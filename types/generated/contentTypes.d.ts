@@ -484,6 +484,8 @@ export interface PluginUsersPermissionsUser
     business_name: Schema.Attribute.String;
     business_number: Schema.Attribute.String;
     user_type: Schema.Attribute.String;
+    phone: Schema.Attribute.String;
+    address: Schema.Attribute.Component<'elements.address', false>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -513,11 +515,8 @@ export interface ApiAccountDetailAccountDetail
   };
   attributes: {
     level: Schema.Attribute.Enumeration<['SMALL', 'MID-SIZED', 'VIP']>;
-    odoo_user_id: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+    odoo_user_id: Schema.Attribute.String & Schema.Attribute.Unique;
     phone: Schema.Attribute.String;
-    shipping_addresses: Schema.Attribute.Component<'elements.address', true>;
     payment_options: Schema.Attribute.Component<
       'elements.payment-option',
       true
@@ -526,6 +525,10 @@ export interface ApiAccountDetailAccountDetail
     warehouse_location: Schema.Attribute.Component<
       'elements.warehouse-location',
       false
+    >;
+    shipping_addresses: Schema.Attribute.Component<
+      'elements.shipping-address',
+      true
     >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;

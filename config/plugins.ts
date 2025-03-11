@@ -1,4 +1,4 @@
-export default ({env}) => ({
+export default ({ env }) => ({
   upload: {
     config: {
       provider: "aws-s3",
@@ -25,15 +25,22 @@ export default ({env}) => ({
   },
   graphql: {
     config: {
-      endpoint: '/graphql',
+      endpoint: "/graphql",
       shadowCRUD: true,
-      playgroundAlways: false,
-      depthLimit: 10,
+      playgroundAlways: true,
+      depthLimit: 7,
       defaultLimit: 50,
       amountLimit: 100,
       createAdminUser: true,
       apolloServer: {
         tracing: false,
+      },
+      landingPage: (strapi) => {
+        if (env("NODE_ENV") !== "production") {
+          return true;
+        } else {
+          return false;
+        }
       },
     },
   },
@@ -50,7 +57,7 @@ export default ({env}) => ({
   //         }
 
   //         if (value.length > 24) {
-  //           // throws default error message 
+  //           // throws default error message
   //           return false;
   //         }
 

@@ -1,7 +1,7 @@
 {
-  "collectionName": "components_elements_addresses",
+  "collectionName": "components_elements_shipping_addresses",
   "info": {
-    "displayName": "Address",
+    "displayName": "Shipping Address",
     "icon": "bulletList",
     "description": ""
   },
@@ -30,6 +30,11 @@
     },
     "city": {
       "type": "string"
+    },
+    "name": {
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.name"
     }
   }
 }

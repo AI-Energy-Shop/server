@@ -105,6 +105,36 @@ export interface LayoutSlide extends Struct.ComponentSchema {
   };
 }
 
+export interface FormNewsletter extends Struct.ComponentSchema {
+  collectionName: 'components_form_newsletters';
+  info: {
+    displayName: 'Newsletter';
+    icon: 'envelop';
+    description: '';
+  };
+  attributes: {
+    heading: Schema.Attribute.String;
+    sub_heading: Schema.Attribute.String;
+    inputs: Schema.Attribute.Component<'elements.input', true>;
+    sub_text: Schema.Attribute.String;
+    button_title: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
+  };
+}
+
+export interface FormInquiry extends Struct.ComponentSchema {
+  collectionName: 'components_form_inquiries';
+  info: {
+    displayName: 'Inquiry';
+    icon: 'apps';
+  };
+  attributes: {
+    heading: Schema.Attribute.String;
+    button_title: Schema.Attribute.String;
+    inputs: Schema.Attribute.Component<'elements.input', true>;
+  };
+}
+
 export interface ElementsWarehouseLocation extends Struct.ComponentSchema {
   collectionName: 'components_elements_warehouse_locations';
   info: {
@@ -145,6 +175,26 @@ export interface ElementsShipping extends Struct.ComponentSchema {
     >;
     shipping_details: Schema.Attribute.Component<'elements.address', false>;
     warehouse_location: Schema.Attribute.Integer;
+  };
+}
+
+export interface ElementsShippingAddress extends Struct.ComponentSchema {
+  collectionName: 'components_elements_shipping_addresses';
+  info: {
+    displayName: 'Shipping Address';
+    icon: 'bulletList';
+    description: '';
+  };
+  attributes: {
+    street: Schema.Attribute.String;
+    suburb: Schema.Attribute.String;
+    state_territory: Schema.Attribute.String;
+    postcode: Schema.Attribute.String;
+    country: Schema.Attribute.String;
+    isActive: Schema.Attribute.Boolean;
+    phone: Schema.Attribute.String;
+    city: Schema.Attribute.String;
+    name: Schema.Attribute.Component<'elements.name', false>;
   };
 }
 
@@ -273,37 +323,6 @@ export interface ElementsAddress extends Struct.ComponentSchema {
     isActive: Schema.Attribute.Boolean;
     phone: Schema.Attribute.String;
     city: Schema.Attribute.String;
-    name: Schema.Attribute.Component<'elements.name', false>;
-  };
-}
-
-export interface FormNewsletter extends Struct.ComponentSchema {
-  collectionName: 'components_form_newsletters';
-  info: {
-    displayName: 'Newsletter';
-    icon: 'envelop';
-    description: '';
-  };
-  attributes: {
-    heading: Schema.Attribute.String;
-    sub_heading: Schema.Attribute.String;
-    inputs: Schema.Attribute.Component<'elements.input', true>;
-    sub_text: Schema.Attribute.String;
-    button_title: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images'>;
-  };
-}
-
-export interface FormInquiry extends Struct.ComponentSchema {
-  collectionName: 'components_form_inquiries';
-  info: {
-    displayName: 'Inquiry';
-    icon: 'apps';
-  };
-  attributes: {
-    heading: Schema.Attribute.String;
-    button_title: Schema.Attribute.String;
-    inputs: Schema.Attribute.Component<'elements.input', true>;
   };
 }
 
@@ -317,9 +336,12 @@ declare module '@strapi/strapi' {
       'sections.about': SectionsAbout;
       'layout.warehouse-location': LayoutWarehouseLocation;
       'layout.slide': LayoutSlide;
+      'form.newsletter': FormNewsletter;
+      'form.inquiry': FormInquiry;
       'elements.warehouse-location': ElementsWarehouseLocation;
       'elements.specification': ElementsSpecification;
       'elements.shipping': ElementsShipping;
+      'elements.shipping-address': ElementsShippingAddress;
       'elements.price': ElementsPrice;
       'elements.payment-option': ElementsPaymentOption;
       'elements.name': ElementsName;
@@ -329,8 +351,6 @@ declare module '@strapi/strapi' {
       'elements.delivery-option': ElementsDeliveryOption;
       'elements.cart-item': ElementsCartItem;
       'elements.address': ElementsAddress;
-      'form.newsletter': FormNewsletter;
-      'form.inquiry': FormInquiry;
     }
   }
 }

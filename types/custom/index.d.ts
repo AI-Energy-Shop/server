@@ -7,19 +7,23 @@ export type RegisterUserInput = {
   password: string;
   businessName: string;
   businessNumber: string;
+  street: string;
+  state: string;
+  suburb: string;
+  postalCode: string;
+  phone: string;
 };
 
 type UserAccountDetails = {
   odooId: string;
-  userPricingLevel: "SMALL" | "MID-SIZED" | "VIP";
+  userPricingLevel: string;
 };
 
 export type UserApprovalRequestInput = {
-  data: {
-    email: string;
-    accountStatus: "REVIEWING" | "APPROVED" | "DENIED";
-    user: UserAccountDetails;
-  };
+  accountStatus: "APPROVED" | "DENIED" | "PENDING";
+  odooUserId: string;
+  userLevel: "SMALL" | "MID-SIZED" | "VIP";
+  userType: string;
 };
 
 type = "SMALL" | "MID-SIZED" | "VIP" | "WHOLESALE";
