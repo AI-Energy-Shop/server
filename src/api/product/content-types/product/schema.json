@@ -33,11 +33,6 @@
       "repeatable": true,
       "component": "elements.price"
     },
-    "inventory": {
-      "type": "component",
-      "repeatable": true,
-      "component": "elements.inventory"
-    },
     "files": {
       "type": "media",
       "multiple": true,
@@ -70,6 +65,12 @@
     },
     "model": {
       "type": "string"
+    },
+    "inventories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::inventory.inventory",
+      "inversedBy": "products"
     }
   }
 }

@@ -104,10 +104,14 @@
     "phone": {
       "type": "string"
     },
-    "address": {
-      "type": "component",
-      "repeatable": false,
-      "component": "elements.address"
+    "addresses": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::address.address",
+      "mappedBy": "users"
+    },
+    "createAccountRequest": {
+      "type": "datetime"
     }
   }
 }

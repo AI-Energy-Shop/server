@@ -17,6 +17,12 @@
     },
     "quantity": {
       "type": "integer"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product",
+      "mappedBy": "inventories"
     }
   }
 }

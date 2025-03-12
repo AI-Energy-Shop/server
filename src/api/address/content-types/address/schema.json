@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "addresses",
+  "info": {
+    "singularName": "address",
+    "pluralName": "addresses",
+    "displayName": "Address",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "street1": {
+      "type": "string"
+    },
+    "street2": {
+      "type": "string"
+    },
+    "suburb": {
+      "type": "string"
+    },
+    "state_territory": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "zip_code": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string",
+      "default": "Australia"
+    },
+    "phone": {
+      "type": "string"
+    },
+    "isActive": {
+      "type": "boolean"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "addresses"
+    }
+  }
+}

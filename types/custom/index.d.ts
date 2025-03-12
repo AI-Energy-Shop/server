@@ -20,7 +20,7 @@ type UserAccountDetails = {
 };
 
 export type UserApprovalRequestInput = {
-  accountStatus: "APPROVED" | "DENIED" | "PENDING";
+  accountStatus: "APPROVED" | "DENIED" | "CREATE_APPROVED";
   odooUserId: string;
   userLevel: "SMALL" | "MID-SIZED" | "VIP";
   userType: string;

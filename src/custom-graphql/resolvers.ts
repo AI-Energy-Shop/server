@@ -37,6 +37,17 @@ export const resolvers = {
           throw new Error("Username already exists!");
         }
 
+        const address = await strapi.documents("api::address.address").create({
+          data: {
+            street1: args.data.street,
+            suburb: args.data.suburb,
+            state_territory: args.data.state,
+            phone: args.data.phone,
+            zip_code: args.data.postalCode,
+            isActive: true,
+          },
+        });
+
         const createdUser = await strapi
           .documents("plugin::users-permissions.user")
           .create({
@@ -49,17 +60,11 @@ export const resolvers = {
               user_type: args.data.userType,
               password: args.data.password,
               phone: args.data.phone,
-              address: {
-                street: args.data.street,
-                suburb: args.data.suburb,
-                state_territory: args.data.state,
-                postcode: args.data.postalCode,
-                isActive: true,
-              },
               account_status: "PENDING",
+              addresses: address.id,
             },
             populate: {
-              address: true,
+              addresses: true,
             },
           });
 
@@ -131,7 +136,8 @@ export const resolvers = {
           throw new Error("Failed to create user account details");
         }
 
-        const userRole = args.data.accountStatus === "APPROVED" ? 1 : 2;
+        const accStatus = args.data.accountStatus;
+        const userRole = accStatus.toLowerCase().includes("approved") ? 1 : 2;
 
         const userUpdate = await strapi
           .documents("plugin::users-permissions.user")
@@ -139,7 +145,11 @@ export const resolvers = {
             documentId: userData.documentId,
             data: {
               role: userRole,
-              account_status: args.data.accountStatus,
+              createAccountRequest:
+                accStatus === "CREATE_APPROVED" ? Date.now() : null,
+              account_status: accStatus.toLowerCase().includes("approved")
+                ? "APPROVED"
+                : "DENIED",
               account_detail: createUserAccountDetails.documentId,
             },
             populate: {

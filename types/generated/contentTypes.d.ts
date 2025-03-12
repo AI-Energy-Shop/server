@@ -485,7 +485,8 @@ export interface PluginUsersPermissionsUser
     business_number: Schema.Attribute.String;
     user_type: Schema.Attribute.String;
     phone: Schema.Attribute.String;
-    address: Schema.Attribute.Component<'elements.address', false>;
+    addresses: Schema.Attribute.Relation<'manyToMany', 'api::address.address'>;
+    createAccountRequest: Schema.Attribute.DateTime;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -545,6 +546,46 @@ export interface ApiAccountDetailAccountDetail
   };
 }
 
+export interface ApiAddressAddress extends Struct.CollectionTypeSchema {
+  collectionName: 'addresses';
+  info: {
+    singularName: 'address';
+    pluralName: 'addresses';
+    displayName: 'Address';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    street1: Schema.Attribute.String;
+    street2: Schema.Attribute.String;
+    suburb: Schema.Attribute.String;
+    state_territory: Schema.Attribute.String;
+    city: Schema.Attribute.String;
+    zip_code: Schema.Attribute.String;
+    country: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Australia'>;
+    phone: Schema.Attribute.String;
+    isActive: Schema.Attribute.Boolean;
+    users: Schema.Attribute.Relation<
+      'manyToMany',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::address.address'
+    >;
+  };
+}
+
 export interface ApiCartCart extends Struct.CollectionTypeSchema {
   collectionName: 'carts';
   info: {
@@ -595,6 +636,7 @@ export interface ApiInventoryInventory extends Struct.CollectionTypeSchema {
   attributes: {
     location: Schema.Attribute.String;
     quantity: Schema.Attribute.Integer;
+    products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -695,7 +737,6 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     vendor: Schema.Attribute.String;
     odoo_product_id: Schema.Attribute.String & Schema.Attribute.Unique;
     price_list: Schema.Attribute.Component<'elements.price', true>;
-    inventory: Schema.Attribute.Component<'elements.inventory', true>;
     files: Schema.Attribute.Media<'files', true>;
     images: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
@@ -704,6 +745,10 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     specification: Schema.Attribute.Component<'elements.specification', true>;
     key_features: Schema.Attribute.Component<'elements.key-features', true>;
     model: Schema.Attribute.String;
+    inventories: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::inventory.inventory'
+    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -1161,6 +1206,7 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::account-detail.account-detail': ApiAccountDetailAccountDetail;
+      'api::address.address': ApiAddressAddress;
       'api::cart.cart': ApiCartCart;
       'api::inventory.inventory': ApiInventoryInventory;
       'api::order.order': ApiOrderOrder;
