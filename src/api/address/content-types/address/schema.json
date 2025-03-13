@@ -42,6 +42,11 @@
       "relation": "manyToMany",
       "target": "plugin::users-permissions.user",
       "inversedBy": "addresses"
+    },
+    "name": {
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.name"
     }
   }
 }

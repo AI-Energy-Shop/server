@@ -51,6 +51,39 @@ export const resolvers = {
           },
         });
 
+        const shippingAddresses = await strapi
+          .documents("api::address.address")
+          .create({
+            data: {
+              street1: args.data.street1,
+              street2: args.data.street2,
+              city: args.data.city,
+              state: args.data.state,
+              phone: args.data.phone,
+              zip_code: args.data.zipCode,
+              country: args.data.country,
+              isActive: true,
+            },
+          });
+
+        const accountDetails = await strapi
+          .documents("api::account-detail.account-detail")
+          .create({
+            data: {
+              shipping_addresses: shippingAddresses.documentId,
+              warehouse_location: {
+                title: "Sydney",
+                address: {
+                  street: "24/32-38 Belmore Rd",
+                  city: "Sydney",
+                  state_territory: "NSW",
+                  postcode: "2196",
+                  country: "Australia",
+                },
+              },
+            },
+          });
+
         const createdUser = await strapi
           .documents("plugin::users-permissions.user")
           .create({
@@ -65,6 +98,7 @@ export const resolvers = {
               phone: args.data.phone,
               account_status: "PENDING",
               addresses: address.id,
+              account_detail: accountDetails.id,
             },
             populate: {
               addresses: true,
@@ -108,6 +142,7 @@ export const resolvers = {
             documentId: args.documentId,
             populate: {
               account_detail: true,
+              role: true,
             },
           });
 
@@ -115,19 +150,19 @@ export const resolvers = {
           throw new Error("User not found!");
         }
 
-        if (userData.account_detail) {
+        if (
+          userData.account_status === "APPROVED" ||
+          userData.account_status === "DENIED"
+        ) {
           throw new Error(
             `User has been processed and marked as "${userData.account_status}"`
           );
         }
 
-        if (userData.account_status === "PENDING") {
-          throw new Error("User is still pending");
-        }
-
-        const createUserAccountDetails = await strapi
+        const updateAccountDetails = await strapi
           .documents("api::account-detail.account-detail")
-          .create({
+          .update({
+            documentId: userData.account_detail.documentId,
             data: {
               level: args.data.userLevel,
               odoo_user_id: args.data.odooUserId,
@@ -135,7 +170,7 @@ export const resolvers = {
             },
           });
 
-        if (!createUserAccountDetails) {
+        if (!updateAccountDetails) {
           throw new Error("Failed to create user account details");
         }
 
@@ -153,7 +188,6 @@ export const resolvers = {
               account_status: accStatus.toLowerCase().includes("approved")
                 ? "APPROVED"
                 : "DENIED",
-              account_detail: createUserAccountDetails.documentId,
             },
             populate: {
               account_detail: true,

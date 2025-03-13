@@ -527,9 +527,9 @@ export interface ApiAccountDetailAccountDetail
       'elements.warehouse-location',
       false
     >;
-    shipping_addresses: Schema.Attribute.Component<
-      'elements.shipping-address',
-      true
+    shipping_addresses: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::address.address'
     >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
@@ -570,6 +570,7 @@ export interface ApiAddressAddress extends Struct.CollectionTypeSchema {
       'manyToMany',
       'plugin::users-permissions.user'
     >;
+    name: Schema.Attribute.Component<'elements.name', false>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;

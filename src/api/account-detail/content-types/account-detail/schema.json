@@ -14,7 +14,11 @@
   "attributes": {
     "level": {
       "type": "enumeration",
-      "enum": ["SMALL", "MID-SIZED", "VIP"]
+      "enum": [
+        "SMALL",
+        "MID-SIZED",
+        "VIP"
+      ]
     },
     "odoo_user_id": {
       "type": "string",
@@ -41,9 +45,9 @@
       "component": "elements.warehouse-location"
     },
     "shipping_addresses": {
-      "type": "component",
-      "repeatable": true,
-      "component": "elements.shipping-address"
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::address.address"
     }
   }
 }
