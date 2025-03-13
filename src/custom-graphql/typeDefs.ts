@@ -48,17 +48,19 @@ export const typeDefs = `
 	}
 
 	input RegisterUserInput {
-		userType: String!
 		email: String!
 		username: String!
 		password: String!
 		businessName: String!
 		businessNumber: String!
-		street: String!
-		suburb: String!
-		state: String!
-		postalCode: String!
+		userType: String!
 		phone: String!
+		street1: String!
+		street2: String!
+		state: String!
+		city: String!
+		country: String!
+		zipCode: String!
 	}
 
 	input ApprovedUserInput {

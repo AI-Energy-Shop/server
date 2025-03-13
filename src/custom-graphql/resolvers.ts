@@ -19,6 +19,7 @@ export const resolvers = {
               },
             },
           });
+
         if (useremail) {
           throw new Error("Email already exists!");
         }
@@ -39,11 +40,13 @@ export const resolvers = {
 
         const address = await strapi.documents("api::address.address").create({
           data: {
-            street1: args.data.street,
-            suburb: args.data.suburb,
-            state_territory: args.data.state,
+            street1: args.data.street1,
+            street2: args.data.street2,
+            city: args.data.city,
+            state: args.data.state,
             phone: args.data.phone,
-            zip_code: args.data.postalCode,
+            zip_code: args.data.zipCode,
+            country: args.data.country,
             isActive: true,
           },
         });

@@ -560,8 +560,7 @@ export interface ApiAddressAddress extends Struct.CollectionTypeSchema {
   attributes: {
     street1: Schema.Attribute.String;
     street2: Schema.Attribute.String;
-    suburb: Schema.Attribute.String;
-    state_territory: Schema.Attribute.String;
+    state: Schema.Attribute.String;
     city: Schema.Attribute.String;
     zip_code: Schema.Attribute.String;
     country: Schema.Attribute.String & Schema.Attribute.DefaultTo<'Australia'>;

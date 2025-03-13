@@ -1,17 +1,19 @@
 import type { Struct, Schema } from "@strapi/strapi";
 
 export type RegisterUserInput = {
-  userType: string;
   email: string;
   username: string;
   password: string;
   businessName: string;
   businessNumber: string;
-  street: string;
-  state: string;
-  suburb: string;
-  postalCode: string;
+  userType: string;
   phone: string;
+  street1: string;
+  street2: string;
+  state: string;
+  city: string;
+  country: string;
+  zipCode: string;
 };
 
 type UserAccountDetails = {

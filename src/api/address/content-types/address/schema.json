@@ -18,10 +18,7 @@
     "street2": {
       "type": "string"
     },
-    "suburb": {
-      "type": "string"
-    },
-    "state_territory": {
+    "state": {
       "type": "string"
     },
     "city": {
