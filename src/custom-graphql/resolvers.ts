@@ -1,8 +1,6 @@
 import {
-  PaginationInputArgs,
   ProductInputArgs,
   RegisterUserInput,
-  SortInputArgs,
   UserApprovalRequestInput,
 } from "../../types/custom";
 
@@ -40,6 +38,7 @@ export const resolvers = {
 
         const address = await strapi.documents("api::address.address").create({
           data: {
+            title: "Primary",
             street1: args.data.street1,
             street2: args.data.street2,
             city: args.data.city,
@@ -55,6 +54,7 @@ export const resolvers = {
           .documents("api::address.address")
           .create({
             data: {
+              title: "Primary",
               street1: args.data.street1,
               street2: args.data.street2,
               city: args.data.city,
@@ -408,44 +408,44 @@ export const resolvers = {
         return [];
       }
     },
-    getProduct: async (_: any, args: { documentId: string }) => {
-      try {
-        const product = await strapi.documents("api::product.product").findOne({
-          documentId: args.documentId,
-        });
+    // getProduct: async (_: any, args: { documentId: string }) => {
+    //   try {
+    //     const product = await strapi.documents("api::product.product").findOne({
+    //       documentId: args.documentId,
+    //     });
 
-        if (!product) {
-          throw new Error("Product not found");
-        }
+    //     if (!product) {
+    //       throw new Error("Product not found");
+    //     }
 
-        return product;
-      } catch (error) {
-        console.log(error);
-        return error;
-      }
-    },
-    getProducts: async (
-      _: any,
-      args: { pagination: PaginationInputArgs; sort: SortInputArgs }
-    ) => {
-      try {
-        const products = await strapi
-          .documents("api::product.product")
-          .findMany({
-            start: args.pagination.start,
-            limit: args.pagination.limit,
-          });
+    //     return product;
+    //   } catch (error) {
+    //     console.log(error);
+    //     return error;
+    //   }
+    // },
+    // getProducts: async (
+    //   _: any,
+    //   args: { pagination: PaginationInputArgs; sort: SortInputArgs }
+    // ) => {
+    //   try {
+    //     const products = await strapi
+    //       .documents("api::product.product")
+    //       .findMany({
+    //         start: args.pagination.start,
+    //         limit: args.pagination.limit,
+    //       });
 
-        if (!products) {
-          throw new Error("No products found");
-        }
+    //     if (!products) {
+    //       throw new Error("No products found");
+    //     }
 
-        return products;
-      } catch (error) {
-        console.error("Error getting products:", error.message);
-        return error;
-      }
-    },
+    //     return products;
+    //   } catch (error) {
+    //     console.error("Error getting products:", error.message);
+    //     return error;
+    //   }
+    // },
     cart: async (_: any, args: { documentId: string }) => {
       try {
         const cart = await strapi.documents("api::cart.cart").findOne({

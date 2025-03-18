@@ -20,12 +20,12 @@ export const resolversConfig = {
     },
   },
   Query: {
-    getProduct: {
-      auth: true,
-    },
-    getProducts: {
-      auth: true,
-    },
+    // getProduct: {
+    //   auth: true,
+    // },
+    // getProducts: {
+    //   auth: true,
+    // },
     getPage: {
       auth: false,
     },

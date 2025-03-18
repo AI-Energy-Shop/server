@@ -487,6 +487,9 @@ export interface PluginUsersPermissionsUser
     phone: Schema.Attribute.String;
     addresses: Schema.Attribute.Relation<'manyToMany', 'api::address.address'>;
     createAccountRequest: Schema.Attribute.DateTime;
+    image_logo: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -571,6 +574,7 @@ export interface ApiAddressAddress extends Struct.CollectionTypeSchema {
       'plugin::users-permissions.user'
     >;
     name: Schema.Attribute.Component<'elements.name', false>;
+    title: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -634,9 +638,10 @@ export interface ApiInventoryInventory extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    location: Schema.Attribute.String;
-    quantity: Schema.Attribute.Integer;
     products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
+    name: Schema.Attribute.String;
+    location_code: Schema.Attribute.String;
+    quantity: Schema.Attribute.Integer;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -719,6 +724,36 @@ export interface ApiPagePage extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiPricePrice extends Struct.CollectionTypeSchema {
+  collectionName: 'prices';
+  info: {
+    singularName: 'price';
+    pluralName: 'prices';
+    displayName: 'Price';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    sale_price: Schema.Attribute.Decimal;
+    price: Schema.Attribute.Decimal;
+    min_quantity: Schema.Attribute.Integer;
+    max_quantity: Schema.Attribute.Integer;
+    user_level: Schema.Attribute.String;
+    products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
+    createdAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::price.price'>;
+  };
+}
+
 export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   collectionName: 'products';
   info: {
@@ -731,12 +766,11 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    name: Schema.Attribute.String;
-    description: Schema.Attribute.Text;
+    name: Schema.Attribute.String & Schema.Attribute.Required;
+    description: Schema.Attribute.Text & Schema.Attribute.Required;
     category: Schema.Attribute.String;
     vendor: Schema.Attribute.String;
     odoo_product_id: Schema.Attribute.String & Schema.Attribute.Unique;
-    price_list: Schema.Attribute.Component<'elements.price', true>;
     files: Schema.Attribute.Media<'files', true>;
     images: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
@@ -744,11 +778,15 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     >;
     specification: Schema.Attribute.Component<'elements.specification', true>;
     key_features: Schema.Attribute.Component<'elements.key-features', true>;
-    model: Schema.Attribute.String;
+    model: Schema.Attribute.String & Schema.Attribute.Required;
     inventories: Schema.Attribute.Relation<
       'manyToMany',
       'api::inventory.inventory'
     >;
+    product_brand_image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    price_lists: Schema.Attribute.Relation<'manyToMany', 'api::price.price'>;
     createdAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
@@ -1211,6 +1249,7 @@ declare module '@strapi/strapi' {
       'api::inventory.inventory': ApiInventoryInventory;
       'api::order.order': ApiOrderOrder;
       'api::page.page': ApiPagePage;
+      'api::price.price': ApiPricePrice;
       'api::product.product': ApiProductProduct;
       'api::user-approval-request.user-approval-request': ApiUserApprovalRequestUserApprovalRequest;
       'api::user-notification.user-notification': ApiUserNotificationUserNotification;

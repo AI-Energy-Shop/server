@@ -13,10 +13,12 @@
   "pluginOptions": {},
   "attributes": {
     "name": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "description": {
-      "type": "text"
+      "type": "text",
+      "required": true
     },
     "category": {
       "type": "string"
@@ -27,11 +29,6 @@
     "odoo_product_id": {
       "type": "string",
       "unique": true
-    },
-    "price_list": {
-      "type": "component",
-      "repeatable": true,
-      "component": "elements.price"
     },
     "files": {
       "type": "media",
@@ -64,12 +61,30 @@
       "component": "elements.key-features"
     },
     "model": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "inventories": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::inventory.inventory",
+      "inversedBy": "products"
+    },
+    "product_brand_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "price_lists": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::price.price",
       "inversedBy": "products"
     }
   }

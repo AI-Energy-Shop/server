@@ -107,8 +107,6 @@ export const typeDefs = `
 		carts(filters: CartFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Cart]
 		getPage(slug: String!): Page
 		files(filters: FilesFiltersArgs): [UploadFile]!
-		getProduct(documentId: ID!, status: PublicationStatus = PUBLISHED): Product
-		getProducts(filters: ProductFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [Product]!
 		user(filters: UserFiltersInput): UsersPermissionsUser
 	}
 `;

@@ -12,17 +12,20 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "location": {
-      "type": "string"
-    },
-    "quantity": {
-      "type": "integer"
-    },
     "products": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::product.product",
       "mappedBy": "inventories"
+    },
+    "name": {
+      "type": "string"
+    },
+    "location_code": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "integer"
     }
   }
 }
