@@ -273,6 +273,51 @@ export const resolvers = {
     addToCart: async (_: any, args: any, ctx: any) => {
       try {
         const { user } = ctx?.state;
+
+        const existingCartItem = await strapi
+          .documents("api::cart.cart")
+          .findFirst({
+            filters: {
+              item: {
+                model: {
+                  $contains: args.data.model,
+                },
+              },
+              user: {
+                id: {
+                  $contains: user.id,
+                },
+              },
+            },
+            populate: {
+              item: true,
+            },
+          });
+
+        if (existingCartItem) {
+          const updatedCartItem = await strapi
+            .documents("api::cart.cart")
+            .update({
+              documentId: existingCartItem.documentId,
+              data: {
+                item: {
+                  price: args.data.price,
+                  title: args.data.title,
+                  model: args.data.model,
+                  image: args.data.image,
+                  odoo_product_id: args.data.odoo_product_id,
+                  quantity: existingCartItem.item.quantity + args.data.quantity,
+                },
+              },
+              populate: {
+                item: true,
+                user: true,
+              },
+            });
+
+          return updatedCartItem;
+        }
+
         const cart = await strapi.documents("api::cart.cart").create({
           data: {
             user: user.id,
@@ -286,17 +331,10 @@ export const resolvers = {
           },
         });
 
-        if (!cart) {
-          throw new Error("Failed to add to cart");
-        }
-
         return cart;
       } catch (error) {
-        console.error("Error adding to cart:", error.message);
-        return {
-          success: false,
-          error: error.message || "Unknown error occurred",
-        };
+        console.error("Error adding to cart:", error);
+        throw new Error(error.message);
       }
     },
     updateCartItem: async (_: any, args: any) => {

@@ -763,7 +763,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     description: '';
   };
   options: {
-    draftAndPublish: false;
+    draftAndPublish: true;
   };
   attributes: {
     name: Schema.Attribute.String & Schema.Attribute.Required;
