@@ -12,9 +12,6 @@ export default {
   register({ strapi }: { strapi: Core.Strapi }) {
     // Add your logic here
     const extensionService = strapi.plugin("graphql").service("extension");
-    // disable carts shadow crud
-    extensionService.shadowCRUD("api::cart.cart").disable();
-
     const extension = ({ strapiExt }: { strapiExt: Core.Strapi }) => ({
       types: {},
       plugins: [],

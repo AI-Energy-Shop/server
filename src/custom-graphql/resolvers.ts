@@ -70,7 +70,9 @@ export const resolvers = {
           .documents("api::account-detail.account-detail")
           .create({
             data: {
-              shipping_addresses: shippingAddresses.documentId,
+              shipping_addresses: {
+                connect: [shippingAddresses.documentId],
+              },
               warehouse_location: {
                 title: "Sydney",
                 address: {
@@ -97,8 +99,10 @@ export const resolvers = {
               password: args.data.password,
               phone: args.data.phone,
               account_status: "PENDING",
-              addresses: address.id,
-              account_detail: accountDetails.id,
+              addresses: {
+                connect: [address.documentId],
+              },
+              account_detail: accountDetails.documentId,
             },
             populate: {
               addresses: true,
@@ -270,114 +274,6 @@ export const resolvers = {
         };
       }
     },
-    addToCart: async (_: any, args: any, ctx: any) => {
-      try {
-        const { user } = ctx?.state;
-
-        const existingCartItem = await strapi
-          .documents("api::cart.cart")
-          .findFirst({
-            filters: {
-              item: {
-                model: {
-                  $contains: args.data.model,
-                },
-              },
-              user: {
-                id: {
-                  $contains: user.id,
-                },
-              },
-            },
-            populate: {
-              item: true,
-            },
-          });
-
-        if (existingCartItem) {
-          const updatedCartItem = await strapi
-            .documents("api::cart.cart")
-            .update({
-              documentId: existingCartItem.documentId,
-              data: {
-                item: {
-                  price: args.data.price,
-                  title: args.data.title,
-                  model: args.data.model,
-                  image: args.data.image,
-                  odoo_product_id: args.data.odoo_product_id,
-                  quantity: existingCartItem.item.quantity + args.data.quantity,
-                },
-              },
-              populate: {
-                item: true,
-                user: true,
-              },
-            });
-
-          return updatedCartItem;
-        }
-
-        const cart = await strapi.documents("api::cart.cart").create({
-          data: {
-            user: user.id,
-            item: {
-              ...args.data,
-            },
-          },
-          populate: {
-            item: true,
-            user: true,
-          },
-        });
-
-        return cart;
-      } catch (error) {
-        console.error("Error adding to cart:", error);
-        throw new Error(error.message);
-      }
-    },
-    updateCartItem: async (_: any, args: any) => {
-      try {
-        const { documentId, data } = args;
-        const cart = await strapi.documents("api::cart.cart").update({
-          documentId: documentId,
-          data: {
-            item: data,
-          },
-        });
-
-        return cart;
-      } catch (error) {
-        console.error("Error updating cart item:", error.message);
-        return {
-          success: false,
-          error: error.message || "Unknown error occurred",
-        };
-      }
-    },
-    deleteCartItem: async (_: any, args: any) => {
-      try {
-        const { documentId } = args;
-        const cart = await strapi.documents("api::cart.cart").delete({
-          documentId: documentId,
-        });
-
-        if (!cart) {
-          throw new Error("Failed to delete cart item");
-        }
-
-        return {
-          documentId: documentId,
-        };
-      } catch (error) {
-        console.error("Error deleting cart item:", error.message);
-        return {
-          success: false,
-          error: error.message || "Unknown error occurred",
-        };
-      }
-    },
     updateUser: async (_: any, args: { documentId: string; data: any }) => {
       try {
         const { documentId, data } = args;
@@ -444,76 +340,6 @@ export const resolvers = {
       } catch (error) {
         console.error(error);
         return [];
-      }
-    },
-    // getProduct: async (_: any, args: { documentId: string }) => {
-    //   try {
-    //     const product = await strapi.documents("api::product.product").findOne({
-    //       documentId: args.documentId,
-    //     });
-
-    //     if (!product) {
-    //       throw new Error("Product not found");
-    //     }
-
-    //     return product;
-    //   } catch (error) {
-    //     console.log(error);
-    //     return error;
-    //   }
-    // },
-    // getProducts: async (
-    //   _: any,
-    //   args: { pagination: PaginationInputArgs; sort: SortInputArgs }
-    // ) => {
-    //   try {
-    //     const products = await strapi
-    //       .documents("api::product.product")
-    //       .findMany({
-    //         start: args.pagination.start,
-    //         limit: args.pagination.limit,
-    //       });
-
-    //     if (!products) {
-    //       throw new Error("No products found");
-    //     }
-
-    //     return products;
-    //   } catch (error) {
-    //     console.error("Error getting products:", error.message);
-    //     return error;
-    //   }
-    // },
-    cart: async (_: any, args: { documentId: string }) => {
-      try {
-        const cart = await strapi.documents("api::cart.cart").findOne({
-          documentId: args.documentId,
-        });
-      } catch (error) {
-        console.error("Error getting cart:", error.message);
-        return error;
-      }
-    },
-    carts: async (_: any, args: { filters: any }, ctx: any) => {
-      try {
-        const { user } = ctx?.state;
-        const carts = await strapi.documents("api::cart.cart").findMany({
-          filters: {
-            user: {
-              id: {
-                $contains: user.id,
-              },
-            },
-          },
-          populate: {
-            item: true,
-          },
-        });
-
-        return carts;
-      } catch (error) {
-        console.error("Error getting carts:", error.message);
-        return error;
       }
     },
     user: async (

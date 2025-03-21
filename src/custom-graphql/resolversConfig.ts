@@ -6,26 +6,11 @@ export const resolversConfig = {
     registerUser: {
       auth: false,
     },
-    addToCart: {
-      auth: true,
-    },
-    updateCartItem: {
-      auth: true,
-    },
-    deleteCartItem: {
-      auth: true,
-    },
     updateUser: {
       auth: true,
     },
   },
   Query: {
-    // getProduct: {
-    //   auth: true,
-    // },
-    // getProducts: {
-    //   auth: true,
-    // },
     getPage: {
       auth: false,
     },

@@ -30,6 +30,11 @@
     "image": {
       "type": "string",
       "required": true
+    },
+    "productID": {
+      "type": "string",
+      "required": true,
+      "unique": true
     }
   }
 }

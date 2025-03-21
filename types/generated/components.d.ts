@@ -1,254 +1,67 @@
-import type { Struct, Schema } from '@strapi/strapi';
+import type { Schema, Struct } from '@strapi/strapi';
 
-export interface SectionsWarehouseLocations extends Struct.ComponentSchema {
-  collectionName: 'components_sections_warehouse_locations';
+export interface ElementsAddress extends Struct.ComponentSchema {
+  collectionName: 'components_elements_addresses';
   info: {
-    displayName: 'Warehouse Locations';
-  };
-  attributes: {
-    heading: Schema.Attribute.String;
-    sub_heading: Schema.Attribute.String;
-    locations: Schema.Attribute.Component<'layout.warehouse-location', true>;
-  };
-}
-
-export interface SectionsImageSlider extends Struct.ComponentSchema {
-  collectionName: 'components_sections_image_sliders';
-  info: {
-    displayName: 'Image Slider';
-    icon: 'apps';
     description: '';
-  };
-  attributes: {
-    animation_duration: Schema.Attribute.Integer;
-    display_button: Schema.Attribute.Boolean;
-    slides: Schema.Attribute.Component<'layout.slide', true>;
-  };
-}
-
-export interface SectionsContactUs extends Struct.ComponentSchema {
-  collectionName: 'components_sections_contact_us';
-  info: {
-    displayName: 'Contact Us';
-    description: '';
-  };
-  attributes: {
-    heading: Schema.Attribute.String;
-    description: Schema.Attribute.Text;
-    button_title: Schema.Attribute.String;
-    background_image: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    >;
-  };
-}
-
-export interface SectionsContactDetails extends Struct.ComponentSchema {
-  collectionName: 'components_sections_contact_details';
-  info: {
-    displayName: 'Contact Details';
-    description: '';
-  };
-  attributes: {
-    left_heading: Schema.Attribute.String;
-    left_sub_heading: Schema.Attribute.String;
-    right_heading: Schema.Attribute.String;
-    right_sub_heading: Schema.Attribute.String;
-  };
-}
-
-export interface SectionsAbout extends Struct.ComponentSchema {
-  collectionName: 'components_sections_about';
-  info: {
-    displayName: 'About';
-    description: '';
-  };
-  attributes: {
-    heading: Schema.Attribute.String;
-    sub_heading: Schema.Attribute.String;
-    description: Schema.Attribute.String;
-    button_title: Schema.Attribute.String;
-    background_image: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    >;
-  };
-}
-
-export interface LayoutWarehouseLocation extends Struct.ComponentSchema {
-  collectionName: 'components_layout_warehouse_locations';
-  info: {
-    displayName: 'Warehouse Location';
+    displayName: 'Address';
     icon: 'bulletList';
-    description: '';
   };
   attributes: {
-    address: Schema.Attribute.String;
-    warehouse_time: Schema.Attribute.String;
-    office_time: Schema.Attribute.String;
-    google_maps_link: Schema.Attribute.Text;
-    name: Schema.Attribute.String;
-  };
-}
-
-export interface LayoutSlide extends Struct.ComponentSchema {
-  collectionName: 'components_layout_slides';
-  info: {
-    displayName: 'Slide';
-    icon: 'bulletList';
-    description: '';
-  };
-  attributes: {
-    title: Schema.Attribute.String;
-    description: Schema.Attribute.Text;
-    link: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
-    type: Schema.Attribute.Enumeration<['DESKTOP', 'TABLET', 'MOBILE']>;
-  };
-}
-
-export interface FormNewsletter extends Struct.ComponentSchema {
-  collectionName: 'components_form_newsletters';
-  info: {
-    displayName: 'Newsletter';
-    icon: 'envelop';
-    description: '';
-  };
-  attributes: {
-    heading: Schema.Attribute.String;
-    sub_heading: Schema.Attribute.String;
-    inputs: Schema.Attribute.Component<'elements.input', true>;
-    sub_text: Schema.Attribute.String;
-    button_title: Schema.Attribute.String;
-    image: Schema.Attribute.Media<'images'>;
-  };
-}
-
-export interface FormInquiry extends Struct.ComponentSchema {
-  collectionName: 'components_form_inquiries';
-  info: {
-    displayName: 'Inquiry';
-    icon: 'apps';
-  };
-  attributes: {
-    heading: Schema.Attribute.String;
-    button_title: Schema.Attribute.String;
-    inputs: Schema.Attribute.Component<'elements.input', true>;
-  };
-}
-
-export interface ElementsWarehouseLocation extends Struct.ComponentSchema {
-  collectionName: 'components_elements_warehouse_locations';
-  info: {
-    displayName: 'Warehouse Location';
-    icon: 'bulletList';
-    description: '';
-  };
-  attributes: {
-    title: Schema.Attribute.String;
-    address: Schema.Attribute.Component<'elements.address', false>;
-  };
-}
-
-export interface ElementsSpecification extends Struct.ComponentSchema {
-  collectionName: 'components_elements_specifications';
-  info: {
-    displayName: 'Specification';
-    icon: 'bulletList';
-    description: '';
-  };
-  attributes: {
-    key: Schema.Attribute.String & Schema.Attribute.Required;
-    value: Schema.Attribute.String & Schema.Attribute.Required;
-  };
-}
-
-export interface ElementsShipping extends Struct.ComponentSchema {
-  collectionName: 'components_elements_shippings';
-  info: {
-    displayName: 'Shipping';
-    icon: 'bulletList';
-    description: '';
-  };
-  attributes: {
-    delivery_option: Schema.Attribute.Component<
-      'elements.delivery-option',
-      false
-    >;
-    shipping_details: Schema.Attribute.Component<'elements.address', false>;
-    warehouse_location: Schema.Attribute.Integer;
-  };
-}
-
-export interface ElementsShippingAddress extends Struct.ComponentSchema {
-  collectionName: 'components_elements_shipping_addresses';
-  info: {
-    displayName: 'Shipping Address';
-    icon: 'bulletList';
-    description: '';
-  };
-  attributes: {
-    street: Schema.Attribute.String;
-    suburb: Schema.Attribute.String;
-    state_territory: Schema.Attribute.String;
-    postcode: Schema.Attribute.String;
+    city: Schema.Attribute.String;
     country: Schema.Attribute.String;
     isActive: Schema.Attribute.Boolean;
     phone: Schema.Attribute.String;
-    city: Schema.Attribute.String;
-    name: Schema.Attribute.Component<'elements.name', false>;
+    postcode: Schema.Attribute.String;
+    state_territory: Schema.Attribute.String;
+    street: Schema.Attribute.String;
+    suburb: Schema.Attribute.String;
   };
 }
 
-export interface ElementsPrice extends Struct.ComponentSchema {
-  collectionName: 'components_elements_prices';
+export interface ElementsCartItem extends Struct.ComponentSchema {
+  collectionName: 'components_elements_cart_items';
   info: {
-    displayName: 'Price';
-    icon: 'priceTag';
     description: '';
+    displayName: 'Cart Item';
+    icon: 'bulletList';
   };
   attributes: {
+    image: Schema.Attribute.String & Schema.Attribute.Required;
+    model: Schema.Attribute.String & Schema.Attribute.Required;
+    odoo_product_id: Schema.Attribute.String & Schema.Attribute.Required;
+    price: Schema.Attribute.Decimal & Schema.Attribute.Required;
+    productID: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    quantity: Schema.Attribute.Integer & Schema.Attribute.Required;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ElementsDeliveryOption extends Struct.ComponentSchema {
+  collectionName: 'components_elements_delivery_options';
+  info: {
+    displayName: 'Delivery Option';
+  };
+  attributes: {
+    eta: Schema.Attribute.String;
+    notes: Schema.Attribute.Text;
     price: Schema.Attribute.Decimal;
-    sale_price: Schema.Attribute.Decimal;
-    min_quantity: Schema.Attribute.BigInteger;
-    max_quantity: Schema.Attribute.BigInteger;
-    user_level: Schema.Attribute.Enumeration<
-      ['SMALL', 'MID-SIZED', 'VIP', 'WHOLESALE']
-    >;
+    title: Schema.Attribute.String;
   };
 }
 
-export interface ElementsPaymentOption extends Struct.ComponentSchema {
-  collectionName: 'components_elements_payment_options';
+export interface ElementsInput extends Struct.ComponentSchema {
+  collectionName: 'components_elements_inputs';
   info: {
-    displayName: 'Payment Option';
+    displayName: 'Input';
   };
   attributes: {
-    card_number: Schema.Attribute.String;
-    expiration_date: Schema.Attribute.Date;
-    cvv: Schema.Attribute.String;
-    card_holder_name: Schema.Attribute.String;
-    billing_zip: Schema.Attribute.String;
-  };
-}
-
-export interface ElementsName extends Struct.ComponentSchema {
-  collectionName: 'components_elements_names';
-  info: {
-    displayName: 'Name';
-  };
-  attributes: {
-    first_name: Schema.Attribute.String;
-    middle_name: Schema.Attribute.String;
-    last_name: Schema.Attribute.String;
-  };
-}
-
-export interface ElementsKeyFeatures extends Struct.ComponentSchema {
-  collectionName: 'components_elements_key_features';
-  info: {
-    displayName: 'key_features';
-  };
-  attributes: {
-    feature: Schema.Attribute.String;
+    label: Schema.Attribute.String;
+    placeholder: Schema.Attribute.String;
+    required: Schema.Attribute.Boolean;
+    type: Schema.Attribute.Enumeration<['TEXT', 'NUMBER', 'TEXTAREA']>;
   };
 }
 
@@ -264,93 +77,283 @@ export interface ElementsInventory extends Struct.ComponentSchema {
   };
 }
 
-export interface ElementsInput extends Struct.ComponentSchema {
-  collectionName: 'components_elements_inputs';
+export interface ElementsKeyFeatures extends Struct.ComponentSchema {
+  collectionName: 'components_elements_key_features';
   info: {
-    displayName: 'Input';
+    displayName: 'key_features';
   };
   attributes: {
-    label: Schema.Attribute.String;
-    type: Schema.Attribute.Enumeration<['TEXT', 'NUMBER', 'TEXTAREA']>;
-    placeholder: Schema.Attribute.String;
-    required: Schema.Attribute.Boolean;
+    feature: Schema.Attribute.String;
   };
 }
 
-export interface ElementsDeliveryOption extends Struct.ComponentSchema {
-  collectionName: 'components_elements_delivery_options';
+export interface ElementsName extends Struct.ComponentSchema {
+  collectionName: 'components_elements_names';
   info: {
-    displayName: 'Delivery Option';
+    displayName: 'Name';
   };
   attributes: {
-    title: Schema.Attribute.String;
-    eta: Schema.Attribute.String;
-    notes: Schema.Attribute.Text;
+    first_name: Schema.Attribute.String;
+    last_name: Schema.Attribute.String;
+    middle_name: Schema.Attribute.String;
+  };
+}
+
+export interface ElementsPaymentOption extends Struct.ComponentSchema {
+  collectionName: 'components_elements_payment_options';
+  info: {
+    displayName: 'Payment Option';
+  };
+  attributes: {
+    billing_zip: Schema.Attribute.String;
+    card_holder_name: Schema.Attribute.String;
+    card_number: Schema.Attribute.String;
+    cvv: Schema.Attribute.String;
+    expiration_date: Schema.Attribute.Date;
+  };
+}
+
+export interface ElementsPrice extends Struct.ComponentSchema {
+  collectionName: 'components_elements_prices';
+  info: {
+    description: '';
+    displayName: 'Price';
+    icon: 'priceTag';
+  };
+  attributes: {
+    max_quantity: Schema.Attribute.BigInteger;
+    min_quantity: Schema.Attribute.BigInteger;
     price: Schema.Attribute.Decimal;
+    sale_price: Schema.Attribute.Decimal;
+    user_level: Schema.Attribute.Enumeration<
+      ['SMALL', 'MID-SIZED', 'VIP', 'WHOLESALE']
+    >;
   };
 }
 
-export interface ElementsCartItem extends Struct.ComponentSchema {
-  collectionName: 'components_elements_cart_items';
+export interface ElementsShipping extends Struct.ComponentSchema {
+  collectionName: 'components_elements_shippings';
   info: {
-    displayName: 'Cart Item';
-    icon: 'bulletList';
     description: '';
+    displayName: 'Shipping';
+    icon: 'bulletList';
   };
   attributes: {
-    title: Schema.Attribute.String & Schema.Attribute.Required;
-    quantity: Schema.Attribute.Integer & Schema.Attribute.Required;
-    price: Schema.Attribute.Decimal & Schema.Attribute.Required;
-    odoo_product_id: Schema.Attribute.String & Schema.Attribute.Required;
-    model: Schema.Attribute.String & Schema.Attribute.Required;
-    image: Schema.Attribute.String & Schema.Attribute.Required;
+    delivery_option: Schema.Attribute.Component<
+      'elements.delivery-option',
+      false
+    >;
+    shipping_details: Schema.Attribute.Component<'elements.address', false>;
+    warehouse_location: Schema.Attribute.Integer;
   };
 }
 
-export interface ElementsAddress extends Struct.ComponentSchema {
-  collectionName: 'components_elements_addresses';
+export interface ElementsShippingAddress extends Struct.ComponentSchema {
+  collectionName: 'components_elements_shipping_addresses';
   info: {
-    displayName: 'Address';
-    icon: 'bulletList';
     description: '';
+    displayName: 'Shipping Address';
+    icon: 'bulletList';
   };
   attributes: {
-    street: Schema.Attribute.String;
-    suburb: Schema.Attribute.String;
-    state_territory: Schema.Attribute.String;
-    postcode: Schema.Attribute.String;
+    city: Schema.Attribute.String;
     country: Schema.Attribute.String;
     isActive: Schema.Attribute.Boolean;
+    name: Schema.Attribute.Component<'elements.name', false>;
     phone: Schema.Attribute.String;
-    city: Schema.Attribute.String;
+    postcode: Schema.Attribute.String;
+    state_territory: Schema.Attribute.String;
+    street: Schema.Attribute.String;
+    suburb: Schema.Attribute.String;
+  };
+}
+
+export interface ElementsSpecification extends Struct.ComponentSchema {
+  collectionName: 'components_elements_specifications';
+  info: {
+    description: '';
+    displayName: 'Specification';
+    icon: 'bulletList';
+  };
+  attributes: {
+    key: Schema.Attribute.String & Schema.Attribute.Required;
+    value: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ElementsWarehouseLocation extends Struct.ComponentSchema {
+  collectionName: 'components_elements_warehouse_locations';
+  info: {
+    description: '';
+    displayName: 'Warehouse Location';
+    icon: 'bulletList';
+  };
+  attributes: {
+    address: Schema.Attribute.Component<'elements.address', false>;
+    title: Schema.Attribute.String;
+  };
+}
+
+export interface FormInquiry extends Struct.ComponentSchema {
+  collectionName: 'components_form_inquiries';
+  info: {
+    displayName: 'Inquiry';
+    icon: 'apps';
+  };
+  attributes: {
+    button_title: Schema.Attribute.String;
+    heading: Schema.Attribute.String;
+    inputs: Schema.Attribute.Component<'elements.input', true>;
+  };
+}
+
+export interface FormNewsletter extends Struct.ComponentSchema {
+  collectionName: 'components_form_newsletters';
+  info: {
+    description: '';
+    displayName: 'Newsletter';
+    icon: 'envelop';
+  };
+  attributes: {
+    button_title: Schema.Attribute.String;
+    heading: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'images'>;
+    inputs: Schema.Attribute.Component<'elements.input', true>;
+    sub_heading: Schema.Attribute.String;
+    sub_text: Schema.Attribute.String;
+  };
+}
+
+export interface LayoutSlide extends Struct.ComponentSchema {
+  collectionName: 'components_layout_slides';
+  info: {
+    description: '';
+    displayName: 'Slide';
+    icon: 'bulletList';
+  };
+  attributes: {
+    description: Schema.Attribute.Text;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    link: Schema.Attribute.String;
+    title: Schema.Attribute.String;
+    type: Schema.Attribute.Enumeration<['DESKTOP', 'TABLET', 'MOBILE']>;
+  };
+}
+
+export interface LayoutWarehouseLocation extends Struct.ComponentSchema {
+  collectionName: 'components_layout_warehouse_locations';
+  info: {
+    description: '';
+    displayName: 'Warehouse Location';
+    icon: 'bulletList';
+  };
+  attributes: {
+    address: Schema.Attribute.String;
+    google_maps_link: Schema.Attribute.Text;
+    name: Schema.Attribute.String;
+    office_time: Schema.Attribute.String;
+    warehouse_time: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsAbout extends Struct.ComponentSchema {
+  collectionName: 'components_sections_about';
+  info: {
+    description: '';
+    displayName: 'About';
+  };
+  attributes: {
+    background_image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    button_title: Schema.Attribute.String;
+    description: Schema.Attribute.String;
+    heading: Schema.Attribute.String;
+    sub_heading: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsContactDetails extends Struct.ComponentSchema {
+  collectionName: 'components_sections_contact_details';
+  info: {
+    description: '';
+    displayName: 'Contact Details';
+  };
+  attributes: {
+    left_heading: Schema.Attribute.String;
+    left_sub_heading: Schema.Attribute.String;
+    right_heading: Schema.Attribute.String;
+    right_sub_heading: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsContactUs extends Struct.ComponentSchema {
+  collectionName: 'components_sections_contact_us';
+  info: {
+    description: '';
+    displayName: 'Contact Us';
+  };
+  attributes: {
+    background_image: Schema.Attribute.Media<
+      'images' | 'files' | 'videos' | 'audios'
+    >;
+    button_title: Schema.Attribute.String;
+    description: Schema.Attribute.Text;
+    heading: Schema.Attribute.String;
+  };
+}
+
+export interface SectionsImageSlider extends Struct.ComponentSchema {
+  collectionName: 'components_sections_image_sliders';
+  info: {
+    description: '';
+    displayName: 'Image Slider';
+    icon: 'apps';
+  };
+  attributes: {
+    animation_duration: Schema.Attribute.Integer;
+    display_button: Schema.Attribute.Boolean;
+    slides: Schema.Attribute.Component<'layout.slide', true>;
+  };
+}
+
+export interface SectionsWarehouseLocations extends Struct.ComponentSchema {
+  collectionName: 'components_sections_warehouse_locations';
+  info: {
+    displayName: 'Warehouse Locations';
+  };
+  attributes: {
+    heading: Schema.Attribute.String;
+    locations: Schema.Attribute.Component<'layout.warehouse-location', true>;
+    sub_heading: Schema.Attribute.String;
   };
 }
 
 declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
-      'sections.warehouse-locations': SectionsWarehouseLocations;
-      'sections.image-slider': SectionsImageSlider;
-      'sections.contact-us': SectionsContactUs;
-      'sections.contact-details': SectionsContactDetails;
-      'sections.about': SectionsAbout;
-      'layout.warehouse-location': LayoutWarehouseLocation;
-      'layout.slide': LayoutSlide;
-      'form.newsletter': FormNewsletter;
-      'form.inquiry': FormInquiry;
-      'elements.warehouse-location': ElementsWarehouseLocation;
-      'elements.specification': ElementsSpecification;
+      'elements.address': ElementsAddress;
+      'elements.cart-item': ElementsCartItem;
+      'elements.delivery-option': ElementsDeliveryOption;
+      'elements.input': ElementsInput;
+      'elements.inventory': ElementsInventory;
+      'elements.key-features': ElementsKeyFeatures;
+      'elements.name': ElementsName;
+      'elements.payment-option': ElementsPaymentOption;
+      'elements.price': ElementsPrice;
       'elements.shipping': ElementsShipping;
       'elements.shipping-address': ElementsShippingAddress;
-      'elements.price': ElementsPrice;
-      'elements.payment-option': ElementsPaymentOption;
-      'elements.name': ElementsName;
-      'elements.key-features': ElementsKeyFeatures;
-      'elements.inventory': ElementsInventory;
-      'elements.input': ElementsInput;
-      'elements.delivery-option': ElementsDeliveryOption;
-      'elements.cart-item': ElementsCartItem;
-      'elements.address': ElementsAddress;
+      'elements.specification': ElementsSpecification;
+      'elements.warehouse-location': ElementsWarehouseLocation;
+      'form.inquiry': FormInquiry;
+      'form.newsletter': FormNewsletter;
+      'layout.slide': LayoutSlide;
+      'layout.warehouse-location': LayoutWarehouseLocation;
+      'sections.about': SectionsAbout;
+      'sections.contact-details': SectionsContactDetails;
+      'sections.contact-us': SectionsContactUs;
+      'sections.image-slider': SectionsImageSlider;
+      'sections.warehouse-locations': SectionsWarehouseLocations;
     }
   }
 }
