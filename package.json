@@ -1,22 +1,26 @@
 {
-  "name": "backend",
+  "name": "server-v-5-11-3",
   "version": "0.1.0",
   "private": true,
   "description": "A Strapi application",
   "scripts": {
     "build": "strapi build",
+    "console": "strapi console",
     "deploy": "strapi deploy",
     "dev": "strapi develop",
+    "develop": "strapi develop",
     "start": "strapi start",
-    "strapi": "strapi"
+    "strapi": "strapi",
+    "upgrade": "npx @strapi/upgrade latest",
+    "upgrade:dry": "npx @strapi/upgrade latest --dry"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.0.6",
+    "@strapi/plugin-cloud": "5.11.3",
     "@strapi/plugin-graphql": "^5.0.6",
-    "@strapi/plugin-users-permissions": "5.0.6",
+    "@strapi/plugin-users-permissions": "5.11.3",
     "@strapi/provider-upload-aws-s3": "^5.0.6",
-    "@strapi/strapi": "5.0.6",
-    "better-sqlite3": "9.4.3",
+    "@strapi/strapi": "5.11.3",
+    "better-sqlite3": "11.3.0",
     "mysql2": "^3.11.4",
     "pg": "^8.13.1",
     "pg-connection-string": "^2.7.0",
@@ -32,10 +36,10 @@
     "typescript": "^5"
   },
   "engines": {
-    "node": "20.10.0",
-    "npm": "10.9.0"
+    "node": ">=18.0.0 <=22.x.x",
+    "npm": ">=6.0.0"
   },
   "strapi": {
-    "uuid": "18e6708a-53aa-4f7c-b06c-93733eb3d1e0"
+    "uuid": "2766cf1c-edc2-4889-a23c-5c9928896a49"
   }
 }

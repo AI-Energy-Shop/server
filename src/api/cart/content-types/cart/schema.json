@@ -8,8 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": false,
-    "populateCreatorFields": true
+    "draftAndPublish": false
   },
   "pluginOptions": {
     "graphql": {
