@@ -23,8 +23,8 @@ export const resolversConfig = {
     carts: {
       auth: true,
     },
-    user: {
-      auth: true,
-    },
+    // user: {
+    //   auth: true,
+    // },
   },
 };

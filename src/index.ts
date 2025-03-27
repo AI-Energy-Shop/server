@@ -12,13 +12,13 @@ export default {
   register({ strapi }: { strapi: Core.Strapi }) {
     // Add your logic here
     const extensionService = strapi.plugin("graphql").service("extension");
-    const extension = ({ strapiExt }: { strapiExt: Core.Strapi }) => ({
-      types: {},
-      plugins: [],
-      typeDefs: typeDefs,
-      resolvers: resolvers,
-      resolversConfig: resolversConfig,
-    });
+    const extension = (strapiExt: any) => {
+      return {
+        typeDefs: typeDefs,
+        resolvers: resolvers,
+        resolversConfig: resolversConfig,
+      };
+    };
 
     extensionService.use(extension);
   },

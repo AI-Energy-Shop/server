@@ -179,7 +179,9 @@ export const resolvers = {
         }
 
         const accStatus = args.data.accountStatus;
-        const userRole = accStatus.toLowerCase().includes("approved") ? 1 : 2;
+        const userRole = accStatus.toLowerCase().includes("approved")
+          ? "u7pxh5su46ebp1jsia8y6mdl"
+          : "elrqazyf8qxdxw7qkuh81xr4";
 
         const userUpdate = await strapi
           .documents("plugin::users-permissions.user")
@@ -195,8 +197,11 @@ export const resolvers = {
             },
             populate: {
               account_detail: true,
+              role: true,
             },
           });
+
+        console.log(userUpdate);
 
         if (!userUpdate) {
           throw new Error("User update failed");
