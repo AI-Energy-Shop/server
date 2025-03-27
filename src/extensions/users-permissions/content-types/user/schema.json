@@ -57,8 +57,7 @@
       "type": "relation",
       "relation": "manyToOne",
       "target": "plugin::users-permissions.role",
-      "inversedBy": "users",
-      "configurable": false
+      "inversedBy": "users"
     },
     "account_detail": {
       "type": "relation",
@@ -67,12 +66,7 @@
     },
     "account_status": {
       "type": "enumeration",
-      "enum": [
-        "PENDING",
-        "REVIEWING",
-        "APPROVED",
-        "DENIED"
-      ]
+      "enum": ["PENDING", "REVIEWING", "APPROVED", "DENIED"]
     },
     "user_notifications": {
       "type": "relation",
@@ -114,14 +108,15 @@
       "type": "datetime"
     },
     "image_logo": {
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ],
       "type": "media",
-      "multiple": false
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images", "files", "videos", "audios"]
+    },
+    "credit": {
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.credit"
     }
   }
 }

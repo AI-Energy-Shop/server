@@ -1,0 +1,21 @@
+{
+  "collectionName": "components_elements_credits",
+  "info": {
+    "displayName": "Credit"
+  },
+  "options": {},
+  "attributes": {
+    "limit": {
+      "type": "decimal"
+    },
+    "totalReceivable": {
+      "type": "decimal"
+    },
+    "totalOverdue": {
+      "type": "decimal"
+    },
+    "paymentTerms": {
+      "type": "datetime"
+    }
+  }
+}

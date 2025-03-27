@@ -50,6 +50,12 @@
     },
     "title": {
       "type": "string"
+    },
+    "odoo_address_id": {
+      "type": "string"
+    },
+    "mobile": {
+      "type": "string"
     }
   }
 }
