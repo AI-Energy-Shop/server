@@ -18,7 +18,7 @@ export const typeDefs = `
 		password: String!
 		businessName: String!
 		businessNumber: String!
-		userType: String!
+		businessType: String!
 		phone: String!
 		street1: String!
 		street2: String!
@@ -29,7 +29,7 @@ export const typeDefs = `
 	}
 
 	input ApprovedUserInput {
-		userType: String!
+		businessType: String!
 		userLevel: String!
 		accountStatus: String!
 		odooUserId: String!

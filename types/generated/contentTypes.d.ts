@@ -1271,6 +1271,7 @@ export interface PluginUsersPermissionsUser
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     business_name: Schema.Attribute.String;
     business_number: Schema.Attribute.String;
+    business_type: Schema.Attribute.String;
     carts: Schema.Attribute.Relation<'oneToMany', 'api::cart.cart'>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     createAccountRequest: Schema.Attribute.DateTime;
@@ -1313,7 +1314,6 @@ export interface PluginUsersPermissionsUser
       'oneToMany',
       'api::user-notification.user-notification'
     >;
-    user_type: Schema.Attribute.String;
     username: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique &

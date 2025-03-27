@@ -95,7 +95,7 @@ export const resolvers = {
               username: args.data.username,
               business_name: args.data.businessName,
               business_number: args.data.businessNumber,
-              user_type: args.data.userType,
+              business_type: args.data.businessType,
               password: args.data.password,
               phone: args.data.phone,
               account_status: "PENDING",
@@ -210,8 +210,6 @@ export const resolvers = {
               role: true,
             },
           });
-
-        console.log(userUpdate);
 
         if (!userUpdate) {
           throw new Error("User update failed");

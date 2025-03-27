@@ -66,7 +66,12 @@
     },
     "account_status": {
       "type": "enumeration",
-      "enum": ["PENDING", "REVIEWING", "APPROVED", "DENIED"]
+      "enum": [
+        "PENDING",
+        "REVIEWING",
+        "APPROVED",
+        "DENIED"
+      ]
     },
     "user_notifications": {
       "type": "relation",
@@ -92,7 +97,7 @@
     "business_number": {
       "type": "string"
     },
-    "user_type": {
+    "business_type": {
       "type": "string"
     },
     "phone": {
@@ -111,7 +116,12 @@
       "type": "media",
       "multiple": false,
       "required": false,
-      "allowedTypes": ["images", "files", "videos", "audios"]
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     },
     "credit": {
       "type": "component",

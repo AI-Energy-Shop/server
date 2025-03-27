@@ -6,7 +6,7 @@ export type RegisterUserInput = {
   password: string;
   businessName: string;
   businessNumber: string;
-  userType: string;
+  businessType: string;
   phone: string;
   street1: string;
   street2: string;
@@ -23,9 +23,9 @@ type UserAccountDetails = {
 
 export type UserApprovalRequestInput = {
   accountStatus: "APPROVED" | "DENIED" | "CREATE_APPROVED";
+  businessType: string;
   odooUserId: string;
   userLevel: "SMALL" | "MID-SIZED" | "VIP";
-  userType: string;
 };
 
 type = "SMALL" | "MID-SIZED" | "VIP" | "WHOLESALE";
