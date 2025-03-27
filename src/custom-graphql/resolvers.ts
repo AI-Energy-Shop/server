@@ -179,16 +179,26 @@ export const resolvers = {
         }
 
         const accStatus = args.data.accountStatus;
-        const userRole = accStatus.toLowerCase().includes("approved")
-          ? "u7pxh5su46ebp1jsia8y6mdl"
-          : "elrqazyf8qxdxw7qkuh81xr4";
+        const isApproved = accStatus.toLowerCase().includes("approved")
+          ? true
+          : false;
+
+        const roles = await strapi
+          .documents("plugin::users-permissions.role")
+          .findMany({
+            filters: {
+              name: {
+                $contains: "CUSTOMER",
+              },
+            },
+          });
 
         const userUpdate = await strapi
           .documents("plugin::users-permissions.user")
           .update({
             documentId: userData.documentId,
             data: {
-              role: userRole,
+              role: isApproved && roles.length > 0 ? roles[0].documentId : null,
               createAccountRequest:
                 accStatus === "CREATE_APPROVED" ? Date.now() : null,
               account_status: accStatus.toLowerCase().includes("approved")
