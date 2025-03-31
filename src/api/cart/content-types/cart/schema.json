@@ -27,11 +27,13 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "carts"
     },
-    "item": {
-      "type": "component",
-      "repeatable": false,
-      "component": "elements.cart-item",
-      "required": true
+    "product": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::product.product"
+    },
+    "quantity": {
+      "type": "integer"
     }
   }
 }
