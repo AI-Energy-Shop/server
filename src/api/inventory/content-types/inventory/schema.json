@@ -26,6 +26,12 @@
     },
     "quantity": {
       "type": "integer"
+    },
+    "variants": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::variant.variant",
+      "mappedBy": "inventories"
     }
   }
 }

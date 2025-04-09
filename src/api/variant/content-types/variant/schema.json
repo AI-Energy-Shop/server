@@ -1,0 +1,46 @@
+{
+  "kind": "collectionType",
+  "collectionName": "variants",
+  "info": {
+    "singularName": "variant",
+    "pluralName": "variants",
+    "displayName": "Variant",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "variantOption": {
+      "type": "string"
+    },
+    "variantImage": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "prices_list": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::price.price",
+      "inversedBy": "variants"
+    },
+    "inventories": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::inventory.inventory",
+      "inversedBy": "variants"
+    },
+    "products": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product",
+      "mappedBy": "variants"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_elements_filter_rules",
+  "info": {
+    "displayName": "Filter Rule",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "field": {
+      "type": "string"
+    }
+  }
+}

@@ -1,15 +1,14 @@
 {
-  "collectionName": "components_elements_specifications",
+  "collectionName": "components_elements_specs",
   "info": {
-    "displayName": "Specification",
-    "icon": "bulletList",
-    "description": ""
+    "displayName": "Specs"
   },
   "options": {},
   "attributes": {
     "key": {
       "type": "string",
       "required": true,
+      "unique": true,
       "regex": "^[^-]*$"
     },
     "value": {

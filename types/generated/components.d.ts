@@ -65,6 +65,17 @@ export interface ElementsDeliveryOption extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsFilterRule extends Struct.ComponentSchema {
+  collectionName: 'components_elements_filter_rules';
+  info: {
+    description: '';
+    displayName: 'Filter Rule';
+  };
+  attributes: {
+    field: Schema.Attribute.String;
+  };
+}
+
 export interface ElementsInput extends Struct.ComponentSchema {
   collectionName: 'components_elements_inputs';
   info: {
@@ -190,6 +201,19 @@ export interface ElementsSpecification extends Struct.ComponentSchema {
   };
   attributes: {
     key: Schema.Attribute.String & Schema.Attribute.Required;
+    value: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ElementsSpecs extends Struct.ComponentSchema {
+  collectionName: 'components_elements_specs';
+  info: {
+    displayName: 'Specs';
+  };
+  attributes: {
+    key: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
     value: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
@@ -349,6 +373,7 @@ declare module '@strapi/strapi' {
       'elements.cart-item': ElementsCartItem;
       'elements.credit': ElementsCredit;
       'elements.delivery-option': ElementsDeliveryOption;
+      'elements.filter-rule': ElementsFilterRule;
       'elements.input': ElementsInput;
       'elements.inventory': ElementsInventory;
       'elements.key-features': ElementsKeyFeatures;
@@ -358,6 +383,7 @@ declare module '@strapi/strapi' {
       'elements.shipping': ElementsShipping;
       'elements.shipping-address': ElementsShippingAddress;
       'elements.specification': ElementsSpecification;
+      'elements.specs': ElementsSpecs;
       'elements.warehouse-location': ElementsWarehouseLocation;
       'form.inquiry': FormInquiry;
       'form.newsletter': FormNewsletter;

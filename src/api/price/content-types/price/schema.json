@@ -32,6 +32,12 @@
       "relation": "manyToMany",
       "target": "api::product.product",
       "mappedBy": "price_lists"
+    },
+    "variants": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::variant.variant",
+      "mappedBy": "prices_list"
     }
   }
 }
