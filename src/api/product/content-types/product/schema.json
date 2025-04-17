@@ -92,6 +92,9 @@
       "relation": "manyToMany",
       "target": "api::variant.variant",
       "inversedBy": "products"
+    },
+    "quote_needed": {
+      "type": "boolean"
     }
   }
 }
