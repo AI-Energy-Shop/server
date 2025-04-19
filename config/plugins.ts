@@ -28,7 +28,7 @@ export default ({ env }) => {
       config: {
         endpoint: "/graphql",
         shadowCRUD: true,
-        depthLimit: 7,
+        depthLimit: 20,
         defaultLimit: 50,
         amountLimit: 1000,
         createAdminUser: true,

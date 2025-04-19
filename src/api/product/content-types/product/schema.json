@@ -14,11 +14,15 @@
   "attributes": {
     "name": {
       "type": "string",
-      "required": true
+      "required": true,
+      "regex": "^(?!.*[%+&]).+$"
     },
     "description": {
       "type": "text",
       "required": true
+    },
+    "product_type": {
+      "type": "string"
     },
     "vendor": {
       "type": "string"
@@ -92,6 +96,12 @@
       "relation": "manyToMany",
       "target": "api::variant.variant",
       "inversedBy": "products"
+    },
+    "collections": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::collection.collection",
+      "mappedBy": "products"
     }
   }
 }

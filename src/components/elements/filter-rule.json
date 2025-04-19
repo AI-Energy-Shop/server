@@ -1,12 +1,15 @@
 {
   "collectionName": "components_elements_filter_rules",
   "info": {
-    "displayName": "Filter Rule",
+    "displayName": "Filter",
     "description": ""
   },
   "options": {},
   "attributes": {
-    "field": {
+    "title": {
+      "type": "string"
+    },
+    "handle": {
       "type": "string"
     }
   }

@@ -69,10 +69,11 @@ export interface ElementsFilterRule extends Struct.ComponentSchema {
   collectionName: 'components_elements_filter_rules';
   info: {
     description: '';
-    displayName: 'Filter Rule';
+    displayName: 'Filter';
   };
   attributes: {
-    field: Schema.Attribute.String;
+    handle: Schema.Attribute.String;
+    title: Schema.Attribute.String;
   };
 }
 
