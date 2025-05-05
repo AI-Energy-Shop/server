@@ -8,26 +8,100 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
-    "cart_items": {
-      "displayName": "Cart Item",
-      "type": "component",
-      "repeatable": true,
-      "component": "elements.cart-item"
+    "orderNumber": {
+      "type": "string"
     },
-    "shipping": {
+    "stripeCheckoutSession": {
+      "type": "string"
+    },
+    "trackingNumber": {
+      "type": "string"
+    },
+    "fulfillmentStatus": {
+      "type": "enumeration",
+      "enum": [
+        "fulfilled",
+        "unfulfilled"
+      ]
+    },
+    "paymentStatus": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "refund"
+      ]
+    },
+    "paymentMethod": {
+      "type": "enumeration",
+      "enum": [
+        "credit_card",
+        "bank_transfer",
+        "account_credit"
+      ]
+    },
+    "deliveryStatus": {
+      "type": "enumeration",
+      "enum": [
+        "tracking_added",
+        "shipped"
+      ]
+    },
+    "voucherCode": {
+      "type": "string"
+    },
+    "orderNotes": {
+      "type": "string"
+    },
+    "shippingType": {
+      "type": "enumeration",
+      "enum": [
+        "standard_delivery",
+        "express_delivery",
+        "pickup"
+      ]
+    },
+    "deliveryNotes": {
+      "type": "string"
+    },
+    "pickupNotes": {
+      "type": "string"
+    },
+    "pickupOption": {
+      "displayName": "Pickup Option",
       "type": "component",
       "repeatable": false,
-      "component": "elements.shipping"
+      "component": "elements.pickup-option"
+    },
+    "total": {
+      "displayName": "Total",
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.total"
+    },
+    "shippingAddress": {
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.shipping-address"
+    },
+    "warehouseLocation": {
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.warehouse-location"
+    },
+    "lineItems": {
+      "displayName": "Line Item",
+      "type": "component",
+      "repeatable": true,
+      "component": "elements.line-item"
     },
     "user": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "orders"
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }

@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_elements_totals",
+  "info": {
+    "displayName": "Total"
+  },
+  "options": {},
+  "attributes": {
+    "currency": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "decimal"
+    }
+  }
+}

@@ -638,24 +638,51 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
     singularName: 'order';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
-    cart_items: Schema.Attribute.Component<'elements.cart-item', true>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    deliveryNotes: Schema.Attribute.String;
+    deliveryStatus: Schema.Attribute.Enumeration<['tracking_added', 'shipped']>;
+    fulfillmentStatus: Schema.Attribute.Enumeration<
+      ['fulfilled', 'unfulfilled']
+    >;
+    lineItems: Schema.Attribute.Component<'elements.line-item', true>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::order.order'> &
       Schema.Attribute.Private;
+    orderNotes: Schema.Attribute.String;
+    orderNumber: Schema.Attribute.String;
+    paymentMethod: Schema.Attribute.Enumeration<
+      ['credit_card', 'bank_transfer', 'account_credit']
+    >;
+    paymentStatus: Schema.Attribute.Enumeration<['pending', 'refund']>;
+    pickupNotes: Schema.Attribute.String;
+    pickupOption: Schema.Attribute.Component<'elements.pickup-option', false>;
     publishedAt: Schema.Attribute.DateTime;
-    shipping: Schema.Attribute.Component<'elements.shipping', false>;
+    shippingAddress: Schema.Attribute.Component<
+      'elements.shipping-address',
+      false
+    >;
+    shippingType: Schema.Attribute.Enumeration<
+      ['standard_delivery', 'express_delivery', 'pickup']
+    >;
+    stripeCheckoutSession: Schema.Attribute.String;
+    total: Schema.Attribute.Component<'elements.total', false>;
+    trackingNumber: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     user: Schema.Attribute.Relation<
-      'manyToOne',
+      'oneToOne',
       'plugin::users-permissions.user'
+    >;
+    voucherCode: Schema.Attribute.String;
+    warehouseLocation: Schema.Attribute.Component<
+      'elements.warehouse-location',
+      false
     >;
   };
 }
@@ -739,7 +766,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     singularName: 'product';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     brand: Schema.Attribute.Relation<'manyToOne', 'api::brand.brand'>;
@@ -779,6 +806,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     price_lists: Schema.Attribute.Relation<'manyToMany', 'api::price.price'>;
     product_type: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
+    releaseAt: Schema.Attribute.DateTime;
     specifications: Schema.Attribute.Relation<
       'manyToMany',
       'api::specification.specification'
@@ -851,9 +879,7 @@ export interface ApiSpecificationSpecification
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    value: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
+    value: Schema.Attribute.String & Schema.Attribute.Required;
   };
 }
 
@@ -1453,7 +1479,6 @@ export interface PluginUsersPermissionsUser
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
-    orders: Schema.Attribute.Relation<'oneToMany', 'api::order.order'>;
     password: Schema.Attribute.Password &
       Schema.Attribute.Private &
       Schema.Attribute.SetMinMaxLength<{

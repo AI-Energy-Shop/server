@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -85,12 +85,6 @@
       "target": "api::brand.brand",
       "inversedBy": "products"
     },
-    "specifications": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::specification.specification",
-      "mappedBy": "products"
-    },
     "variants": {
       "type": "relation",
       "relation": "manyToMany",
@@ -102,6 +96,16 @@
       "relation": "manyToMany",
       "target": "api::collection.collection",
       "mappedBy": "products"
+    },
+    "specifications": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::specification.specification",
+      "mappedBy": "products"
+    },
+    "releaseAt": {
+      "type": "datetime",
+      "required": false
     }
   }
 }

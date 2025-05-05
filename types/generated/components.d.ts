@@ -112,6 +112,18 @@ export interface ElementsKeyFeatures extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsLineItem extends Struct.ComponentSchema {
+  collectionName: 'components_elements_line_items';
+  info: {
+    displayName: 'Line Item';
+  };
+  attributes: {
+    locationCode: Schema.Attribute.String;
+    product: Schema.Attribute.Relation<'oneToOne', 'api::product.product'>;
+    quantity: Schema.Attribute.Integer;
+  };
+}
+
 export interface ElementsName extends Struct.ComponentSchema {
   collectionName: 'components_elements_names';
   info: {
@@ -135,6 +147,17 @@ export interface ElementsPaymentOption extends Struct.ComponentSchema {
     card_number: Schema.Attribute.String;
     cvv: Schema.Attribute.String;
     expiration_date: Schema.Attribute.Date;
+  };
+}
+
+export interface ElementsPickupOption extends Struct.ComponentSchema {
+  collectionName: 'components_elements_pickup_options';
+  info: {
+    displayName: 'Pickup Option';
+  };
+  attributes: {
+    date: Schema.Attribute.DateTime;
+    estimatedArraivalTime: Schema.Attribute.String;
   };
 }
 
@@ -216,6 +239,17 @@ export interface ElementsSpecs extends Struct.ComponentSchema {
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     value: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ElementsTotal extends Struct.ComponentSchema {
+  collectionName: 'components_elements_totals';
+  info: {
+    displayName: 'Total';
+  };
+  attributes: {
+    amount: Schema.Attribute.Decimal;
+    currency: Schema.Attribute.String;
   };
 }
 
@@ -378,13 +412,16 @@ declare module '@strapi/strapi' {
       'elements.input': ElementsInput;
       'elements.inventory': ElementsInventory;
       'elements.key-features': ElementsKeyFeatures;
+      'elements.line-item': ElementsLineItem;
       'elements.name': ElementsName;
       'elements.payment-option': ElementsPaymentOption;
+      'elements.pickup-option': ElementsPickupOption;
       'elements.price': ElementsPrice;
       'elements.shipping': ElementsShipping;
       'elements.shipping-address': ElementsShippingAddress;
       'elements.specification': ElementsSpecification;
       'elements.specs': ElementsSpecs;
+      'elements.total': ElementsTotal;
       'elements.warehouse-location': ElementsWarehouseLocation;
       'form.inquiry': FormInquiry;
       'form.newsletter': FormNewsletter;
