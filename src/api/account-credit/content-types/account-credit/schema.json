@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "account_credits",
+  "info": {
+    "singularName": "account-credit",
+    "pluralName": "account-credits",
+    "displayName": "Account Credit",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "creditLimit": {
+      "type": "decimal"
+    },
+    "totalReceivable": {
+      "type": "decimal"
+    },
+    "totalOverdue": {
+      "type": "decimal"
+    },
+    "paymentTerms": {
+      "type": "datetime"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "accountCredit"
+    }
+  }
+}

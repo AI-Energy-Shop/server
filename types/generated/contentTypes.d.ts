@@ -369,6 +369,43 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiAccountCreditAccountCredit
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'account_credits';
+  info: {
+    description: '';
+    displayName: 'Account Credit';
+    pluralName: 'account-credits';
+    singularName: 'account-credit';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    creditLimit: Schema.Attribute.Decimal;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::account-credit.account-credit'
+    > &
+      Schema.Attribute.Private;
+    paymentTerms: Schema.Attribute.DateTime;
+    publishedAt: Schema.Attribute.DateTime;
+    totalOverdue: Schema.Attribute.Decimal;
+    totalReceivable: Schema.Attribute.Decimal;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+  };
+}
+
 export interface ApiAccountDetailAccountDetail
   extends Struct.CollectionTypeSchema {
   collectionName: 'account_details';
@@ -1453,6 +1490,10 @@ export interface PluginUsersPermissionsUser
     account_status: Schema.Attribute.Enumeration<
       ['PENDING', 'REVIEWING', 'APPROVED', 'DENIED']
     >;
+    accountCredit: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::account-credit.account-credit'
+    >;
     addresses: Schema.Attribute.Relation<'manyToMany', 'api::address.address'>;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     business_name: Schema.Attribute.String;
@@ -1464,7 +1505,6 @@ export interface PluginUsersPermissionsUser
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    credit: Schema.Attribute.Component<'elements.credit', false>;
     email: Schema.Attribute.Email &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -1518,6 +1558,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::account-credit.account-credit': ApiAccountCreditAccountCredit;
       'api::account-detail.account-detail': ApiAccountDetailAccountDetail;
       'api::address.address': ApiAddressAddress;
       'api::brand.brand': ApiBrandBrand;
