@@ -106,6 +106,12 @@
     "releaseAt": {
       "type": "datetime",
       "required": false
+    },
+    "shipping": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::shipping.shipping",
+      "mappedBy": "product"
     }
   }
 }

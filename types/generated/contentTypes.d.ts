@@ -844,6 +844,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     product_type: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     releaseAt: Schema.Attribute.DateTime;
+    shipping: Schema.Attribute.Relation<'oneToOne', 'api::shipping.shipping'>;
     specifications: Schema.Attribute.Relation<
       'manyToMany',
       'api::specification.specification'
@@ -853,6 +854,38 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     variants: Schema.Attribute.Relation<'manyToMany', 'api::variant.variant'>;
     vendor: Schema.Attribute.String;
+  };
+}
+
+export interface ApiShippingShipping extends Struct.CollectionTypeSchema {
+  collectionName: 'shippings';
+  info: {
+    displayName: 'Shipping';
+    pluralName: 'shippings';
+    singularName: 'shipping';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    height: Schema.Attribute.Decimal;
+    length: Schema.Attribute.Decimal;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::shipping.shipping'
+    > &
+      Schema.Attribute.Private;
+    product: Schema.Attribute.Relation<'oneToOne', 'api::product.product'>;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    weight: Schema.Attribute.Decimal;
+    width: Schema.Attribute.Decimal;
   };
 }
 
@@ -1570,6 +1603,7 @@ declare module '@strapi/strapi' {
       'api::page.page': ApiPagePage;
       'api::price.price': ApiPricePrice;
       'api::product.product': ApiProductProduct;
+      'api::shipping.shipping': ApiShippingShipping;
       'api::specification.specification': ApiSpecificationSpecification;
       'api::user-approval-request.user-approval-request': ApiUserApprovalRequestUserApprovalRequest;
       'api::user-notification.user-notification': ApiUserNotificationUserNotification;
