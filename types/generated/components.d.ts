@@ -39,19 +39,6 @@ export interface ElementsCartItem extends Struct.ComponentSchema {
   };
 }
 
-export interface ElementsCredit extends Struct.ComponentSchema {
-  collectionName: 'components_elements_credits';
-  info: {
-    displayName: 'Credit';
-  };
-  attributes: {
-    limit: Schema.Attribute.Decimal;
-    paymentTerms: Schema.Attribute.DateTime;
-    totalOverdue: Schema.Attribute.Decimal;
-    totalReceivable: Schema.Attribute.Decimal;
-  };
-}
-
 export interface ElementsDeliveryOption extends Struct.ComponentSchema {
   collectionName: 'components_elements_delivery_options';
   info: {
@@ -115,11 +102,12 @@ export interface ElementsKeyFeatures extends Struct.ComponentSchema {
 export interface ElementsLineItem extends Struct.ComponentSchema {
   collectionName: 'components_elements_line_items';
   info: {
+    description: '';
     displayName: 'Line Item';
   };
   attributes: {
+    lines: Schema.Attribute.Component<'elements.cart-item', false>;
     locationCode: Schema.Attribute.String;
-    product: Schema.Attribute.Relation<'oneToOne', 'api::product.product'>;
     quantity: Schema.Attribute.Integer;
   };
 }
@@ -406,7 +394,6 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'elements.address': ElementsAddress;
       'elements.cart-item': ElementsCartItem;
-      'elements.credit': ElementsCredit;
       'elements.delivery-option': ElementsDeliveryOption;
       'elements.filter-rule': ElementsFilterRule;
       'elements.input': ElementsInput;

@@ -221,64 +221,67 @@ export const resolvers = {
         throw new Error(err.message);
       }
     },
-    customProductUpdate: async (_: any, args: ProductInputArgs) => {
+    customProductUpdate: async (_: any, args: any, context: any) => {
       try {
-        if (!args || !args.documentId || !args.data) {
-          throw new Error("Invalid arguments provided");
-        }
-
-        const product = await strapi
-          .documents("api::product.product")
-          .findOne({ documentId: args.documentId });
-
-        if (!product) {
-          throw new Error("Product not found");
-        }
-
         const files = await strapi.documents("plugin::upload.file").findMany();
 
-        if (!files || files.length === 0) {
-          throw new Error("No files found");
-        }
+        const filteredFiles = files.filter((file: any) => {
+          if (args?.data?.files?.length > 0) {
+            if (args.data.files.includes(file.documentId)) {
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            return false;
+          }
+        });
 
-        const filteredFiles = files
-          .filter((file: any) => args.data.files.includes(file.documentId))
-          .map((file: any) => file);
+        const filteredMedia = files.filter((file: any) => {
+          if (args?.data?.images?.length > 0) {
+            if (args.data.images.includes(file.documentId)) {
+              return true;
+            } else {
+              return false;
+            }
+          } else {
+            return false;
+          }
+        });
 
-        const filteredMedia = files
-          .filter((file: any) => args.data.images.includes(file.documentId))
-          .map((file: any) => file);
+        const res = await strapi.documents("api::product.product").update({
+          documentId: args.documentId,
+          data: {
+            name: args.data.name,
+            model: args.data.model,
+            odoo_product_id: args.data.odoo_product_id,
+            description: args.data.description,
+            vendor: args.data.vendor,
+            product_type: args.data.product_type,
+            images: filteredMedia,
+            files: filteredFiles,
+            price_lists: args.data.price_lists,
+            specifications: args.data.specifications,
+            inventories: args.data.inventories,
+            key_features: args.data.key_features,
+            releaseAt: args.data.releaseAt,
+            improvedBy: context.state.user.documentId,
+            // variants: args.data.variants,
+          },
+          populate: {
+            files: true,
+            images: true,
+            price_lists: true,
+            inventories: true,
+            specifications: true,
+            key_features: true,
+            improvedBy: true,
+            madeBy: true,
+            shipping: true,
+          },
+        });
 
-        const updateProductRes = await strapi
-          .documents("api::product.product")
-          .update({
-            documentId: product.documentId,
-            data: {
-              name: args.data.name,
-              description: args.data.description,
-              odoo_product_id: args.data.odoo_product_id,
-              category: args.data.category,
-              vendor: args.data.vendor,
-              collection: args.data.collection,
-              tags: args.data.tags,
-              specification: args.data.specification,
-              price_list: args.data.price_list,
-              inventory: args.data.inventory,
-              key_features: args.data.key_features,
-              files: filteredFiles,
-              images: filteredMedia,
-            },
-            populate: {
-              files: true,
-              images: true,
-            },
-          });
-
-        if (!updateProductRes) {
-          throw new Error("Failed to update product");
-        }
-
-        return updateProductRes;
+        return res;
       } catch (error) {
         console.error("Error updating product:", error.message);
         return {

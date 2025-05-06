@@ -1,7 +1,8 @@
 {
   "collectionName": "components_elements_line_items",
   "info": {
-    "displayName": "Line Item"
+    "displayName": "Line Item",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -11,10 +12,10 @@
     "locationCode": {
       "type": "string"
     },
-    "product": {
-      "type": "relation",
-      "relation": "oneToOne",
-      "target": "api::product.product"
+    "lines": {
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.cart-item"
     }
   }
 }

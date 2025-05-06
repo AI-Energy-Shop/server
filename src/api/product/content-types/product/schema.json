@@ -36,26 +36,13 @@
       "type": "media",
       "multiple": true,
       "required": false,
-      "allowedTypes": [
-        "files"
-      ]
+      "allowedTypes": ["files"]
     },
     "images": {
       "type": "media",
       "multiple": true,
       "required": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "key_features": {
-      "displayName": "key_features",
-      "type": "component",
-      "repeatable": true,
-      "component": "elements.key-features"
+      "allowedTypes": ["images", "files", "videos", "audios"]
     },
     "model": {
       "type": "string",
@@ -72,6 +59,11 @@
       "relation": "manyToMany",
       "target": "api::price.price",
       "inversedBy": "products"
+    },
+    "key_features": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::key-feature.key-feature"
     },
     "categories": {
       "type": "relation",
@@ -103,7 +95,7 @@
       "target": "api::specification.specification",
       "mappedBy": "products"
     },
-    "releaseAt": {
+    "releasedAt": {
       "type": "datetime",
       "required": false
     },
@@ -112,6 +104,21 @@
       "relation": "oneToOne",
       "target": "api::shipping.shipping",
       "mappedBy": "product"
+    },
+    "madeBy": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "improvedBy": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "removedBy": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }

@@ -666,6 +666,35 @@ export interface ApiInventoryInventory extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiKeyFeatureKeyFeature extends Struct.CollectionTypeSchema {
+  collectionName: 'key_features';
+  info: {
+    description: '';
+    displayName: 'Key Feature';
+    pluralName: 'key-features';
+    singularName: 'key-feature';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    feature: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::key-feature.key-feature'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
   collectionName: 'orders';
   info: {
@@ -824,17 +853,28 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'images' | 'files' | 'videos' | 'audios',
       true
     >;
+    improvedBy: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     inventories: Schema.Attribute.Relation<
       'manyToMany',
       'api::inventory.inventory'
     >;
-    key_features: Schema.Attribute.Component<'elements.key-features', true>;
+    key_features: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::key-feature.key-feature'
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'api::product.product'
     > &
       Schema.Attribute.Private;
+    madeBy: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     model: Schema.Attribute.String & Schema.Attribute.Required;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     odoo_product_id: Schema.Attribute.String &
@@ -843,7 +883,11 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     price_lists: Schema.Attribute.Relation<'manyToMany', 'api::price.price'>;
     product_type: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    releaseAt: Schema.Attribute.DateTime;
+    releasedAt: Schema.Attribute.DateTime;
+    removedBy: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
     shipping: Schema.Attribute.Relation<'oneToOne', 'api::shipping.shipping'>;
     specifications: Schema.Attribute.Relation<
       'manyToMany',
@@ -1599,6 +1643,7 @@ declare module '@strapi/strapi' {
       'api::category.category': ApiCategoryCategory;
       'api::collection.collection': ApiCollectionCollection;
       'api::inventory.inventory': ApiInventoryInventory;
+      'api::key-feature.key-feature': ApiKeyFeatureKeyFeature;
       'api::order.order': ApiOrderOrder;
       'api::page.page': ApiPagePage;
       'api::price.price': ApiPricePrice;
