@@ -1,24 +1,25 @@
 {
   "collectionName": "components_elements_delivery_option_shippings",
   "info": {
-    "displayName": "Delivery Option Shipping"
+    "displayName": "Delivery Option Shipping",
+    "description": ""
   },
   "options": {},
   "attributes": {
     "companyId": {
-      "type": "number"
+      "type": "biginteger"
     },
     "carrierId": {
-      "type": "number"
+      "type": "biginteger"
     },
     "carrierServiceId": {
-      "type": "number"
+      "type": "biginteger"
     },
     "carrierAccountId": {
-      "type": "number"
+      "type": "biginteger"
     },
     "companyCarrierAccountId": {
-      "type": "number"
+      "type": "biginteger"
     },
     "dgsDeclaration": {
       "type": "boolean"

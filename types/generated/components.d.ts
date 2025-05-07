@@ -59,9 +59,39 @@ export interface ElementsDeliveryOption extends Struct.ComponentSchema {
 export interface ElementsDeliveryOptionShipping extends Struct.ComponentSchema {
   collectionName: 'components_elements_delivery_option_shippings';
   info: {
+    description: '';
     displayName: 'Delivery Option Shipping';
   };
-  attributes: {};
+  attributes: {
+    carrierAccountId: Schema.Attribute.BigInteger;
+    carrierId: Schema.Attribute.BigInteger;
+    carrierServiceId: Schema.Attribute.BigInteger;
+    companyCarrierAccountId: Schema.Attribute.BigInteger;
+    companyId: Schema.Attribute.BigInteger;
+    dgsDeclaration: Schema.Attribute.Boolean;
+    display: Schema.Attribute.Component<
+      'elements.delivery-option-shipping-display',
+      false
+    >;
+  };
+}
+
+export interface ElementsDeliveryOptionShippingDisplay
+  extends Struct.ComponentSchema {
+  collectionName: 'components_elements_delivery_option_shipping_display';
+  info: {
+    description: '';
+    displayName: 'Delivery Option Shipping Display';
+    icon: 'bulletList';
+  };
+  attributes: {
+    carrierDisplayName: Schema.Attribute.String;
+    carrierServiceDisplayName: Schema.Attribute.String;
+    eta: Schema.Attribute.String;
+    totalSellBeforeTax: Schema.Attribute.String;
+    totalSellPrice: Schema.Attribute.String;
+    totalWeight: Schema.Attribute.BigInteger;
+  };
 }
 
 export interface ElementsFilterRule extends Struct.ComponentSchema {
@@ -392,6 +422,7 @@ declare module '@strapi/strapi' {
       'elements.cart-item': ElementsCartItem;
       'elements.delivery-option': ElementsDeliveryOption;
       'elements.delivery-option-shipping': ElementsDeliveryOptionShipping;
+      'elements.delivery-option-shipping-display': ElementsDeliveryOptionShippingDisplay;
       'elements.filter-rule': ElementsFilterRule;
       'elements.input': ElementsInput;
       'elements.inventory': ElementsInventory;

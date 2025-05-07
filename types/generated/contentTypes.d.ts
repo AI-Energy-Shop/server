@@ -711,6 +711,10 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     deliveryNotes: Schema.Attribute.String;
+    deliveryOption: Schema.Attribute.Component<
+      'elements.delivery-option',
+      false
+    >;
     deliveryStatus: Schema.Attribute.Enumeration<['tracking_added', 'shipped']>;
     fulfillmentStatus: Schema.Attribute.Enumeration<
       ['fulfilled', 'unfulfilled']

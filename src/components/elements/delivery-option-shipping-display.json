@@ -2,7 +2,8 @@
   "collectionName": "components_elements_delivery_option_shipping_display",
   "info": {
     "displayName": "Delivery Option Shipping Display",
-    "icon": "bulletList"
+    "icon": "bulletList",
+    "description": ""
   },
   "options": {},
   "attributes": {
@@ -16,7 +17,7 @@
       "type": "string"
     },
     "totalWeight": {
-      "type": "number"
+      "type": "biginteger"
     },
     "totalSellBeforeTax": {
       "type": "string"
