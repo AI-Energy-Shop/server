@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_elements_delivery_option_shippings",
+  "info": {
+    "displayName": "Delivery Option Shipping"
+  },
+  "options": {},
+  "attributes": {
+    "companyId": {
+      "type": "number"
+    },
+    "carrierId": {
+      "type": "number"
+    },
+    "carrierServiceId": {
+      "type": "number"
+    },
+    "carrierAccountId": {
+      "type": "number"
+    },
+    "companyCarrierAccountId": {
+      "type": "number"
+    },
+    "dgsDeclaration": {
+      "type": "boolean"
+    },
+    "display": {
+      "displayName": "Delivery Option Shipping Display",
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.delivery-option-shipping-display"
+    }
+  }
+}

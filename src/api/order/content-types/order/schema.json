@@ -23,32 +23,19 @@
     },
     "fulfillmentStatus": {
       "type": "enumeration",
-      "enum": [
-        "fulfilled",
-        "unfulfilled"
-      ]
+      "enum": ["fulfilled", "unfulfilled"]
     },
     "paymentStatus": {
       "type": "enumeration",
-      "enum": [
-        "pending",
-        "refund"
-      ]
+      "enum": ["pending", "paid", "refunded", "failed"]
     },
     "paymentMethod": {
       "type": "enumeration",
-      "enum": [
-        "credit_card",
-        "bank_transfer",
-        "account_credit"
-      ]
+      "enum": ["credit_card", "bank_transfer", "account_credit"]
     },
     "deliveryStatus": {
       "type": "enumeration",
-      "enum": [
-        "tracking_added",
-        "shipped"
-      ]
+      "enum": ["tracking_added", "shipped"]
     },
     "voucherCode": {
       "type": "string"
@@ -58,11 +45,7 @@
     },
     "shippingType": {
       "type": "enumeration",
-      "enum": [
-        "standard_delivery",
-        "express_delivery",
-        "pickup"
-      ]
+      "enum": ["delivery", "pickup"]
     },
     "deliveryNotes": {
       "type": "string"
@@ -97,6 +80,11 @@
       "type": "component",
       "repeatable": true,
       "component": "elements.line-item"
+    },
+    "deliveryOption": {
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.delivery-option"
     },
     "user": {
       "type": "relation",

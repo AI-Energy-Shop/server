@@ -42,14 +42,26 @@ export interface ElementsCartItem extends Struct.ComponentSchema {
 export interface ElementsDeliveryOption extends Struct.ComponentSchema {
   collectionName: 'components_elements_delivery_options';
   info: {
+    description: '';
     displayName: 'Delivery Option';
   };
   attributes: {
-    eta: Schema.Attribute.String;
-    notes: Schema.Attribute.Text;
-    price: Schema.Attribute.Decimal;
-    title: Schema.Attribute.String;
+    eta: Schema.Attribute.Date;
+    requestedDeliveryDate: Schema.Attribute.Date;
+    shipping: Schema.Attribute.Component<
+      'elements.delivery-option-shipping',
+      false
+    >;
+    type: Schema.Attribute.String;
   };
+}
+
+export interface ElementsDeliveryOptionShipping extends Struct.ComponentSchema {
+  collectionName: 'components_elements_delivery_option_shippings';
+  info: {
+    displayName: 'Delivery Option Shipping';
+  };
+  attributes: {};
 }
 
 export interface ElementsFilterRule extends Struct.ComponentSchema {
@@ -106,9 +118,8 @@ export interface ElementsLineItem extends Struct.ComponentSchema {
     displayName: 'Line Item';
   };
   attributes: {
-    lines: Schema.Attribute.Component<'elements.cart-item', false>;
-    locationCode: Schema.Attribute.String;
-    quantity: Schema.Attribute.Integer;
+    line: Schema.Attribute.Component<'elements.cart-item', false>;
+    location: Schema.Attribute.Enumeration<['MEL', 'SYD', 'BNE']>;
   };
 }
 
@@ -167,23 +178,6 @@ export interface ElementsPrice extends Struct.ComponentSchema {
   };
 }
 
-export interface ElementsShipping extends Struct.ComponentSchema {
-  collectionName: 'components_elements_shippings';
-  info: {
-    description: '';
-    displayName: 'Shipping';
-    icon: 'bulletList';
-  };
-  attributes: {
-    delivery_option: Schema.Attribute.Component<
-      'elements.delivery-option',
-      false
-    >;
-    shipping_details: Schema.Attribute.Component<'elements.address', false>;
-    warehouse_location: Schema.Attribute.Integer;
-  };
-}
-
 export interface ElementsShippingAddress extends Struct.ComponentSchema {
   collectionName: 'components_elements_shipping_addresses';
   info: {
@@ -196,6 +190,7 @@ export interface ElementsShippingAddress extends Struct.ComponentSchema {
     country: Schema.Attribute.String;
     isActive: Schema.Attribute.Boolean;
     name: Schema.Attribute.Component<'elements.name', false>;
+    odoo_address_id: Schema.Attribute.String;
     phone: Schema.Attribute.String;
     postcode: Schema.Attribute.String;
     state_territory: Schema.Attribute.String;
@@ -250,6 +245,7 @@ export interface ElementsWarehouseLocation extends Struct.ComponentSchema {
   };
   attributes: {
     address: Schema.Attribute.Component<'elements.address', false>;
+    odoo_warehouse_id: Schema.Attribute.String;
     title: Schema.Attribute.String;
   };
 }
@@ -395,6 +391,7 @@ declare module '@strapi/strapi' {
       'elements.address': ElementsAddress;
       'elements.cart-item': ElementsCartItem;
       'elements.delivery-option': ElementsDeliveryOption;
+      'elements.delivery-option-shipping': ElementsDeliveryOptionShipping;
       'elements.filter-rule': ElementsFilterRule;
       'elements.input': ElementsInput;
       'elements.inventory': ElementsInventory;
@@ -404,7 +401,6 @@ declare module '@strapi/strapi' {
       'elements.payment-option': ElementsPaymentOption;
       'elements.pickup-option': ElementsPickupOption;
       'elements.price': ElementsPrice;
-      'elements.shipping': ElementsShipping;
       'elements.shipping-address': ElementsShippingAddress;
       'elements.specification': ElementsSpecification;
       'elements.specs': ElementsSpecs;

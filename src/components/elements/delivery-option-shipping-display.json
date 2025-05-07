@@ -1,0 +1,28 @@
+{
+  "collectionName": "components_elements_delivery_option_shipping_display",
+  "info": {
+    "displayName": "Delivery Option Shipping Display",
+    "icon": "bulletList"
+  },
+  "options": {},
+  "attributes": {
+    "carrierDisplayName": {
+      "type": "string"
+    },
+    "carrierServiceDisplayName": {
+      "type": "string"
+    },
+    "eta": {
+      "type": "string"
+    },
+    "totalWeight": {
+      "type": "number"
+    },
+    "totalSellBeforeTax": {
+      "type": "string"
+    },
+    "totalSellPrice": {
+      "type": "string"
+    }
+  }
+}

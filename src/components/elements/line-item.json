@@ -6,13 +6,12 @@
   },
   "options": {},
   "attributes": {
-    "quantity": {
-      "type": "integer"
+    "location": {
+      "type": "enumeration",
+      "enum": ["MEL", "SYD", "BNE"],
+      "component": "elements.warehouse-location"
     },
-    "locationCode": {
-      "type": "string"
-    },
-    "lines": {
+    "line": {
       "type": "component",
       "repeatable": false,
       "component": "elements.cart-item"

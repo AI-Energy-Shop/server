@@ -1,21 +1,25 @@
 {
   "collectionName": "components_elements_delivery_options",
   "info": {
-    "displayName": "Delivery Option"
+    "displayName": "Delivery Option",
+    "description": ""
   },
   "options": {},
   "attributes": {
-    "title": {
+    "type": {
       "type": "string"
+    },
+    "requestedDeliveryDate": {
+      "type": "date"
     },
     "eta": {
-      "type": "string"
+      "type": "date"
     },
-    "notes": {
-      "type": "text"
-    },
-    "price": {
-      "type": "decimal"
+    "shipping": {
+      "displayName": "Delivery Option Shipping",
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.delivery-option-shipping"
     }
   }
 }

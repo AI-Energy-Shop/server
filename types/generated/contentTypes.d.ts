@@ -724,7 +724,9 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
     paymentMethod: Schema.Attribute.Enumeration<
       ['credit_card', 'bank_transfer', 'account_credit']
     >;
-    paymentStatus: Schema.Attribute.Enumeration<['pending', 'refund']>;
+    paymentStatus: Schema.Attribute.Enumeration<
+      ['pending', 'paid', 'refunded', 'failed']
+    >;
     pickupNotes: Schema.Attribute.String;
     pickupOption: Schema.Attribute.Component<'elements.pickup-option', false>;
     publishedAt: Schema.Attribute.DateTime;
@@ -732,9 +734,7 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
       'elements.shipping-address',
       false
     >;
-    shippingType: Schema.Attribute.Enumeration<
-      ['standard_delivery', 'express_delivery', 'pickup']
-    >;
+    shippingType: Schema.Attribute.Enumeration<['delivery', 'pickup']>;
     stripeCheckoutSession: Schema.Attribute.String;
     total: Schema.Attribute.Component<'elements.total', false>;
     trackingNumber: Schema.Attribute.String;
