@@ -58,6 +58,7 @@ export const typeDefs = `
 
 	type Mutation {
 		registerUser(data: RegisterUserInput!): UsersPermissionsUser
+		customProductCreate(data: ProductInput!): Product
 		customProductUpdate(documentId: ID!, data: ProductInput!): Product
 		approvedUser(documentId: ID!, data: ApprovedUserInput!): UsersPermissionsUser
 		updateUser(documentId: ID!, data: UsersPermissionsUserInput!): UsersPermissionsUser

@@ -1,5 +1,8 @@
 export const resolversConfig = {
   Mutation: {
+    customProductCreate: {
+      auth: true,
+    },
     customProductUpdate: {
       auth: true,
     },

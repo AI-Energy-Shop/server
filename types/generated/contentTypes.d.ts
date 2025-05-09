@@ -516,7 +516,6 @@ export interface ApiBrandBrand extends Struct.CollectionTypeSchema {
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::brand.brand'> &
       Schema.Attribute.Private;
     name: Schema.Attribute.String & Schema.Attribute.Required;
-    products: Schema.Attribute.Relation<'oneToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -839,7 +838,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
-    brand: Schema.Attribute.Relation<'manyToOne', 'api::brand.brand'>;
+    brand: Schema.Attribute.Relation<'oneToOne', 'api::brand.brand'>;
     categories: Schema.Attribute.Relation<
       'manyToMany',
       'api::category.category'
@@ -851,7 +850,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    description: Schema.Attribute.Text & Schema.Attribute.Required;
+    description: Schema.Attribute.Text;
     files: Schema.Attribute.Media<'files', true>;
     images: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',

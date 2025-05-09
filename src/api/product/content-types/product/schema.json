@@ -19,7 +19,7 @@
     },
     "description": {
       "type": "text",
-      "required": true
+      "required": false
     },
     "product_type": {
       "type": "string"
@@ -36,13 +36,20 @@
       "type": "media",
       "multiple": true,
       "required": false,
-      "allowedTypes": ["files"]
+      "allowedTypes": [
+        "files"
+      ]
     },
     "images": {
       "type": "media",
       "multiple": true,
       "required": false,
-      "allowedTypes": ["images", "files", "videos", "audios"]
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     },
     "model": {
       "type": "string",
@@ -73,9 +80,8 @@
     },
     "brand": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::brand.brand",
-      "inversedBy": "products"
+      "relation": "oneToOne",
+      "target": "api::brand.brand"
     },
     "variants": {
       "type": "relation",
