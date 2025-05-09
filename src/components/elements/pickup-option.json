@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_elements_pickup_options",
+  "info": {
+    "displayName": "Pickup Option"
+  },
+  "options": {},
+  "attributes": {
+    "estimatedArraivalTime": {
+      "type": "string"
+    },
+    "date": {
+      "type": "datetime"
+    }
+  }
+}

@@ -29,12 +29,6 @@
     "url": {
       "type": "string",
       "required": true
-    },
-    "products": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::product.product",
-      "mappedBy": "brand"
     }
   }
 }

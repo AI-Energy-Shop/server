@@ -39,29 +39,58 @@ export interface ElementsCartItem extends Struct.ComponentSchema {
   };
 }
 
-export interface ElementsCredit extends Struct.ComponentSchema {
-  collectionName: 'components_elements_credits';
-  info: {
-    displayName: 'Credit';
-  };
-  attributes: {
-    limit: Schema.Attribute.Decimal;
-    paymentTerms: Schema.Attribute.DateTime;
-    totalOverdue: Schema.Attribute.Decimal;
-    totalReceivable: Schema.Attribute.Decimal;
-  };
-}
-
 export interface ElementsDeliveryOption extends Struct.ComponentSchema {
   collectionName: 'components_elements_delivery_options';
   info: {
+    description: '';
     displayName: 'Delivery Option';
   };
   attributes: {
+    eta: Schema.Attribute.Date;
+    requestedDeliveryDate: Schema.Attribute.Date;
+    shipping: Schema.Attribute.Component<
+      'elements.delivery-option-shipping',
+      false
+    >;
+    type: Schema.Attribute.String;
+  };
+}
+
+export interface ElementsDeliveryOptionShipping extends Struct.ComponentSchema {
+  collectionName: 'components_elements_delivery_option_shippings';
+  info: {
+    description: '';
+    displayName: 'Delivery Option Shipping';
+  };
+  attributes: {
+    carrierAccountId: Schema.Attribute.BigInteger;
+    carrierId: Schema.Attribute.BigInteger;
+    carrierServiceId: Schema.Attribute.BigInteger;
+    companyCarrierAccountId: Schema.Attribute.BigInteger;
+    companyId: Schema.Attribute.BigInteger;
+    dgsDeclaration: Schema.Attribute.Boolean;
+    display: Schema.Attribute.Component<
+      'elements.delivery-option-shipping-display',
+      false
+    >;
+  };
+}
+
+export interface ElementsDeliveryOptionShippingDisplay
+  extends Struct.ComponentSchema {
+  collectionName: 'components_elements_delivery_option_shipping_display';
+  info: {
+    description: '';
+    displayName: 'Delivery Option Shipping Display';
+    icon: 'bulletList';
+  };
+  attributes: {
+    carrierDisplayName: Schema.Attribute.String;
+    carrierServiceDisplayName: Schema.Attribute.String;
     eta: Schema.Attribute.String;
-    notes: Schema.Attribute.Text;
-    price: Schema.Attribute.Decimal;
-    title: Schema.Attribute.String;
+    totalSellBeforeTax: Schema.Attribute.String;
+    totalSellPrice: Schema.Attribute.String;
+    totalWeight: Schema.Attribute.BigInteger;
   };
 }
 
@@ -112,6 +141,18 @@ export interface ElementsKeyFeatures extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsLineItem extends Struct.ComponentSchema {
+  collectionName: 'components_elements_line_items';
+  info: {
+    description: '';
+    displayName: 'Line Item';
+  };
+  attributes: {
+    line: Schema.Attribute.Component<'elements.cart-item', false>;
+    location: Schema.Attribute.Enumeration<['MEL', 'SYD', 'BNE']>;
+  };
+}
+
 export interface ElementsName extends Struct.ComponentSchema {
   collectionName: 'components_elements_names';
   info: {
@@ -138,6 +179,17 @@ export interface ElementsPaymentOption extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsPickupOption extends Struct.ComponentSchema {
+  collectionName: 'components_elements_pickup_options';
+  info: {
+    displayName: 'Pickup Option';
+  };
+  attributes: {
+    date: Schema.Attribute.DateTime;
+    estimatedArraivalTime: Schema.Attribute.String;
+  };
+}
+
 export interface ElementsPrice extends Struct.ComponentSchema {
   collectionName: 'components_elements_prices';
   info: {
@@ -156,23 +208,6 @@ export interface ElementsPrice extends Struct.ComponentSchema {
   };
 }
 
-export interface ElementsShipping extends Struct.ComponentSchema {
-  collectionName: 'components_elements_shippings';
-  info: {
-    description: '';
-    displayName: 'Shipping';
-    icon: 'bulletList';
-  };
-  attributes: {
-    delivery_option: Schema.Attribute.Component<
-      'elements.delivery-option',
-      false
-    >;
-    shipping_details: Schema.Attribute.Component<'elements.address', false>;
-    warehouse_location: Schema.Attribute.Integer;
-  };
-}
-
 export interface ElementsShippingAddress extends Struct.ComponentSchema {
   collectionName: 'components_elements_shipping_addresses';
   info: {
@@ -185,6 +220,7 @@ export interface ElementsShippingAddress extends Struct.ComponentSchema {
     country: Schema.Attribute.String;
     isActive: Schema.Attribute.Boolean;
     name: Schema.Attribute.Component<'elements.name', false>;
+    odoo_address_id: Schema.Attribute.String;
     phone: Schema.Attribute.String;
     postcode: Schema.Attribute.String;
     state_territory: Schema.Attribute.String;
@@ -219,6 +255,17 @@ export interface ElementsSpecs extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsTotal extends Struct.ComponentSchema {
+  collectionName: 'components_elements_totals';
+  info: {
+    displayName: 'Total';
+  };
+  attributes: {
+    amount: Schema.Attribute.Decimal;
+    currency: Schema.Attribute.String;
+  };
+}
+
 export interface ElementsWarehouseLocation extends Struct.ComponentSchema {
   collectionName: 'components_elements_warehouse_locations';
   info: {
@@ -228,6 +275,7 @@ export interface ElementsWarehouseLocation extends Struct.ComponentSchema {
   };
   attributes: {
     address: Schema.Attribute.Component<'elements.address', false>;
+    odoo_warehouse_id: Schema.Attribute.String;
     title: Schema.Attribute.String;
   };
 }
@@ -372,19 +420,22 @@ declare module '@strapi/strapi' {
     export interface ComponentSchemas {
       'elements.address': ElementsAddress;
       'elements.cart-item': ElementsCartItem;
-      'elements.credit': ElementsCredit;
       'elements.delivery-option': ElementsDeliveryOption;
+      'elements.delivery-option-shipping': ElementsDeliveryOptionShipping;
+      'elements.delivery-option-shipping-display': ElementsDeliveryOptionShippingDisplay;
       'elements.filter-rule': ElementsFilterRule;
       'elements.input': ElementsInput;
       'elements.inventory': ElementsInventory;
       'elements.key-features': ElementsKeyFeatures;
+      'elements.line-item': ElementsLineItem;
       'elements.name': ElementsName;
       'elements.payment-option': ElementsPaymentOption;
+      'elements.pickup-option': ElementsPickupOption;
       'elements.price': ElementsPrice;
-      'elements.shipping': ElementsShipping;
       'elements.shipping-address': ElementsShippingAddress;
       'elements.specification': ElementsSpecification;
       'elements.specs': ElementsSpecs;
+      'elements.total': ElementsTotal;
       'elements.warehouse-location': ElementsWarehouseLocation;
       'form.inquiry': FormInquiry;
       'form.newsletter': FormNewsletter;

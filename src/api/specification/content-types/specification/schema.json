@@ -48,7 +48,7 @@
     "value": {
       "type": "string",
       "required": true,
-      "unique": true,
+      "unique": false,
       "regex": "^(?!.*[%+&]).+$"
     },
     "products": {

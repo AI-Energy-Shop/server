@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_elements_line_items",
+  "info": {
+    "displayName": "Line Item",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "location": {
+      "type": "enumeration",
+      "enum": ["MEL", "SYD", "BNE"],
+      "component": "elements.warehouse-location"
+    },
+    "line": {
+      "type": "component",
+      "repeatable": false,
+      "component": "elements.cart-item"
+    }
+  }
+}

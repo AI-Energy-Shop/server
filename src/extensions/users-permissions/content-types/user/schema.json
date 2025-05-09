@@ -79,12 +79,6 @@
       "target": "api::user-notification.user-notification",
       "mappedBy": "user"
     },
-    "orders": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::order.order",
-      "mappedBy": "user"
-    },
     "carts": {
       "type": "relation",
       "relation": "oneToMany",
@@ -123,10 +117,11 @@
         "audios"
       ]
     },
-    "credit": {
-      "type": "component",
-      "repeatable": false,
-      "component": "elements.credit"
+    "accountCredit": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::account-credit.account-credit",
+      "inversedBy": "user"
     }
   }
 }

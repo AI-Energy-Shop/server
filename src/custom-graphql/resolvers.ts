@@ -221,70 +221,119 @@ export const resolvers = {
         throw new Error(err.message);
       }
     },
-    customProductUpdate: async (_: any, args: ProductInputArgs) => {
+    customProductCreate: async (_: any, args: any, context: any) => {
       try {
-        if (!args || !args.documentId || !args.data) {
-          throw new Error("Invalid arguments provided");
-        }
-
-        const product = await strapi
-          .documents("api::product.product")
-          .findOne({ documentId: args.documentId });
-
-        if (!product) {
-          throw new Error("Product not found");
-        }
-
-        const files = await strapi.documents("plugin::upload.file").findMany();
-
-        if (!files || files.length === 0) {
-          throw new Error("No files found");
-        }
-
-        const filteredFiles = files
-          .filter((file: any) => args.data.files.includes(file.documentId))
-          .map((file: any) => file);
-
-        const filteredMedia = files
-          .filter((file: any) => args.data.images.includes(file.documentId))
-          .map((file: any) => file);
-
-        const updateProductRes = await strapi
-          .documents("api::product.product")
-          .update({
-            documentId: product.documentId,
-            data: {
-              name: args.data.name,
-              description: args.data.description,
-              odoo_product_id: args.data.odoo_product_id,
-              category: args.data.category,
-              vendor: args.data.vendor,
-              collection: args.data.collection,
-              tags: args.data.tags,
-              specification: args.data.specification,
-              price_list: args.data.price_list,
-              inventory: args.data.inventory,
-              key_features: args.data.key_features,
-              files: filteredFiles,
-              images: filteredMedia,
+        const [files, images] = await Promise.all([
+          strapi.documents("plugin::upload.file").findMany({
+            filters: {
+              documentId: {
+                $in: args.data.files,
+              },
             },
-            populate: {
-              files: true,
-              images: true,
+          }),
+          strapi.documents("plugin::upload.file").findMany({
+            filters: {
+              documentId: {
+                $in: args.data.images,
+              },
             },
-          });
+          }),
+        ]);
 
-        if (!updateProductRes) {
-          throw new Error("Failed to update product");
-        }
+        const res = await strapi.documents("api::product.product").create({
+          data: {
+            name: args.data.name,
+            model: args.data.model,
+            odoo_product_id: args.data.odoo_product_id,
+            description: args.data.description,
+            vendor: args.data.vendor,
+            product_type: args.data.product_type,
+            brand: args.data.brand,
+            images: images,
+            files: files,
+            price_lists: args.data.price_lists,
+            specifications: args.data.specifications,
+            inventories: args.data.inventories,
+            key_features: args.data.key_features,
+            shipping: args.data.shipping,
+            releaseAt: args.data.releaseAt,
+            madeBy: context.state.user.documentId,
+            // variants: args.data.variants,
+          },
+          populate: {
+            files: true,
+            images: true,
+            price_lists: true,
+            inventories: true,
+            specifications: true,
+            key_features: true,
+            improvedBy: true,
+            madeBy: true,
+            shipping: true,
+          },
+        });
 
-        return updateProductRes;
+        return res;
       } catch (error) {
-        console.error("Error updating product:", error.message);
-        return {
-          success: false,
-          error: error.message || "Unknown error occurred",
-        };
+        return error;
+      }
+    },
+    customProductUpdate: async (_: any, args: any, context: any) => {
+      try {
+        const [files, images] = await Promise.all([
+          strapi.documents("plugin::upload.file").findMany({
+            filters: {
+              documentId: {
+                $in: args.data.files,
+              },
+            },
+          }),
+          strapi.documents("plugin::upload.file").findMany({
+            filters: {
+              documentId: {
+                $in: args.data.images,
+              },
+            },
+          }),
+        ]);
+
+        const res = await strapi.documents("api::product.product").update({
+          documentId: args.documentId,
+          data: {
+            name: args.data.name,
+            model: args.data.model,
+            odoo_product_id: args.data.odoo_product_id,
+            description: args.data.description,
+            vendor: args.data.vendor,
+            product_type: args.data.product_type,
+            brand: args.data.brand,
+            images: images,
+            files: files,
+            price_lists: args.data.price_lists,
+            specifications: args.data.specifications,
+            inventories: args.data.inventories,
+            key_features: args.data.key_features,
+            shipping: args.data.shipping,
+            releaseAt: args.data.releaseAt,
+            improvedBy: context.state.user.documentId,
+            // variants: args.data.variants,
+          },
+          populate: {
+            files: true,
+            images: true,
+            price_lists: true,
+            inventories: true,
+            specifications: true,
+            key_features: true,
+            improvedBy: true,
+            madeBy: true,
+            shipping: true,
+          },
+        });
+
+        return res;
+      } catch (error) {
+        return error;
       }
     },
     updateUser: async (_: any, args: { documentId: string; data: any }) => {

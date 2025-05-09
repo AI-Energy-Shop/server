@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -19,7 +19,7 @@
     },
     "description": {
       "type": "text",
-      "required": true
+      "required": false
     },
     "product_type": {
       "type": "string"
@@ -51,12 +51,6 @@
         "audios"
       ]
     },
-    "key_features": {
-      "displayName": "key_features",
-      "type": "component",
-      "repeatable": true,
-      "component": "elements.key-features"
-    },
     "model": {
       "type": "string",
       "required": true
@@ -73,6 +67,11 @@
       "target": "api::price.price",
       "inversedBy": "products"
     },
+    "key_features": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::key-feature.key-feature"
+    },
     "categories": {
       "type": "relation",
       "relation": "manyToMany",
@@ -81,15 +80,8 @@
     },
     "brand": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::brand.brand",
-      "inversedBy": "products"
-    },
-    "specifications": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::specification.specification",
-      "mappedBy": "products"
+      "relation": "oneToOne",
+      "target": "api::brand.brand"
     },
     "variants": {
       "type": "relation",
@@ -102,6 +94,37 @@
       "relation": "manyToMany",
       "target": "api::collection.collection",
       "mappedBy": "products"
+    },
+    "specifications": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::specification.specification",
+      "mappedBy": "products"
+    },
+    "releasedAt": {
+      "type": "datetime",
+      "required": false
+    },
+    "shipping": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::shipping.shipping",
+      "mappedBy": "product"
+    },
+    "madeBy": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "improvedBy": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "removedBy": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
     }
   }
 }
