@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "credit_cards",
+  "info": {
+    "singularName": "credit-card",
+    "pluralName": "credit-cards",
+    "displayName": "CreditCard"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "stripePaymentMethodID": {
+      "type": "string"
+    },
+    "brand": {
+      "type": "string"
+    },
+    "last4Char": {
+      "type": "string"
+    },
+    "expMonth": {
+      "type": "string"
+    },
+    "expYear": {
+      "type": "string"
+    },
+    "isDefault": {
+      "type": "boolean"
+    }
+  }
+}

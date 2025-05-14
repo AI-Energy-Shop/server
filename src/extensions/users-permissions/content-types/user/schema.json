@@ -122,6 +122,14 @@
       "relation": "oneToOne",
       "target": "api::account-credit.account-credit",
       "inversedBy": "user"
+    },
+    "creditCards": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::credit-card.credit-card"
+    },
+    "stripeCustomerID": {
+      "type": "string"
     }
   }
 }

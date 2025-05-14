@@ -103,7 +103,8 @@
     },
     "releasedAt": {
       "type": "datetime",
-      "required": false
+      "required": true,
+      "default": "2025-05-13T16:00:00.000Z"
     },
     "shipping": {
       "type": "relation",
