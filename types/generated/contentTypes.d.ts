@@ -632,6 +632,39 @@ export interface ApiCollectionCollection extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
+  collectionName: 'credit_cards';
+  info: {
+    displayName: 'CreditCard';
+    pluralName: 'credit-cards';
+    singularName: 'credit-card';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    brand: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    expMonth: Schema.Attribute.String;
+    expYear: Schema.Attribute.String;
+    isDefault: Schema.Attribute.Boolean;
+    last4Char: Schema.Attribute.String;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::credit-card.credit-card'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    stripePaymentMethodID: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiInventoryInventory extends Struct.CollectionTypeSchema {
   collectionName: 'inventories';
   info: {
@@ -886,7 +919,9 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     price_lists: Schema.Attribute.Relation<'manyToMany', 'api::price.price'>;
     product_type: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
-    releasedAt: Schema.Attribute.DateTime;
+    releasedAt: Schema.Attribute.DateTime &
+      Schema.Attribute.Required &
+      Schema.Attribute.DefaultTo<'2025-05-13T16:00:00.000Z'>;
     removedBy: Schema.Attribute.Relation<
       'oneToOne',
       'plugin::users-permissions.user'
@@ -1585,6 +1620,10 @@ export interface PluginUsersPermissionsUser
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    creditCards: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::credit-card.credit-card'
+    >;
     email: Schema.Attribute.Email &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
@@ -1612,6 +1651,7 @@ export interface PluginUsersPermissionsUser
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    stripeCustomerID: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -1645,6 +1685,7 @@ declare module '@strapi/strapi' {
       'api::cart.cart': ApiCartCart;
       'api::category.category': ApiCategoryCategory;
       'api::collection.collection': ApiCollectionCollection;
+      'api::credit-card.credit-card': ApiCreditCardCreditCard;
       'api::inventory.inventory': ApiInventoryInventory;
       'api::key-feature.key-feature': ApiKeyFeatureKeyFeature;
       'api::order.order': ApiOrderOrder;
