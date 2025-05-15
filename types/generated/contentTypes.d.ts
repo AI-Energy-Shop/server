@@ -920,7 +920,6 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     product_type: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     releasedAt: Schema.Attribute.DateTime &
-      Schema.Attribute.Required &
       Schema.Attribute.DefaultTo<'2025-05-13T16:00:00.000Z'>;
     removedBy: Schema.Attribute.Relation<
       'oneToOne',
