@@ -314,7 +314,7 @@ export const resolvers = {
             key_features: args.data.key_features,
             shipping: args.data.shipping,
             improvedBy: context.state.user.documentId,
-            releasedAt: args.data.releaseAt !== "published" && null,
+            releasedAt: args.data.releasedAt,
             // variants: args.data.variants,
           },
           populate: {
@@ -332,6 +332,7 @@ export const resolvers = {
 
         return res;
       } catch (error) {
+        console.error(error);
         return error;
       }
     },
