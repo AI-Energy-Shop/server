@@ -4,10 +4,11 @@
   "info": {
     "singularName": "credit-card",
     "pluralName": "credit-cards",
-    "displayName": "CreditCard"
+    "displayName": "Credit Card",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "attributes": {
     "stripePaymentMethodID": {
@@ -27,6 +28,12 @@
     },
     "isDefault": {
       "type": "boolean"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "creditCards"
     }
   }
 }

@@ -635,12 +635,13 @@ export interface ApiCollectionCollection extends Struct.CollectionTypeSchema {
 export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
   collectionName: 'credit_cards';
   info: {
-    displayName: 'CreditCard';
+    description: '';
+    displayName: 'Credit Card';
     pluralName: 'credit-cards';
     singularName: 'credit-card';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     brand: Schema.Attribute.String;
@@ -662,6 +663,10 @@ export interface ApiCreditCardCreditCard extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    user: Schema.Attribute.Relation<
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
   };
 }
 
