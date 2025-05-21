@@ -17,7 +17,8 @@
       "enum": [
         "SMALL",
         "MID-SIZED",
-        "VIP"
+        "VIP",
+        "WHOLE-SELLER"
       ]
     },
     "odoo_user_id": {

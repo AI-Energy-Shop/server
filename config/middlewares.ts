@@ -1,6 +1,6 @@
 export default [
-  'strapi::logger',
-  'strapi::errors',
+  "strapi::logger",
+  "strapi::errors",
   {
     name: "strapi::security",
     config: {
@@ -31,9 +31,14 @@ export default [
       },
     },
   },
-  'strapi::cors',
-  'strapi::poweredBy',
-  'strapi::query',
+  {
+    name: "strapi::cors",
+    config: {
+      origin: ["http://localhost:3000", "http://170.64.219.200"],
+    },
+  },
+  "strapi::poweredBy",
+  "strapi::query",
   {
     name: "strapi::body",
     config: {
@@ -45,7 +50,7 @@ export default [
       },
     },
   },
-  'strapi::session',
-  'strapi::favicon',
-  'strapi::public',
+  "strapi::session",
+  "strapi::favicon",
+  "strapi::public",
 ];

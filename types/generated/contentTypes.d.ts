@@ -422,7 +422,9 @@ export interface ApiAccountDetailAccountDetail
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    level: Schema.Attribute.Enumeration<['SMALL', 'MID-SIZED', 'VIP']>;
+    level: Schema.Attribute.Enumeration<
+      ['SMALL', 'MID-SIZED', 'VIP', 'WHOLE-SELLER']
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -604,7 +606,7 @@ export interface ApiCollectionCollection extends Struct.CollectionTypeSchema {
     singularName: 'collection';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -677,6 +679,7 @@ export interface ApiInventoryInventory extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    brisbane: Schema.Attribute.Integer & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -686,11 +689,11 @@ export interface ApiInventoryInventory extends Struct.CollectionTypeSchema {
       'api::inventory.inventory'
     > &
       Schema.Attribute.Private;
-    location_code: Schema.Attribute.String;
+    melbourne: Schema.Attribute.Integer & Schema.Attribute.Required;
     name: Schema.Attribute.String;
-    products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
+    product: Schema.Attribute.Relation<'oneToOne', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
-    quantity: Schema.Attribute.Integer;
+    sydney: Schema.Attribute.Integer & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -713,7 +716,7 @@ export interface ApiKeyFeatureKeyFeature extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    feature: Schema.Attribute.String;
+    feature: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -839,6 +842,7 @@ export interface ApiPricePrice extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    comparePrice: Schema.Attribute.Decimal;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -850,7 +854,6 @@ export interface ApiPricePrice extends Struct.CollectionTypeSchema {
     price: Schema.Attribute.Decimal;
     products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
-    sale_price: Schema.Attribute.Decimal;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -893,8 +896,8 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
-    inventories: Schema.Attribute.Relation<
-      'manyToMany',
+    inventory: Schema.Attribute.Relation<
+      'oneToOne',
       'api::inventory.inventory'
     >;
     key_features: Schema.Attribute.Relation<
@@ -911,6 +914,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
+    maxQuantity: Schema.Attribute.Integer;
     model: Schema.Attribute.String & Schema.Attribute.Required;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     odoo_product_id: Schema.Attribute.String &

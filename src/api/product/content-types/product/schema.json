@@ -55,11 +55,11 @@
       "type": "string",
       "required": true
     },
-    "inventories": {
+    "inventory": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "oneToOne",
       "target": "api::inventory.inventory",
-      "inversedBy": "products"
+      "mappedBy": "product"
     },
     "price_lists": {
       "type": "relation",
@@ -126,6 +126,9 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
+    },
+    "maxQuantity": {
+      "type": "integer"
     }
   }
 }

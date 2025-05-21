@@ -2,15 +2,19 @@
   "collectionName": "components_elements_inventories",
   "info": {
     "displayName": "Inventory",
-    "icon": "bulletList"
+    "icon": "bulletList",
+    "description": ""
   },
   "options": {},
   "attributes": {
-    "location": {
-      "type": "string"
+    "melbourne": {
+      "type": "biginteger"
     },
-    "quantity": {
-      "type": "integer"
+    "sydney": {
+      "type": "biginteger"
+    },
+    "brisbane": {
+      "type": "biginteger"
     }
   }
 }

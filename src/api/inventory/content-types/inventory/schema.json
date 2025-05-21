@@ -12,26 +12,32 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "products": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::product.product",
-      "mappedBy": "inventories"
-    },
     "name": {
       "type": "string"
     },
-    "location_code": {
-      "type": "string"
+    "melbourne": {
+      "type": "integer",
+      "required": true
     },
-    "quantity": {
-      "type": "integer"
+    "sydney": {
+      "type": "integer",
+      "required": true
+    },
+    "brisbane": {
+      "type": "integer",
+      "required": true
     },
     "variants": {
       "type": "relation",
       "relation": "manyToMany",
       "target": "api::variant.variant",
       "mappedBy": "inventories"
+    },
+    "product": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::product.product",
+      "inversedBy": "inventory"
     }
   }
 }
