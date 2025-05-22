@@ -276,6 +276,7 @@ export const resolvers = {
 
         return res;
       } catch (error) {
+        console.log("Create Product Error: ", error);
         return error;
       }
     },
@@ -336,7 +337,7 @@ export const resolvers = {
 
         return res;
       } catch (error) {
-        console.error(error);
+        console.error("Product Update error", error);
         return error;
       }
     },

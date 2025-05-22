@@ -553,7 +553,7 @@ export interface ApiCartCart extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     product: Schema.Attribute.Relation<'oneToOne', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
-    quantity: Schema.Attribute.Integer;
+    quantity: Schema.Attribute.Integer & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
