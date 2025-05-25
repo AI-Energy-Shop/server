@@ -241,6 +241,7 @@ export const resolvers = {
 
         const res = await strapi.documents("api::product.product").create({
           data: {
+            handle: args.data.handle,
             name: args.data.name,
             model: args.data.model,
             odoo_product_id: args.data.odoo_product_id,
@@ -264,6 +265,8 @@ export const resolvers = {
           populate: {
             files: true,
             images: true,
+            tags: true,
+            collections: true,
             price_lists: true,
             inventory: true,
             specifications: true,
@@ -302,6 +305,7 @@ export const resolvers = {
         const res = await strapi.documents("api::product.product").update({
           documentId: args.documentId,
           data: {
+            handle: args.data.handle,
             name: args.data.name,
             model: args.data.model,
             odoo_product_id: args.data.odoo_product_id,
@@ -324,6 +328,7 @@ export const resolvers = {
           populate: {
             files: true,
             images: true,
+            tags: true,
             collections: true,
             price_lists: true,
             inventory: true,
@@ -363,6 +368,30 @@ export const resolvers = {
     },
   },
   Query: {
+    getStoreProduct: async (_: any, args: any) => {
+      const { handle } = args;
+      const products = await strapi
+        .documents("api::product.product")
+        .findFirst({
+          filters: {
+            handle: handle,
+          },
+          populate: {
+            brand: true,
+            tags: true,
+            collections: true,
+            inventory: true,
+            shipping: true,
+            price_lists: true,
+            key_features: true,
+            specifications: true,
+            files: true,
+            images: true,
+          },
+        });
+
+      return products;
+    },
     getPage: async (_: any, { slug }: { slug: string }) => {
       try {
         if (!slug || slug === null || slug === "/" || slug === "") {
@@ -386,21 +415,10 @@ export const resolvers = {
     },
     files: async (_: any, args: any) => {
       const { filters } = args;
-      if (!filters || !filters.mimeTypes || filters.mimeTypes.length === 0) {
-        return [];
-      }
 
       try {
-        const filterData = {
-          $or: filters.mimeTypes.map((type: string) => {
-            return {
-              mime: type,
-            };
-          }),
-        };
-
         const files = await strapi.documents("plugin::upload.file").findMany({
-          filters: filterData,
+          filters,
         });
 
         return files;

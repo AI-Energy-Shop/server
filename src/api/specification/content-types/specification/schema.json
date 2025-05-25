@@ -11,40 +11,6 @@
     "draftAndPublish": false
   },
   "attributes": {
-    "key": {
-      "type": "enumeration",
-      "enum": [
-        "Brand",
-        "Product Model",
-        "Wattage",
-        "Cell Technology",
-        "Colour",
-        "Qty Per Pallet",
-        "Dimensions LxWxT",
-        "Weight",
-        "Performance Warranty",
-        "Product Warranty",
-        "Product Series",
-        "Power Rating",
-        "Inverter Type",
-        "Phase Support",
-        "Plug Connector Type",
-        "Grid Support",
-        "IP Rating",
-        "Number Of MPPTs",
-        "Number Of Strings",
-        "Length",
-        "Thickness",
-        "Total Capacity",
-        "Battery Voltage",
-        "Battery Cell Technology",
-        "Number of Battery Cells",
-        "Max System Paralleled",
-        "Dimensions WxHxD"
-      ],
-      "required": true,
-      "default": "Brand"
-    },
     "value": {
       "type": "string",
       "required": true,
@@ -56,6 +22,11 @@
       "relation": "manyToMany",
       "target": "api::product.product",
       "inversedBy": "specifications"
+    },
+    "key": {
+      "type": "string",
+      "required": true,
+      "regex": "^(?!.*[%+&]).+$"
     }
   }
 }

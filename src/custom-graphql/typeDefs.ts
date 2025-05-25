@@ -65,8 +65,9 @@ export const typeDefs = `
 	}
 	
 	type Query {
+		getStoreProduct(handle: String!): Product
 		getPage(slug: String!): Page
-		files(filters: FilesFiltersArgs): [UploadFile]!
+		files(filters: UploadFileFiltersInput): [UploadFile]!
 		user(filters: UserFiltersInput): UsersPermissionsUser
 	}
 `;

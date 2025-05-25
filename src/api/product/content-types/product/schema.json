@@ -12,6 +12,10 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "handle": {
+      "type": "string",
+      "required": true
+    },
     "name": {
       "type": "string",
       "required": true,
@@ -129,6 +133,12 @@
     },
     "maxQuantity": {
       "type": "integer"
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tag.tag",
+      "mappedBy": "product"
     }
   }
 }

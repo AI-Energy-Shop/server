@@ -690,7 +690,6 @@ export interface ApiInventoryInventory extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     melbourne: Schema.Attribute.Integer & Schema.Attribute.Required;
-    name: Schema.Attribute.String;
     product: Schema.Attribute.Relation<'oneToOne', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
     sydney: Schema.Attribute.Integer & Schema.Attribute.Required;
@@ -888,6 +887,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
     files: Schema.Attribute.Media<'files', true>;
+    handle: Schema.Attribute.String & Schema.Attribute.Required;
     images: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
@@ -934,6 +934,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::specification.specification'
     >;
+    tags: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -945,12 +946,13 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
 export interface ApiShippingShipping extends Struct.CollectionTypeSchema {
   collectionName: 'shippings';
   info: {
+    description: '';
     displayName: 'Shipping';
     pluralName: 'shippings';
     singularName: 'shipping';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -990,39 +992,7 @@ export interface ApiSpecificationSpecification
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    key: Schema.Attribute.Enumeration<
-      [
-        'Brand',
-        'Product Model',
-        'Wattage',
-        'Cell Technology',
-        'Colour',
-        'Qty Per Pallet',
-        'Dimensions LxWxT',
-        'Weight',
-        'Performance Warranty',
-        'Product Warranty',
-        'Product Series',
-        'Power Rating',
-        'Inverter Type',
-        'Phase Support',
-        'Plug Connector Type',
-        'Grid Support',
-        'IP Rating',
-        'Number Of MPPTs',
-        'Number Of Strings',
-        'Length',
-        'Thickness',
-        'Total Capacity',
-        'Battery Voltage',
-        'Battery Cell Technology',
-        'Number of Battery Cells',
-        'Max System Paralleled',
-        'Dimensions WxHxD',
-      ]
-    > &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Brand'>;
+    key: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1035,6 +1005,33 @@ export interface ApiSpecificationSpecification
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     value: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ApiTagTag extends Struct.CollectionTypeSchema {
+  collectionName: 'tags';
+  info: {
+    description: '';
+    displayName: 'Tag';
+    pluralName: 'tags';
+    singularName: 'tag';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'> &
+      Schema.Attribute.Private;
+    product: Schema.Attribute.Relation<'manyToOne', 'api::product.product'>;
+    publishedAt: Schema.Attribute.DateTime;
+    tag: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1697,6 +1694,7 @@ declare module '@strapi/strapi' {
       'api::product.product': ApiProductProduct;
       'api::shipping.shipping': ApiShippingShipping;
       'api::specification.specification': ApiSpecificationSpecification;
+      'api::tag.tag': ApiTagTag;
       'api::user-approval-request.user-approval-request': ApiUserApprovalRequestUserApprovalRequest;
       'api::user-notification.user-notification': ApiUserNotificationUserNotification;
       'api::variant.variant': ApiVariantVariant;

@@ -14,11 +14,14 @@ export const resolversConfig = {
     },
   },
   Query: {
+    getStoreProduct: {
+      auth: false,
+    },
     getPage: {
       auth: false,
     },
     files: {
-      auth: false,
+      auth: true,
     },
     cart: {
       auth: true,
