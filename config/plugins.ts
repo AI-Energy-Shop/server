@@ -4,15 +4,19 @@ export default ({ env }) => {
       config: {
         provider: "aws-s3",
         providerOptions: {
+          baseUrl: env("DO_SPACES_ENDPOINT"),
           rootPath: env("DO_SPACES_ROOT_PATH"),
           s3Options: {
-            credentials: {
-              accessKeyId: env("DO_SPACES_ACCESS_KEY"),
-              secretAccessKey: env("DO_SPACES_SECRET_KEY"),
-            },
-            endpoint: env("DO_SPACES_ENDPOINT"),
+            // credentials: {
+            //   accessKeyId: env("DO_SPACES_ACCESS_KEY"),
+            //   secretAccessKey: env("DO_SPACES_SECRET_KEY"),
+            // },
+            accessKeyId: env("DO_SPACES_ACCESS_KEY"),
+            secretAccessKey: env("DO_SPACES_SECRET_KEY"),
             region: env("DO_SPACES_REGION"),
             params: {
+              ACL: env("AWS_ACL", "public-read"),
+              signedUrlExpires: env("AWS_SIGNED_URL_EXPIRES", 15 * 60),
               Bucket: env("DO_SPACES_NAME"),
             },
           },
