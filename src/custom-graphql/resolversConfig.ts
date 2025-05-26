@@ -14,6 +14,9 @@ export const resolversConfig = {
     },
   },
   Query: {
+    getStoreProducts: {
+      auth: false,
+    },
     getStoreProduct: {
       auth: false,
     },

@@ -920,6 +920,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     odoo_product_id: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+    odoo_product_name: Schema.Attribute.String;
     price_lists: Schema.Attribute.Relation<'manyToMany', 'api::price.price'>;
     product_type: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;

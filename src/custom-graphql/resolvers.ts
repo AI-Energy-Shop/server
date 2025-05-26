@@ -368,6 +368,30 @@ export const resolvers = {
     },
   },
   Query: {
+    getStoreProducts: async (_: any, args: any) => {
+      const { filters, pagination, sort } = args;
+      const products = await strapi
+        .documents("api::product.product")
+        .findMany({
+          filters,
+          pagination,
+          sort,
+          populate: {
+            brand: true,
+            tags: true,
+            collections: true,
+            inventory: true,
+            shipping: true,
+            price_lists: true,
+            key_features: true,
+            specifications: true,
+            files: true,
+            images: true,
+          },
+        });
+
+      return products;
+    },
     getStoreProduct: async (_: any, args: any) => {
       const { handle } = args;
       const products = await strapi
@@ -414,11 +438,12 @@ export const resolvers = {
       } catch (error) {}
     },
     files: async (_: any, args: any) => {
-      const { filters } = args;
+      const { filters, sort } = args;
 
       try {
         const files = await strapi.documents("plugin::upload.file").findMany({
           filters,
+          sort,
         });
 
         return files;

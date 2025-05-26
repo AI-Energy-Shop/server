@@ -36,6 +36,11 @@
       "unique": true,
       "required": true
     },
+    "odoo_product_name": {
+      "type": "string",
+      "unique": false,
+      "required": false
+    },
     "files": {
       "type": "media",
       "multiple": true,
