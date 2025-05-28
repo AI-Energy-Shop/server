@@ -512,8 +512,7 @@ export interface ApiBrandBrand extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'> &
-      Schema.Attribute.Required;
+    image: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::brand.brand'> &
       Schema.Attribute.Private;
@@ -587,7 +586,6 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
       'api::category.category'
     > &
       Schema.Attribute.Private;
-    products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
     slug: Schema.Attribute.String & Schema.Attribute.Required;
     title: Schema.Attribute.String & Schema.Attribute.Required;
@@ -875,7 +873,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
   attributes: {
     brand: Schema.Attribute.Relation<'oneToOne', 'api::brand.brand'>;
     categories: Schema.Attribute.Relation<
-      'manyToMany',
+      'oneToMany',
       'api::category.category'
     >;
     collections: Schema.Attribute.Relation<
@@ -939,7 +937,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    variants: Schema.Attribute.Relation<'manyToMany', 'api::variant.variant'>;
+    variants: Schema.Attribute.Relation<'oneToMany', 'api::variant.variant'>;
     vendor: Schema.Attribute.String;
   };
 }
@@ -1018,7 +1016,7 @@ export interface ApiTagTag extends Struct.CollectionTypeSchema {
     singularName: 'tag';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -1027,7 +1025,6 @@ export interface ApiTagTag extends Struct.CollectionTypeSchema {
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'> &
       Schema.Attribute.Private;
-    product: Schema.Attribute.Relation<'manyToOne', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
     tag: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
@@ -1130,7 +1127,6 @@ export interface ApiVariantVariant extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     prices_list: Schema.Attribute.Relation<'manyToMany', 'api::price.price'>;
-    products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &

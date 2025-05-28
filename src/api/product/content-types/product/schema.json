@@ -83,9 +83,8 @@
     },
     "categories": {
       "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::category.category",
-      "inversedBy": "products"
+      "relation": "oneToMany",
+      "target": "api::category.category"
     },
     "brand": {
       "type": "relation",
@@ -94,9 +93,8 @@
     },
     "variants": {
       "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::variant.variant",
-      "inversedBy": "products"
+      "relation": "oneToMany",
+      "target": "api::variant.variant"
     },
     "collections": {
       "type": "relation",
@@ -142,8 +140,7 @@
     "tags": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::tag.tag",
-      "mappedBy": "product"
+      "target": "api::tag.tag"
     }
   }
 }

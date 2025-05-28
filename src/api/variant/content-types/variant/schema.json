@@ -35,12 +35,6 @@
       "relation": "manyToMany",
       "target": "api::inventory.inventory",
       "inversedBy": "variants"
-    },
-    "products": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::product.product",
-      "mappedBy": "variants"
     }
   }
 }

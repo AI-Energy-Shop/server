@@ -29,12 +29,6 @@
         "videos",
         "audios"
       ]
-    },
-    "products": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::product.product",
-      "mappedBy": "categories"
     }
   }
 }
