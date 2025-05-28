@@ -65,8 +65,10 @@ export const typeDefs = `
 	}
 	
 	type Query {
+		getStoreProduct(handle: String!): Product
+		getStoreProducts(filters: ProductFiltersInput, pagination: PaginationArg, sort: [String]): [Product]!
 		getPage(slug: String!): Page
-		files(filters: FilesFiltersArgs): [UploadFile]!
+		files(filters: UploadFileFiltersInput, sort: [String]): [UploadFile]!
 		user(filters: UserFiltersInput): UsersPermissionsUser
 	}
 `;

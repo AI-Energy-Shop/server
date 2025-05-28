@@ -1,5 +1,4 @@
 import {
-  ProductInputArgs,
   RegisterUserInput,
   UserApprovalRequestInput,
 } from "../../types/custom";
@@ -242,6 +241,7 @@ export const resolvers = {
 
         const res = await strapi.documents("api::product.product").create({
           data: {
+            handle: args.data.handle,
             name: args.data.name,
             model: args.data.model,
             odoo_product_id: args.data.odoo_product_id,
@@ -249,13 +249,15 @@ export const resolvers = {
             vendor: args.data.vendor,
             product_type: args.data.product_type,
             brand: args.data.brand,
+            collections: args.data.collections,
             images: images,
             files: files,
             price_lists: args.data.price_lists,
             specifications: args.data.specifications,
-            inventories: args.data.inventories,
+            inventory: args.data.inventory,
             key_features: args.data.key_features,
             shipping: args.data.shipping,
+            maxQuantity: args.data.maxQuantity,
             releasedAt: args.data.releaseAt !== "published" && null,
             madeBy: context.state.user.documentId,
             // variants: args.data.variants,
@@ -263,8 +265,10 @@ export const resolvers = {
           populate: {
             files: true,
             images: true,
+            tags: true,
+            collections: true,
             price_lists: true,
-            inventories: true,
+            inventory: true,
             specifications: true,
             key_features: true,
             improvedBy: true,
@@ -275,6 +279,7 @@ export const resolvers = {
 
         return res;
       } catch (error) {
+        console.log("Create Product Error: ", error);
         return error;
       }
     },
@@ -300,28 +305,33 @@ export const resolvers = {
         const res = await strapi.documents("api::product.product").update({
           documentId: args.documentId,
           data: {
+            handle: args.data.handle,
             name: args.data.name,
             model: args.data.model,
             odoo_product_id: args.data.odoo_product_id,
             description: args.data.description,
             product_type: args.data.product_type,
             brand: args.data.brand,
+            collections: args.data.collections,
             images: images,
             files: files,
             price_lists: args.data.price_lists,
             specifications: args.data.specifications,
-            inventories: args.data.inventories,
+            inventory: args.data.inventory,
             key_features: args.data.key_features,
             shipping: args.data.shipping,
             improvedBy: context.state.user.documentId,
             releasedAt: args.data.releasedAt,
+            maxQuantity: args.data.maxQuantity,
             // variants: args.data.variants,
           },
           populate: {
             files: true,
             images: true,
+            tags: true,
+            collections: true,
             price_lists: true,
-            inventories: true,
+            inventory: true,
             specifications: true,
             key_features: true,
             improvedBy: true,
@@ -332,7 +342,7 @@ export const resolvers = {
 
         return res;
       } catch (error) {
-        console.error(error);
+        console.error("Product Update error", error);
         return error;
       }
     },
@@ -358,6 +368,54 @@ export const resolvers = {
     },
   },
   Query: {
+    getStoreProducts: async (_: any, args: any) => {
+      const { filters, pagination, sort } = args;
+      const products = await strapi
+        .documents("api::product.product")
+        .findMany({
+          filters,
+          pagination,
+          sort,
+          populate: {
+            brand: true,
+            tags: true,
+            collections: true,
+            inventory: true,
+            shipping: true,
+            price_lists: true,
+            key_features: true,
+            specifications: true,
+            files: true,
+            images: true,
+          },
+        });
+
+      return products;
+    },
+    getStoreProduct: async (_: any, args: any) => {
+      const { handle } = args;
+      const products = await strapi
+        .documents("api::product.product")
+        .findFirst({
+          filters: {
+            handle: handle,
+          },
+          populate: {
+            brand: true,
+            tags: true,
+            collections: true,
+            inventory: true,
+            shipping: true,
+            price_lists: true,
+            key_features: true,
+            specifications: true,
+            files: true,
+            images: true,
+          },
+        });
+
+      return products;
+    },
     getPage: async (_: any, { slug }: { slug: string }) => {
       try {
         if (!slug || slug === null || slug === "/" || slug === "") {
@@ -380,22 +438,12 @@ export const resolvers = {
       } catch (error) {}
     },
     files: async (_: any, args: any) => {
-      const { filters } = args;
-      if (!filters || !filters.mimeTypes || filters.mimeTypes.length === 0) {
-        return [];
-      }
+      const { filters, sort } = args;
 
       try {
-        const filterData = {
-          $or: filters.mimeTypes.map((type: string) => {
-            return {
-              mime: type,
-            };
-          }),
-        };
-
         const files = await strapi.documents("plugin::upload.file").findMany({
-          filters: filterData,
+          filters,
+          sort,
         });
 
         return files;

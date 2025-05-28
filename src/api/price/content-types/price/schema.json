@@ -12,7 +12,7 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "sale_price": {
+    "comparePrice": {
       "type": "decimal"
     },
     "price": {

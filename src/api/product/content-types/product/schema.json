@@ -12,6 +12,10 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "handle": {
+      "type": "string",
+      "required": true
+    },
     "name": {
       "type": "string",
       "required": true,
@@ -31,6 +35,11 @@
       "type": "string",
       "unique": true,
       "required": true
+    },
+    "odoo_product_name": {
+      "type": "string",
+      "unique": false,
+      "required": false
     },
     "files": {
       "type": "media",
@@ -55,11 +64,11 @@
       "type": "string",
       "required": true
     },
-    "inventories": {
+    "inventory": {
       "type": "relation",
-      "relation": "manyToMany",
+      "relation": "oneToOne",
       "target": "api::inventory.inventory",
-      "inversedBy": "products"
+      "mappedBy": "product"
     },
     "price_lists": {
       "type": "relation",
@@ -126,6 +135,15 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "plugin::users-permissions.user"
+    },
+    "maxQuantity": {
+      "type": "integer"
+    },
+    "tags": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::tag.tag",
+      "mappedBy": "product"
     }
   }
 }

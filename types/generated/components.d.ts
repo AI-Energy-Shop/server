@@ -122,12 +122,14 @@ export interface ElementsInput extends Struct.ComponentSchema {
 export interface ElementsInventory extends Struct.ComponentSchema {
   collectionName: 'components_elements_inventories';
   info: {
+    description: '';
     displayName: 'Inventory';
     icon: 'bulletList';
   };
   attributes: {
-    location: Schema.Attribute.String;
-    quantity: Schema.Attribute.Integer;
+    brisbane: Schema.Attribute.BigInteger;
+    melbourne: Schema.Attribute.BigInteger;
+    sydney: Schema.Attribute.BigInteger;
   };
 }
 

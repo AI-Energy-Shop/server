@@ -33,7 +33,8 @@
       "target": "api::product.product"
     },
     "quantity": {
-      "type": "integer"
+      "type": "integer",
+      "required": true
     }
   }
 }

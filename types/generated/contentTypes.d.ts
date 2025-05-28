@@ -422,7 +422,9 @@ export interface ApiAccountDetailAccountDetail
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    level: Schema.Attribute.Enumeration<['SMALL', 'MID-SIZED', 'VIP']>;
+    level: Schema.Attribute.Enumeration<
+      ['SMALL', 'MID-SIZED', 'VIP', 'WHOLE-SELLER']
+    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -551,7 +553,7 @@ export interface ApiCartCart extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     product: Schema.Attribute.Relation<'oneToOne', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
-    quantity: Schema.Attribute.Integer;
+    quantity: Schema.Attribute.Integer & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -604,7 +606,7 @@ export interface ApiCollectionCollection extends Struct.CollectionTypeSchema {
     singularName: 'collection';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -677,6 +679,7 @@ export interface ApiInventoryInventory extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    brisbane: Schema.Attribute.Integer & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -686,11 +689,10 @@ export interface ApiInventoryInventory extends Struct.CollectionTypeSchema {
       'api::inventory.inventory'
     > &
       Schema.Attribute.Private;
-    location_code: Schema.Attribute.String;
-    name: Schema.Attribute.String;
-    products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
+    melbourne: Schema.Attribute.Integer & Schema.Attribute.Required;
+    product: Schema.Attribute.Relation<'oneToOne', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
-    quantity: Schema.Attribute.Integer;
+    sydney: Schema.Attribute.Integer & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -713,7 +715,7 @@ export interface ApiKeyFeatureKeyFeature extends Struct.CollectionTypeSchema {
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    feature: Schema.Attribute.String;
+    feature: Schema.Attribute.Text;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -839,6 +841,7 @@ export interface ApiPricePrice extends Struct.CollectionTypeSchema {
     draftAndPublish: false;
   };
   attributes: {
+    comparePrice: Schema.Attribute.Decimal;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -850,7 +853,6 @@ export interface ApiPricePrice extends Struct.CollectionTypeSchema {
     price: Schema.Attribute.Decimal;
     products: Schema.Attribute.Relation<'manyToMany', 'api::product.product'>;
     publishedAt: Schema.Attribute.DateTime;
-    sale_price: Schema.Attribute.Decimal;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -885,6 +887,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     description: Schema.Attribute.Text;
     files: Schema.Attribute.Media<'files', true>;
+    handle: Schema.Attribute.String & Schema.Attribute.Required;
     images: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios',
       true
@@ -893,8 +896,8 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
-    inventories: Schema.Attribute.Relation<
-      'manyToMany',
+    inventory: Schema.Attribute.Relation<
+      'oneToOne',
       'api::inventory.inventory'
     >;
     key_features: Schema.Attribute.Relation<
@@ -911,11 +914,13 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'oneToOne',
       'plugin::users-permissions.user'
     >;
+    maxQuantity: Schema.Attribute.Integer;
     model: Schema.Attribute.String & Schema.Attribute.Required;
     name: Schema.Attribute.String & Schema.Attribute.Required;
     odoo_product_id: Schema.Attribute.String &
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
+    odoo_product_name: Schema.Attribute.String;
     price_lists: Schema.Attribute.Relation<'manyToMany', 'api::price.price'>;
     product_type: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
@@ -930,6 +935,7 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::specification.specification'
     >;
+    tags: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -941,12 +947,13 @@ export interface ApiProductProduct extends Struct.CollectionTypeSchema {
 export interface ApiShippingShipping extends Struct.CollectionTypeSchema {
   collectionName: 'shippings';
   info: {
+    description: '';
     displayName: 'Shipping';
     pluralName: 'shippings';
     singularName: 'shipping';
   };
   options: {
-    draftAndPublish: true;
+    draftAndPublish: false;
   };
   attributes: {
     createdAt: Schema.Attribute.DateTime;
@@ -986,39 +993,7 @@ export interface ApiSpecificationSpecification
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    key: Schema.Attribute.Enumeration<
-      [
-        'Brand',
-        'Product Model',
-        'Wattage',
-        'Cell Technology',
-        'Colour',
-        'Qty Per Pallet',
-        'Dimensions LxWxT',
-        'Weight',
-        'Performance Warranty',
-        'Product Warranty',
-        'Product Series',
-        'Power Rating',
-        'Inverter Type',
-        'Phase Support',
-        'Plug Connector Type',
-        'Grid Support',
-        'IP Rating',
-        'Number Of MPPTs',
-        'Number Of Strings',
-        'Length',
-        'Thickness',
-        'Total Capacity',
-        'Battery Voltage',
-        'Battery Cell Technology',
-        'Number of Battery Cells',
-        'Max System Paralleled',
-        'Dimensions WxHxD',
-      ]
-    > &
-      Schema.Attribute.Required &
-      Schema.Attribute.DefaultTo<'Brand'>;
+    key: Schema.Attribute.String & Schema.Attribute.Required;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
@@ -1031,6 +1006,33 @@ export interface ApiSpecificationSpecification
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     value: Schema.Attribute.String & Schema.Attribute.Required;
+  };
+}
+
+export interface ApiTagTag extends Struct.CollectionTypeSchema {
+  collectionName: 'tags';
+  info: {
+    description: '';
+    displayName: 'Tag';
+    pluralName: 'tags';
+    singularName: 'tag';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<'oneToMany', 'api::tag.tag'> &
+      Schema.Attribute.Private;
+    product: Schema.Attribute.Relation<'manyToOne', 'api::product.product'>;
+    publishedAt: Schema.Attribute.DateTime;
+    tag: Schema.Attribute.String;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
   };
 }
 
@@ -1693,6 +1695,7 @@ declare module '@strapi/strapi' {
       'api::product.product': ApiProductProduct;
       'api::shipping.shipping': ApiShippingShipping;
       'api::specification.specification': ApiSpecificationSpecification;
+      'api::tag.tag': ApiTagTag;
       'api::user-approval-request.user-approval-request': ApiUserApprovalRequestUserApprovalRequest;
       'api::user-notification.user-notification': ApiUserNotificationUserNotification;
       'api::variant.variant': ApiVariantVariant;
