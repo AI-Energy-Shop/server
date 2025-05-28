@@ -312,6 +312,7 @@ export const resolvers = {
             description: args.data.description,
             product_type: args.data.product_type,
             brand: args.data.brand,
+            tags: args.data.tags,
             collections: args.data.collections,
             images: images,
             files: files,
@@ -320,10 +321,10 @@ export const resolvers = {
             inventory: args.data.inventory,
             key_features: args.data.key_features,
             shipping: args.data.shipping,
+            // variants: args.data.variants,
             improvedBy: context.state.user.documentId,
             releasedAt: args.data.releasedAt,
             maxQuantity: args.data.maxQuantity,
-            // variants: args.data.variants,
           },
           populate: {
             files: true,
@@ -401,6 +402,8 @@ export const resolvers = {
             handle: handle,
           },
           populate: {
+            files: true,
+            images: true,
             brand: true,
             tags: true,
             collections: true,
@@ -409,8 +412,6 @@ export const resolvers = {
             price_lists: true,
             key_features: true,
             specifications: true,
-            files: true,
-            images: true,
           },
         });
 
@@ -438,13 +439,16 @@ export const resolvers = {
       } catch (error) {}
     },
     files: async (_: any, args: any) => {
-      const { filters, sort } = args;
-
       try {
         const files = await strapi.documents("plugin::upload.file").findMany({
-          filters,
-          sort,
+          filters: {
+            ext: {
+              $eq: args.filters.ext.eq,
+            },
+          }
         });
+
+        // console.log(files)
 
         return files;
       } catch (error) {
