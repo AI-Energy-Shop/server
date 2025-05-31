@@ -13,10 +13,14 @@
     "title": {
       "type": "string"
     },
+    "name": {
+      "type": "string"
+    },
     "address": {
+      "displayName": "Warehouse Address",
       "type": "component",
       "repeatable": false,
-      "component": "elements.address"
+      "component": "elements.warehouse-address"
     }
   }
 }

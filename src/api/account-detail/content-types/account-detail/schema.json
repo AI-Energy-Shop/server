@@ -15,10 +15,11 @@
     "level": {
       "type": "enumeration",
       "enum": [
-        "SMALL",
-        "MID-SIZED",
-        "VIP",
-        "WHOLE-SELLER"
+        "default",
+        "small",
+        "mid-size",
+        "vip",
+        "whole-seller"
       ]
     },
     "odoo_user_id": {
@@ -29,18 +30,12 @@
     "phone": {
       "type": "string"
     },
-    "payment_options": {
-      "displayName": "Payment Option",
-      "type": "component",
-      "repeatable": true,
-      "component": "elements.payment-option"
-    },
     "name": {
       "type": "component",
       "repeatable": false,
       "component": "elements.name"
     },
-    "warehouse_location": {
+    "warehouseLocation": {
       "type": "component",
       "repeatable": false,
       "component": "elements.warehouse-location"
@@ -49,6 +44,12 @@
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::address.address"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "account_detail"
     }
   }
 }

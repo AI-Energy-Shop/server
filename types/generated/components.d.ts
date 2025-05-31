@@ -268,6 +268,22 @@ export interface ElementsTotal extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsWarehouseAddress extends Struct.ComponentSchema {
+  collectionName: 'components_elements_warehouse_addresses';
+  info: {
+    displayName: 'Warehouse Address';
+    icon: 'bulletList';
+  };
+  attributes: {
+    city: Schema.Attribute.String;
+    postcode: Schema.Attribute.String;
+    state: Schema.Attribute.String;
+    street: Schema.Attribute.String;
+    suburb: Schema.Attribute.String;
+    unit: Schema.Attribute.String;
+  };
+}
+
 export interface ElementsWarehouseLocation extends Struct.ComponentSchema {
   collectionName: 'components_elements_warehouse_locations';
   info: {
@@ -276,7 +292,8 @@ export interface ElementsWarehouseLocation extends Struct.ComponentSchema {
     icon: 'bulletList';
   };
   attributes: {
-    address: Schema.Attribute.Component<'elements.address', false>;
+    address: Schema.Attribute.Component<'elements.warehouse-address', false>;
+    name: Schema.Attribute.String;
     odoo_warehouse_id: Schema.Attribute.String;
     title: Schema.Attribute.String;
   };
@@ -438,6 +455,7 @@ declare module '@strapi/strapi' {
       'elements.specification': ElementsSpecification;
       'elements.specs': ElementsSpecs;
       'elements.total': ElementsTotal;
+      'elements.warehouse-address': ElementsWarehouseAddress;
       'elements.warehouse-location': ElementsWarehouseLocation;
       'form.inquiry': FormInquiry;
       'form.newsletter': FormNewsletter;
