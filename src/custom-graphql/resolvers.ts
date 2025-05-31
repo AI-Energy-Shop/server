@@ -1,6 +1,5 @@
 import {
   RegisterUserInput,
-  UserApprovalRequestInput,
 } from "../../types/custom";
 
 export const resolvers = {
@@ -136,7 +135,7 @@ export const resolvers = {
     },
     approvedUser: async (
       _: any,
-      args: { documentId: string; data: UserApprovalRequestInput }
+      args: { documentId: string; data: any }
     ) => {
       try {
         const userData = await strapi

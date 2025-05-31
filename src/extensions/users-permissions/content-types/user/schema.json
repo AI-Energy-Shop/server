@@ -62,7 +62,8 @@
     "account_detail": {
       "type": "relation",
       "relation": "oneToOne",
-      "target": "api::account-detail.account-detail"
+      "target": "api::account-detail.account-detail",
+      "inversedBy": "user"
     },
     "account_status": {
       "type": "enumeration",
@@ -106,7 +107,7 @@
     "createAccountRequest": {
       "type": "datetime"
     },
-    "image_logo": {
+    "logo": {
       "type": "media",
       "multiple": false,
       "required": false,

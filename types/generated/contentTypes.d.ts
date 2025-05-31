@@ -423,7 +423,7 @@ export interface ApiAccountDetailAccountDetail
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     level: Schema.Attribute.Enumeration<
-      ['SMALL', 'MID-SIZED', 'VIP', 'WHOLE-SELLER']
+      ['default', 'small', 'mid-size', 'vip', 'whole-seller']
     >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
@@ -433,10 +433,6 @@ export interface ApiAccountDetailAccountDetail
       Schema.Attribute.Private;
     name: Schema.Attribute.Component<'elements.name', false>;
     odoo_user_id: Schema.Attribute.String & Schema.Attribute.Unique;
-    payment_options: Schema.Attribute.Component<
-      'elements.payment-option',
-      true
-    >;
     phone: Schema.Attribute.String;
     publishedAt: Schema.Attribute.DateTime;
     shipping_addresses: Schema.Attribute.Relation<
@@ -446,7 +442,11 @@ export interface ApiAccountDetailAccountDetail
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    warehouse_location: Schema.Attribute.Component<
+    user: Schema.Attribute.Relation<
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    warehouseLocation: Schema.Attribute.Component<
       'elements.warehouse-location',
       false
     >;
@@ -1626,15 +1626,13 @@ export interface PluginUsersPermissionsUser
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
-    image_logo: Schema.Attribute.Media<
-      'images' | 'files' | 'videos' | 'audios'
-    >;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::users-permissions.user'
     > &
       Schema.Attribute.Private;
+    logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
     password: Schema.Attribute.Password &
       Schema.Attribute.Private &
       Schema.Attribute.SetMinMaxLength<{
