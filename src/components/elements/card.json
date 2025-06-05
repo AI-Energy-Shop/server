@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_elements_cards",
+  "info": {
+    "displayName": "Card"
+  },
+  "options": {},
+  "attributes": {
+    "stripePaymentId": {
+      "type": "string"
+    },
+    "brand": {
+      "type": "string"
+    },
+    "last4Char": {
+      "type": "string"
+    },
+    "expMonth": {
+      "type": "string"
+    },
+    "expYear": {
+      "type": "string"
+    },
+    "isDefault": {
+      "type": "boolean"
+    }
+  }
+}

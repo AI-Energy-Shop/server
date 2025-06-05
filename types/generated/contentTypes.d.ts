@@ -757,6 +757,7 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
       Schema.Attribute.Private;
     orderNotes: Schema.Attribute.String;
     orderNumber: Schema.Attribute.String;
+    paymentDetails: Schema.Attribute.DynamicZone<['elements.card']>;
     paymentMethod: Schema.Attribute.Enumeration<
       ['credit_card', 'bank_transfer', 'account_credit']
     >;
@@ -777,10 +778,6 @@ export interface ApiOrderOrder extends Struct.CollectionTypeSchema {
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
-    user: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
     voucherCode: Schema.Attribute.String;
     warehouseLocation: Schema.Attribute.Component<
       'elements.warehouse-location',
@@ -1633,6 +1630,7 @@ export interface PluginUsersPermissionsUser
     > &
       Schema.Attribute.Private;
     logo: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    orders: Schema.Attribute.Relation<'oneToMany', 'api::order.order'>;
     password: Schema.Attribute.Password &
       Schema.Attribute.Private &
       Schema.Attribute.SetMinMaxLength<{

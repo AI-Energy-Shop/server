@@ -19,6 +19,21 @@ export interface ElementsAddress extends Struct.ComponentSchema {
   };
 }
 
+export interface ElementsCard extends Struct.ComponentSchema {
+  collectionName: 'components_elements_cards';
+  info: {
+    displayName: 'Card';
+  };
+  attributes: {
+    brand: Schema.Attribute.String;
+    expMonth: Schema.Attribute.String;
+    expYear: Schema.Attribute.String;
+    isDefault: Schema.Attribute.Boolean;
+    last4Char: Schema.Attribute.String;
+    stripePaymentId: Schema.Attribute.String;
+  };
+}
+
 export interface ElementsCartItem extends Struct.ComponentSchema {
   collectionName: 'components_elements_cart_items';
   info: {
@@ -438,6 +453,7 @@ declare module '@strapi/strapi' {
   export module Public {
     export interface ComponentSchemas {
       'elements.address': ElementsAddress;
+      'elements.card': ElementsCard;
       'elements.cart-item': ElementsCartItem;
       'elements.delivery-option': ElementsDeliveryOption;
       'elements.delivery-option-shipping': ElementsDeliveryOptionShipping;
